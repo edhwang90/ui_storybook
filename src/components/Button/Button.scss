@@ -1,0 +1,62 @@
+@import '../../import.scss';
+
+$error-color: #dc3545;
+$success-color: #28a745;
+$warning-color: #ffc107;
+
+.btn {
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  outline: none;
+  border: 0;
+  border-radius: 4px;
+  background-color: $primary-color;
+  color: $primary-color-font;
+  cursor: pointer;
+
+  &:focus, &:hover {
+    background-color: darken($primary-color, 5%);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: #f7f7f7;
+    color: #4d4d4d;
+  }
+}
+
+.is-alternate {
+  background-color: $alternate-color;
+  color: $alternate-color-font;
+
+  &:focus, &:hover {
+    background-color: darken($alternate-color, 5%);
+  }
+}
+
+.is-danger {
+  background-color: $error-color;
+  color: #ffffff;
+
+  &:focus, &:hover {
+    background-color: darken($error-color, 5%);
+  }
+}
+
+.is-warning {
+  background-color: $warning-color;
+  color: #4d4d4d;
+
+  &:focus, &:hover {
+    background-color: darken($warning-color, 5%);
+  }
+}
+
+.is-success {
+  background-color: $success-color;
+  color: #ffffff;
+
+  &:focus, &:hover {
+    background-color: darken($success-color, 5%);
+  }
+}

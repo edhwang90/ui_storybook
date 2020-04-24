@@ -1,18 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './Checkbox.scss';
 
 export const Checkbox = (props) => {
-  const { id, label, toggleProp, handleToggle, disabled } = props;
+  const { data, id, label, toggleProp, handleToggle, disabled } = props;
+  const [checked, setCheck] = useState(toggleProp)
+
+  const checkToggle = () => {
+    setCheck(!checked);
+    handleToggle(data);
+  }
 
   return (
     <div className="checkbox-container">
       <input className="checkbox" type="checkbox" 
-      checked={toggleProp} 
+      checked={checked} 
       id={'checkbox' + id} 
-      onChange={handleToggle}
-      disabled={disabled}
-      />
+      onChange={checkToggle}
+      disabled={disabled}/>
       <label htmlFor={'checkbox' + id}><span>{label}</span></label>
     </div>
   )

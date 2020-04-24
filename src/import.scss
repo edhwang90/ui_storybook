@@ -8,3 +8,10 @@ $primary-color-font: #ffffff;
 $alternate-color: #f7f7f7;
 $alternate-color-font: #4d4d4d;
 
+$error-color: #dc3545;
+$success-color: #28a745;
+$warning-color: #ffc107;
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import './Checkbox.scss';
 
@@ -21,4 +22,9 @@ export const Checkbox = (props) => {
       <label htmlFor={'checkbox' + id}><span>{label}</span></label>
     </div>
   )
+}
+
+Checkbox.propTypes = {
+  label: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired
 }

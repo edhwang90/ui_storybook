@@ -1,0 +1,29 @@
+@import '../../../import.scss';
+
+.form-group {
+  margin-bottom: 1rem;
+
+  &:last-of-type {
+    margin-bottom: 0rem;
+  }
+}
+
+.form-input {
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.form-label {
+  padding: .375rem 0rem;
+  display: block;
+  font-weight: bold;
+}
+
+.field-error-message {
+  font-size: .75rem;
+  color: $error-color;
+  padding: .375rem .75rem;
+}

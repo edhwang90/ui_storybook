@@ -1,7 +1,9 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { Button } from '../components/Button';
 import { withInfo } from '@storybook/addon-info';
+
+import { Button } from '../components/Button';
+import { Link } from '../components/Link';
 
 export default {
   title: 'Buttons',
@@ -39,44 +41,9 @@ export const Buttons = () => (
   </div>
 )
 
-// export const PrimaryButton = () => (
-//   <Button onClick={action('click')}>
-//     Click me!
-//   </Button>
-// )
-
-// export const AlternateButton = () => (
-//   <Button className="is-alternate"
-//           onClick={action('click')}>
-//             Click me!
-//   </Button>
-// )
-
-// export const DangerButton = () => (
-//   <Button className="is-danger"
-//           onClick={action('click')}>
-//             Click me!
-//   </Button>
-// )
-
-// export const WarningButton = () => (
-//   <Button className="is-warning"
-//           onClick={action('click')}>
-//             Click me!
-//   </Button>
-// )
-
-// export const SuccessButton = () => (
-//   <Button className="is-success"
-//           onClick={action('click')}>
-//             Click me!
-//   </Button>
-// )
-
-// export const DisabledButton = () => (
-//   <Button className="is-primary"
-//           disabled
-//           onClick={action('click')}>
-//             Click me!
-//   </Button>
-// )
+export const Links = () => (
+  <div>
+    <Link route="http://google.com" title="to link">Default link</Link>
+    <Link route="http://google.com" isNewTab={true} title="to new tab">Link to new tab</Link>
+  </div>
+)

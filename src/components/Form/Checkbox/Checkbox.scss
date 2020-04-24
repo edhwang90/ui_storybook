@@ -1,4 +1,4 @@
-@import '../../import.scss';
+@import '../../../import.scss';
 
 .checkbox {
   position: absolute; // take it out of document flow
@@ -20,6 +20,7 @@
   // Box.
   & + label:before {
     content: '';
+    box-sizing: content-box;
     margin-right: 15px;
     display: inline-block;
     vertical-align: text-top;
@@ -45,6 +46,7 @@
   // Checkmark. Could be replaced with an image
   &:checked + label:after, &:hover + label:after {
     content: '';
+    box-sizing: content-box;
     position: absolute;
     left: 7px;
     top: 11px;

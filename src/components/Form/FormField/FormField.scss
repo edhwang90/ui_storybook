@@ -23,6 +23,7 @@
 }
 
 .field-error-message {
+  display: inline-block;
   font-size: .75rem;
   color: $error-color;
   padding: .375rem .75rem;

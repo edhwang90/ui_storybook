@@ -2,7 +2,7 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withInfo } from '@storybook/addon-info';
 
-import { Checkbox, FormField } from '../components/Form';
+import { Checkbox, FormField, Select } from '../components/Form';
 
 import './stories.scss';
 
@@ -13,6 +13,12 @@ export default {
     info: { source: true, inline: true, propTables: false }
   }
 };
+
+  const options2 = [
+    { name: 'hello', id: 1 },
+    { name: 'goodbye', id: 2 },
+    { name: 'aufwiedersehen', id: 3}
+  ]
 
 export const Checkboxes = () => (
   <div>
@@ -65,6 +71,14 @@ export const Inputs = () => (
       <FormField validateOnChange onChange={action('change')}>
         <textarea minLength="15" className="form-input" placeholder="Bio..."></textarea>
       </FormField>
+    </div>
+
+    <div className="form-group">
+      <label className="form-label">Select</label>
+      <Select options={options2}
+              attr="name"
+              label="Select..."
+              onClick={action('select')}></Select>
     </div>
   </div>
 )

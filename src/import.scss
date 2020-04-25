@@ -12,19 +12,11 @@ $error-color: #dc3545;
 $success-color: #28a745;
 $warning-color: #ffc107;
 
-*, *:before, *:after {
-  box-sizing: border-box;
-}
+$item-padding: .75rem 1rem;
+$item-padding-lr: 1rem;
+$item-padding-tb: .75rem;
 
-h1, h2, h3, h4, div, label, p, ul, ol {
-  margin: 0;
-  padding: 0;
-}
+$container-padding: 1.5rem;
+$container-padding-lr: 1.5rem;
+$container-padding-tb: 1.5rem;
 
-ul, ol {
-  list-style: none;
-}
-
-.circular {
-  border-radius: 50%;
-}

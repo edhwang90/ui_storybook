@@ -15,11 +15,12 @@
 }
 
 .select-btn {
-  padding: .75rem 1rem;
+  padding: $item-padding;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
 
   &:focus, &:hover {
     border-color: darken(#e6e6e6, 5%);
@@ -32,17 +33,44 @@
   }
 }
 
+.select-actions {
+  button {
+    padding: 0;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+
+    &:first-of-type {
+      padding-right: .5rem;
+      border-right: 1px solid #e6e6e6;
+    }
+
+    &:last-of-type {
+      padding-left: .5rem;
+      padding-right: 0px;
+      border-right: none;
+    }
+  }
+}
+
 .select-list {
   position: absolute;
-  top: 50px;
+  margin-top: .5rem;
 
   li {
-    padding: .75rem 1rem;
+    padding: $item-padding;
     border-bottom: 1px solid #e6e6e6;
     cursor: pointer;
-    
+
     &:hover {
       background-color: #e6e6e6;
     }
+  }
+}
+
+.list-open {
+  .chevron {
+    transform: rotate(180deg);
   }
 }

@@ -32,7 +32,7 @@ export const FormField = (props) => {
             })
           ))
         }
-        <span className="field-error-message">{error}</span>
+        <span className="error-message">{error}</span>
     </React.Fragment>
   )
 } 

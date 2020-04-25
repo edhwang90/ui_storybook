@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { Select } from './components/Form'
+import { Select, FormField } from './components/Form'
+
+import './App.scss';
 
 function App() {
   const [testVal, setTestVal] = useState('');
+  const [testVal2, setTestVal2] = useState('');
+  const [testVal3, setTestVal3] = useState('');
   // const handleClick = (e) => {
   //   console.log(e.target.value);
   // }
@@ -30,17 +32,36 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="sandbox">
       <br />
       <br />
-
-      <div className="form-group">
-        <label className="form-label">Email</label>
-        <Select options={options2}
-                attr="name"
-                label="Select..."
-                onClick={(e) => submit(e)}></Select>
+    <div className="grid">
+      <div className="col">
+        <div className="form-group">
+          <label className="form-label">Username</label>
+          <FormField validateOnChange onChange={e => setTestVal2(e)}>
+            <input minlength="3" className="form-input" type="text" placeholder="Username"></input>
+          </FormField>
+        </div>
+        <div className="form-group">
+          <label className="form-label">Email</label>
+          <Select options={options2}
+                  
+                  attr="name"
+                  label="Select..."
+                  onClick={(e) => submit(e)}></Select>
+        </div>
       </div>
+      <div className="col">
+        <div className="form-group">
+          <label className="form-label">Username</label>
+          <FormField validateOnChange onChange={e => setTestVal3(e)}>
+            <input required className="form-input" type="text" placeholder="Username"></input>
+          </FormField>
+        </div>
+      </div>
+    </div>
+
 
     </div>
   );

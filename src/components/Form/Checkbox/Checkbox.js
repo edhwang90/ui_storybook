@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './Checkbox.scss';
 
 export const Checkbox = (props) => {
-  const { data, id, label, toggleProp, handleToggle, disabled } = props;
+  const { data, id, label, toggleProp, handleToggle, disabled, className } = props;
   const [checked, setCheck] = useState(toggleProp)
 
   const checkToggle = () => {

@@ -38,7 +38,7 @@ export const Checkboxes = () => (
 )
 
 export const Inputs = () => (
-  <div>
+  <div className="story-inputs">
     <div className="form-group">
       <label className="form-label">Username</label>
       <FormField validateOnChange onChange={action('change')}>
@@ -63,7 +63,7 @@ export const Inputs = () => (
     <div className="form-group">
       <label className="form-label">Bio</label>
       <FormField validateOnChange onChange={action('change')}>
-        <textarea minlength="15" className="form-input" placeholder="Bio..."></textarea>
+        <textarea minLength="15" className="form-input" placeholder="Bio..."></textarea>
       </FormField>
     </div>
   </div>

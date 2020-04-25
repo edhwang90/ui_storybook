@@ -1,0 +1,48 @@
+@import '../../../import.scss';
+
+.select-container {
+  position: relative;
+}
+
+.select-btn, .select-list {
+  font-size: 1rem;
+  outline: none;
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  background-color: #fff;
+  color: $font-color;
+  width: 100%;
+}
+
+.select-btn {
+  padding: .75rem 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &:focus, &:hover {
+    border-color: darken(#e6e6e6, 5%);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: #f7f7f7;
+    color: #4d4d4d;
+  }
+}
+
+.select-list {
+  position: absolute;
+  top: 50px;
+
+  li {
+    padding: .75rem 1rem;
+    border-bottom: 1px solid #e6e6e6;
+    cursor: pointer;
+    
+    &:hover {
+      background-color: #e6e6e6;
+    }
+  }
+}

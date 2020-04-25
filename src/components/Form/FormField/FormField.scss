@@ -9,15 +9,19 @@
 }
 
 .form-input {
-  padding: .375rem .75rem;
+  padding: .75rem 1rem;
   font-size: 1rem;
-  border: 1px solid #dbdbdb;
+  border: 1px solid #e6e6e6;
   border-radius: 4px;
   width: 100%;
+
+  &:hover {
+    border-color: darken(#e6e6e6, 10%);
+  }
 }
 
 .form-label {
-  padding: .375rem 0rem;
+  padding: .75rem 0rem;
   display: block;
   font-weight: bold;
 }
@@ -26,5 +30,5 @@
   display: inline-block;
   font-size: .75rem;
   color: $error-color;
-  padding: .375rem .75rem;
+  padding: .75rem 1rem;
 }

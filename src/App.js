@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Input, FormField } from './components/Form'
+import { Select } from './components/Form'
 
 function App() {
   const [testVal, setTestVal] = useState('');
@@ -12,31 +12,34 @@ function App() {
 //   useEffect(() => {
 // console.log('ue', testVal);
 //   }, [testVal])
+  const options = [
+    '1',
+    '2',
+    '3',
+    '523512351235123512351235123512351235'
+  ]
+
+  const options2 = [
+    { name: 'hello', id: 1 },
+    { name: 'goodbye', id: 2 },
+    { name: 'aufwiedersehen', id: 3}
+  ]
 
   const submit = (e) => {
-    console.log(testVal);
+    console.log(e);
   }
 
   return (
     <div className="App">
-      {/* <FormField label="Email" type="email" name="forEmail">
-
-      </FormField> */}
       <br />
       <br />
 
       <div className="form-group">
         <label className="form-label">Email</label>
-        <FormField validateOnChange onChange={(e) => setTestVal(e.target.value)}>
-          <input className="form-input" type="email" placeholder="Email"></input>
-        </FormField>
-      </div>
-
-      <div className="form-group">
-        <label className="form-label">Bio</label>
-        <FormField validateOnChange onChange={(e) => setTestVal(e.target.value)}>
-          <textarea minlength="15" className="form-input" placeholder="Bio..."></textarea>
-        </FormField>
+        <Select options={options2}
+                attr="name"
+                label="Select..."
+                onClick={(e) => submit(e)}></Select>
       </div>
 
     </div>

@@ -27,19 +27,20 @@
     min-width: 25px;
     height: 25px;
     background: #fff;
-    border: 2px solid $font-color;
+    border: 1px solid #e6e6e6;
     border-radius: 4px;
     align-self: normal;
   }
 
   // Box hover
   &:hover + label:before {
-    background: $font-color;
+    background: #fff;
+    border-color: darken(#e6e6e6, 10%);
   }
 
   // Box checked
   &:checked + label:before {
-    background: $font-color;
+    background: #fff;
   }
 
   // Checkmark
@@ -48,34 +49,35 @@
     position: absolute;
     left: 7px;
     top: 11px;
-    background: white;
+    background-color: #4d4d4d;
     width: 2px;
     height: 2px;
     box-shadow: 
-      2px 0 0 white,
-      4px 0 0 white,
-      4px -2px 0 white,
-      4px -4px 0 white,
-      4px -6px 0 white,
-      4px -8px 0 white;
+      2px 0 0 #4d4d4d,
+      4px 0 0 #4d4d4d,
+      4px -2px 0 #4d4d4d,
+      4px -4px 0 #4d4d4d,
+      4px -6px 0 #4d4d4d,
+      4px -8px 0 #4d4d4d;
     transform: rotate(45deg);
     align-self: unset;
   }
 
   // Disabled state label.
   &:disabled + label {
-    color: #b8b8b8;
+    color: #e6e6e6;
     cursor: not-allowed;
   }
 
   &:disabled + label:after {
     box-shadow: none;
+    background-color: #fff;
   }
 
   // Disabled box.
   &:disabled + label:before {
     box-shadow: none;
     background-color: #fff;
-    border-color: #b8b8b8;
+    border-color: #e6e6e6;
   }
 }

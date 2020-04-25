@@ -16,7 +16,12 @@ export default {
 export const Buttons = () => (
   <div>
       <Button onClick={action('click')}>
-        Primary
+        Button
+      </Button>
+
+      <Button className="is-primary"
+          onClick={action('click')}>
+            Primary
       </Button>
 
       <Button className="is-alternate"

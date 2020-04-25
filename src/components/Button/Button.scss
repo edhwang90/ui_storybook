@@ -1,17 +1,17 @@
 @import '../../import.scss';
 
 .btn {
-  padding: .375rem .75rem;
+  padding: .75rem 1rem;
   font-size: 1rem;
   outline: none;
-  border: 0;
+  border: 1px solid transparent;
   border-radius: 4px;
-  background-color: $primary-color;
-  color: $primary-color-font;
+  background-color: #e6e6e6;
+  color: $font-color;
   cursor: pointer;
 
   &:focus, &:hover {
-    background-color: darken($primary-color, 5%);
+    background-color: darken(#e6e6e6, 10%);
   }
 
   &:disabled {
@@ -21,12 +21,22 @@
   }
 }
 
-.is-alternate {
-  background-color: $alternate-color;
-  color: $alternate-color-font;
+.is-primary {
+  background-color: $primary-color;
+  color: $primary-color-font;
 
   &:focus, &:hover {
-    background-color: darken($alternate-color, 5%);
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+.is-alternate {
+  background-color: #ffffff;
+  color: $font-color;
+  border-color: #e6e6e6;
+
+  &:focus, &:hover {
+    background-color: darken(#ffffff, 10%);
   }
 }
 
@@ -35,7 +45,7 @@
   color: #ffffff;
 
   &:focus, &:hover {
-    background-color: darken($error-color, 5%);
+    background-color: darken($error-color, 10%);
   }
 }
 
@@ -44,7 +54,7 @@
   color: #4d4d4d;
 
   &:focus, &:hover {
-    background-color: darken($warning-color, 5%);
+    background-color: darken($warning-color, 10%);
   }
 }
 
@@ -53,6 +63,6 @@
   color: #ffffff;
 
   &:focus, &:hover {
-    background-color: darken($success-color, 5%);
+    background-color: darken($success-color, 10%);
   }
 }

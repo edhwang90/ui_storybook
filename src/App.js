@@ -18,7 +18,19 @@ function App() {
     '1',
     '2',
     '3',
-    '523512351235123512351235123512351235'
+    '523512351235123512351235123512351235',
+    '235',
+    '512',
+    '3462',
+    '51',
+    '8457',
+    '93859',
+    '12',
+    '235',
+    '73',
+    '08',
+    '09',
+    '984'
   ]
 
   const options2 = [
@@ -45,12 +57,13 @@ function App() {
         </div>
         <div className="form-group">
           <label className="form-label">Email</label>
-          <Select options={options2}
+          <Select options={options}
+                  //attr="name"
                   //required
-                  //isMultiSelect
+                  isMultiSelect
                   //value={ [{name: 'hello', id: 5}, {name: 'goodbye', id: 9}]}
-                  value={{name: 'hello', id: 5}}
-                  attr="name"
+                  //value={{name: 'hello', id: 5}}
+
                   label="Select..."
                   onClick={(e) => submit(e)}></Select>
         </div>

@@ -46,7 +46,10 @@ function App() {
         <div className="form-group">
           <label className="form-label">Email</label>
           <Select options={options2}
-                  
+                  //required
+                  //isMultiSelect
+                  //value={ [{name: 'hello', id: 5}, {name: 'goodbye', id: 9}]}
+                  value={{name: 'hello', id: 5}}
                   attr="name"
                   label="Select..."
                   onClick={(e) => submit(e)}></Select>

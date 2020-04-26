@@ -9,7 +9,7 @@
     cursor: pointer;
     padding: 0;
     display: flex;
-    //align-items: center; // for certain font families
+    align-items: center;
   }
 
   & + label span {

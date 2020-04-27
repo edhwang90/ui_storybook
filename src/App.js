@@ -47,36 +47,54 @@ function App() {
     <div className="sandbox">
       <br />
       <br />
-    <div className="grid">
-      <div className="col">
-        <div className="form-group">
-          <label className="form-label">Username</label>
-          <FormField validateOnChange onChange={e => setTestVal2(e)}>
-            <input minlength="3" className="form-input" type="text" placeholder="Username"></input>
-          </FormField>
-        </div>
-        <div className="form-group">
-          <label className="form-label">Email</label>
-          <Select options={options}
-                  //attr="name"
-                  //required
-                  isMultiSelect
-                  //value={ [{name: 'hello', id: 5}, {name: 'goodbye', id: 9}]}
-                  //value={{name: 'hello', id: 5}}
 
-                  label="Select..."
-                  onClick={(e) => submit(e)}></Select>
+      <div className="row">
+        <div className="col">
+          <div className="form-group">
+            <label className="form-label">Username</label>
+            <FormField validateOnChange onChange={e => setTestVal2(e)}>
+              <input minlength="3" className="form-input" type="text" placeholder="Username"></input>
+            </FormField>
+          </div>
+          <div className="form-group">
+            <label className="form-label">Email</label>
+            <Select options={options}
+                    //attr="name"
+                    //required
+                    //isMultiSelect
+                    //value={ [{name: 'hello', id: 5}, {name: 'goodbye', id: 9}]}
+                    //value={{name: 'hello', id: 5}}
+
+                    label="Select..."
+                    onClick={(e) => submit(e)}></Select>
+          </div>
+        </div>
+        <div className="col">
+          <div className="form-group">
+            <label className="form-label">Username</label>
+            <FormField validateOnChange onChange={e => setTestVal3(e)}>
+              <input required className="form-input" type="text" placeholder="Username"></input>
+            </FormField>
+          </div>
         </div>
       </div>
-      <div className="col">
-        <div className="form-group">
-          <label className="form-label">Username</label>
-          <FormField validateOnChange onChange={e => setTestVal3(e)}>
-            <input required className="form-input" type="text" placeholder="Username"></input>
-          </FormField>
+      <div className="row">
+        <div className="col">
+          <div className="form-group">
+              <label className="form-label">Email</label>
+              <Select options={options}
+                      //attr="name"
+                      //required
+                      isMultiSelect
+                      //value={ [{name: 'hello', id: 5}, {name: 'goodbye', id: 9}]}
+                      //value={{name: 'hello', id: 5}}
+
+                      label="Select..."
+                      onClick={(e) => submit(e)}></Select>
+            </div>     
         </div>
       </div>
-    </div>
+  
 
 
     </div>

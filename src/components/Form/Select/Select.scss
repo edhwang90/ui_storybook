@@ -1,5 +1,8 @@
 @import '../../../import.scss';
 
+$select-padding: $item-padding-tb - .35 + 0rem $item-padding-lr - .2 + 0rem;
+$select-item-padding: $item-padding-tb / 2 + 0rem $item-padding-lr / 2 + 0rem;
+
 .select-container, .multi-select-container {
   position: relative;
 }
@@ -66,6 +69,7 @@
   word-break: break-all;
   max-height: 300px;
   overflow: auto;
+  z-index: 2;
 
   li {
     padding: $item-padding;
@@ -78,28 +82,42 @@
   }
 }
 
+.select-chevron, .select-clear {
+  fill: $font-color;
+}
+
 .list-open {
-  .chevron {
+  .select-chevron {
     transform: rotate(180deg);
   }
 }
 
 .multi-select-container {
+  .select-btn {
+    padding: $select-padding;
+  }
   .selected {
+    margin: .1rem;
     display: inline-block;
-    padding: calc(#{$item-padding-tb}/2) calc(#{$item-padding-lr}/2);
-    background-color: $primary-color;
-    color: $primary-color-font;
-    margin-right: .25rem;
-    margin-bottom: .25rem;
+  }
+
+  .selected span {
+    display: inline-block;
+    padding: $select-item-padding;
+    background-color: #e6e6e6;
   }
 
   .remove-selected {
-    vertical-align: middle;
-    margin-left: calc(#{$item-padding-lr}/2);
-    background-color: transparent;
+    padding: $select-item-padding;
+    background-color: #e6e6e6;
+    fill: $font-color;
     border: 0;
     cursor: pointer;
+
+    &:hover {
+      fill: #fff;
+      background-color: #dc3545;
+    }
   }
 }
 

@@ -21,13 +21,14 @@ ul, ol {
   border-radius: 50%;
 }
 
-// Grid
-.grid {
+.row {
   display: flex;
+  flex: 0;
 }
 
 .col {
   flex: 1;
+  flex-direction: column;
   margin-right: 1.25rem;
 
   &:last-of-type {
@@ -50,9 +51,9 @@ ul, ol {
 .form-group {
   margin-bottom: $container-padding-tb;
 
-  &:last-of-type {
-    margin-bottom: 0rem;
-  }
+  // &:last-of-type {
+  //   margin-bottom: 0rem;
+  // }
 }
 
 .error-message {

@@ -13,8 +13,8 @@
 }
 
 .form-label {
-  padding-left: $item-padding-lr;
-  padding-bottom: $item-padding-tb;
+  padding-left: $item-padding-lr + rem;
+  padding-bottom: $item-padding-tb + rem;
   display: block;
   font-weight: bold;
 }

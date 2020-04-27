@@ -1,14 +1,20 @@
 @import '../../../import.scss';
 
+$select-padding-t: $item-padding-tb - .399 + 0rem;
 $select-padding: $item-padding-tb - .35 + 0rem $item-padding-lr - .2 + 0rem;
-$select-item-padding: $item-padding-tb / 2 + 0rem $item-padding-lr / 2 + 0rem;
+$select-item-padding: ($item-padding-tb / 2) - .12 + 0rem $item-padding-lr / 2 + 0rem;
 
 .select-container, .multi-select-container {
   position: relative;
+  
+  svg {
+    fill: $font-color;
+    width: 1rem;
+    height: auto;
+  }
 }
 
 .select-btn, .select-list {
-  font-size: 1rem;
   outline: none;
   border: 1px solid #e6e6e6;
   border-radius: 4px;
@@ -34,6 +40,11 @@ $select-item-padding: $item-padding-tb / 2 + 0rem $item-padding-lr / 2 + 0rem;
     background-color: #f7f7f7;
     color: #4d4d4d;
   }
+}
+
+.select-label {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .select-actions {
@@ -82,12 +93,8 @@ $select-item-padding: $item-padding-tb / 2 + 0rem $item-padding-lr / 2 + 0rem;
   }
 }
 
-.select-chevron, .select-clear {
-  fill: $font-color;
-}
-
 .list-open {
-  .select-chevron {
+  .select-chevron > svg {
     transform: rotate(180deg);
   }
 }
@@ -96,9 +103,15 @@ $select-item-padding: $item-padding-tb / 2 + 0rem $item-padding-lr / 2 + 0rem;
   .select-btn {
     padding: $select-padding;
   }
+
+  .not-selected {
+    padding-top: $select-padding-t;
+    padding-bottom: $select-padding-t;
+    display: inline-block;
+  }
   .selected {
     margin: .1rem;
-    display: inline-block;
+    display: flex;
   }
 
   .selected span {
@@ -113,8 +126,9 @@ $select-item-padding: $item-padding-tb / 2 + 0rem $item-padding-lr / 2 + 0rem;
     fill: $font-color;
     border: 0;
     cursor: pointer;
+    display:
 
-    &:hover {
+    &:hover, &:hover > svg {
       fill: #fff;
       background-color: #dc3545;
     }

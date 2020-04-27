@@ -64,24 +64,24 @@ function App() {
                     //isMultiSelect
                     //value={ [{name: 'hello', id: 5}, {name: 'goodbye', id: 9}]}
                     //value={{name: 'hello', id: 5}}
-
+                    //value='1'
                     label="Select..."
                     onClick={(e) => submit(e)}></Select>
           </div>
         </div>
         <div className="col">
           <div className="form-group">
-                <label className="form-label">another</label>
-                <Select options={options}
-                        //attr="name"
-                        required
-                        isMultiSelect
-                        //value={ [{name: 'hello', id: 5}, {name: 'goodbye', id: 9}]}
-                        //value={{name: 'hello', id: 5}}
-
-                        label="Select..."
-                        onClick={(e) => submit(e)}></Select>
-              </div> 
+            <label className="form-label">another</label>
+            <Select options={options2}
+                    attr="name"
+                    required
+                    isMultiSelect
+                    value={ [{name: 'hello', id: 5}, {name: 'goodbye', id: 9}]}
+                    //value={{name: 'hello', id: 5}}
+                    //value={['1', '2']}
+                    label="Select..."
+                    onClick={(e) => submit(e)}></Select>
+          </div> 
 
               <div className="form-group">
             <label className="form-label">Username</label>

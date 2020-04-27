@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { filterObjectArray } from '../../../lib/utils';
 
 import './Select.scss';
@@ -152,4 +153,19 @@ export const Select = (props) => {
       <span className="error-message">{error}</span>
     </div>
   )
+}
+
+Select.propTypes = {
+  options: PropTypes.array.isRequired,
+  label: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  value: PropTypes.any,
+  attr: (props, propName, componentName) => {
+          if (props['options'][0] instanceof Object && (props[propName] === undefined || typeof(props[propName]) !== 'string')) {
+            return new Error(`Please provide an ${propName} for display purposes.`)
+          }
+        },
+  isMultiSelect: PropTypes.bool,
+  required: PropTypes.bool,
+  errorMessage: PropTypes.string
 }

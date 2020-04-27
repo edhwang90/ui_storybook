@@ -45,57 +45,55 @@ export const Checkboxes = () => (
 
 export const Inputs = () => (
   <div className="story-inputs">
-    <div className="form-group">
-      <label className="form-label">Username</label>
-      <FormField validateOnChange onChange={action('change')}>
-        <input className="form-input" type="text" placeholder="Username"></input>
-      </FormField>
-    </div>
+    <div className="row">
+      <div className="col">
+        <div className="form-group">
+          <label className="form-label">Username</label>
+          <FormField validateOnChange onChange={action('change')}>
+            <input className="form-input" type="text" placeholder="Username"></input>
+          </FormField>
+        </div>
 
-    <div className="form-group">
-      <label className="form-label">Password</label>
-      <FormField validateOnChange onChange={action('change')}>
-        <input className="form-input" type="password" placeholder="Password"></input>
-      </FormField>
-    </div>
+        <div className="form-group">
+          <label className="form-label">Password</label>
+          <FormField validateOnChange onChange={action('change')}>
+            <input className="form-input" type="password" placeholder="Password"></input>
+          </FormField>
+        </div>
 
-    <div className="form-group">
-      <label className="form-label">Email</label>
-      <FormField validateOnChange onChange={action('change')}>
-        <input className="form-input" type="email" placeholder="Email"></input>
-      </FormField>
-    </div>
+        <div className="form-group">
+          <label className="form-label">Email</label>
+          <FormField validateOnChange onChange={action('change')}>
+            <input className="form-input" type="email" placeholder="Email"></input>
+          </FormField>
+        </div>
 
-    <div className="form-group">
-      <label className="form-label">Bio</label>
-      <FormField validateOnChange onChange={action('change')}>
-        <textarea minLength="15" className="form-input" placeholder="Bio..."></textarea>
-      </FormField>
-    </div>
+        <div className="form-group">
+          <label className="form-label">Bio</label>
+          <FormField validateOnChange onChange={action('change')}>
+            <textarea minLength="15" className="form-input" placeholder="Bio..."></textarea>
+          </FormField>
+        </div>
+      </div>
+      <div className="col">
+        <div className="form-group">
+          <label className="form-label">Select</label>
+          <Select options={options2}
+                  attr="name"
+                  label="Select..."
+                  onClick={action('select')}></Select>
+        </div>
 
-    <div className="form-group">
-      <label className="form-label">Select</label>
-      <Select options={options2}
-              attr="name"
-              label="Select..."
-              onClick={action('select')}></Select>
+        <div className="form-group">
+          <label className="form-label">another</label>
+          <Select options={options2}
+                  attr="name"
+                  isMultiSelect
+                  value={ [{name: 'hello', id: 5}, {name: 'goodbye', id: 9}]}
+                  label="Select..."
+                  onClick={action('change')}></Select>
+        </div> 
+      </div>
     </div>
   </div>
 )
-
-// export const Unchecked = () => (
-//   <Checkbox toggleProp={false}
-//             label="Checkbox"
-//             id="1"
-//             handleToggle={action('toggle')}>
-//   </Checkbox>
-// )
-
-// export const Disabled = () => (
-//   <Checkbox toggleProp={false}
-//             label="Checkbox"
-//             id="1"
-//             disabled
-//             handleToggle={action('toggle')}>
-//   </Checkbox>
-// )

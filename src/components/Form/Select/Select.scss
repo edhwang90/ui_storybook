@@ -1,16 +1,12 @@
 @import '../../../import.scss';
 
-$select-padding-t: $item-padding-tb - .399 + 0rem;
-$select-padding: $item-padding-tb - .35 + 0rem $item-padding-lr - .2 + 0rem;
-$select-item-padding: ($item-padding-tb / 2) - .12 + 0rem $item-padding-lr / 2 + 0rem;
-
 .select-container, .multi-select-container {
   position: relative;
   
   svg {
     fill: $font-color;
     width: 1rem;
-    height: auto;
+    height: 1rem;
   }
 }
 
@@ -21,6 +17,8 @@ $select-item-padding: ($item-padding-tb / 2) - .12 + 0rem $item-padding-lr / 2 +
   background-color: #fff;
   color: $font-color;
   width: 100%;
+  line-height: 1rem;
+  -webkit-line-height: unset;
 }
 
 .select-btn {
@@ -50,7 +48,8 @@ $select-item-padding: ($item-padding-tb / 2) - .12 + 0rem $item-padding-lr / 2 +
 .select-actions {
   display: flex;
   flex-shrink: 0;
-  align-self: stretch;
+  height: 1rem;
+  align-items: center;
 
   button {
     padding: 0;
@@ -99,34 +98,38 @@ $select-item-padding: ($item-padding-tb / 2) - .12 + 0rem $item-padding-lr / 2 +
   }
 }
 
-.multi-select-container {
+.multi-select-container.show-selected {
   .select-btn {
-    padding: $select-padding;
+    padding: ($item-padding-tb/2) - .1 + 0rem $item-padding-lr/2 + 0rem;
   }
+}
 
+.multi-select-container {
   .not-selected {
-    padding-top: $select-padding-t;
-    padding-bottom: $select-padding-t;
     display: inline-block;
   }
+
   .selected {
     margin: .1rem;
     display: flex;
+    font-size: .8rem;
   }
 
   .selected span {
-    display: inline-block;
-    padding: $select-item-padding;
+    display: flex;
+    align-items: center;
+    padding: $item-padding-tb/2 + 0rem $item-padding-lr/2 + 0rem;
     background-color: #e6e6e6;
   }
 
   .remove-selected {
-    padding: $select-item-padding;
+    padding: $item-padding-tb/2 + 0rem $item-padding-lr/2 + 0rem;
     background-color: #e6e6e6;
     fill: $font-color;
     border: 0;
     cursor: pointer;
-    display:
+    display: flex;
+    align-items: center;
 
     &:hover, &:hover > svg {
       fill: #fff;

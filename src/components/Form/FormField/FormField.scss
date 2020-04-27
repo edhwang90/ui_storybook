@@ -2,15 +2,23 @@
 
 .form-input {
   padding: $item-padding;
+  font-family: 'Lato', 'Open sans', sans-serif;
   font-size: 1rem;
   border: 1px solid #e6e6e6;
   border-radius: 4px;
   width: 100%;
+  line-height: 1rem;
 
   &:hover {
     border-color: darken(#e6e6e6, 10%);
   }
 }
+
+.form-input::-webkit-input-placeholder {
+  line-height: 1rem;
+}
+
+::-webkit-input-placeholder { line-height: normal; }
 
 .form-label {
   padding-left: $item-padding-lr + rem;

@@ -112,7 +112,7 @@ export const Select = (props) => {
   }
 
   return (
-    <div className={ isMultiSelect ? 'multi-select-container': 'select-container'}>
+    <div className={ isMultiSelect ? `multi-select-container ${selected.length > 0 ? 'show-selected' : ''}`: 'select-container'}>
       <div className="select-btn-container">
         <div className={`select-btn${ isOpen ? ' list-open' : '' }`}
              onClick={toggleSelect}

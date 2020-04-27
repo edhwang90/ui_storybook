@@ -4,14 +4,18 @@
   padding: $item-padding;
   font-size: 1rem;
   outline: none;
-  border: 1px solid transparent;
+  border: 1px solid #e6e6e6;
   border-radius: 4px;
   background-color: #e6e6e6;
   color: $font-color;
   cursor: pointer;
 
-  &:focus, &:hover {
+  &:hover {
     background-color: darken(#e6e6e6, 10%);
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(#e6e6e6,.5)
   }
 
   &:disabled {
@@ -21,48 +25,72 @@
   }
 }
 
-.is-primary {
+.btn.is-primary {
   background-color: $primary-color;
+  border-color: $primary-color;
   color: $primary-color-font;
 
-  &:focus, &:hover {
+  &:hover {
     background-color: darken($primary-color, 10%);
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba($primary-color,.5)
   }
 }
 
-.is-alternate {
+.btn.is-alternate {
   background-color: #ffffff;
   color: $font-color;
   border-color: #e6e6e6;
 
-  &:focus, &:hover {
+  &:hover {
     background-color: darken(#ffffff, 10%);
   }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(#e6e6e6,.5)
+  }
 }
 
-.is-danger {
+.btn.is-danger {
   background-color: $error-color;
+  border-color: $error-color;
   color: #ffffff;
 
-  &:focus, &:hover {
+  &:hover {
     background-color: darken($error-color, 10%);
   }
-}
 
-.is-warning {
-  background-color: $warning-color;
-  color: #4d4d4d;
-
-  &:focus, &:hover {
-    background-color: darken($warning-color, 10%);
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba($error-color,.5)
   }
 }
 
-.is-success {
+.btn.is-warning {
+  background-color: $warning-color;
+  border-color: $warning-color;
+  color: #4d4d4d;
+
+  &:hover {
+    background-color: darken($warning-color, 10%);
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba($warning-color,.5)
+  }
+}
+
+.btn.is-success {
   background-color: $success-color;
+  border-color: $success-color;
   color: #ffffff;
 
-  &:focus, &:hover {
+  &:hover {
     background-color: darken($success-color, 10%);
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba($success-color,.5)
   }
 }

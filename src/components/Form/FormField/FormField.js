@@ -9,6 +9,7 @@ export const FormField = (props) => {
 
   const handleChange = (e) => {
     e.preventDefault();
+
     if (validateOnChange) setError(e.target.validationMessage);
     else {
       e.target.oninvalid = (e) => {
@@ -23,16 +24,25 @@ export const FormField = (props) => {
 
   return (
     <React.Fragment>
-        {
-          React.Children.map(props.children, child => (
-            React.cloneElement(child, {
-              onChange: handleChange,
-              onBlur: handleChange,
-              validateOnChange: validateOnChange
+      <div className="input-container">
+          {
+            React.Children.map(props.children, child => {
+              if (child.type === 'input') {
+                return (
+                  React.cloneElement(child, {
+                    onChange: handleChange,
+                    onBlur: handleChange,
+                    validateOnChange: validateOnChange
+                  })
+                )
+              }
+              else {
+                return child
+              }
             })
-          ))
-        }
-        <span className="error-message">{error}</span>
+          }
+      </div>
+      <span className="error-message">{error}</span>
     </React.Fragment>
   )
 } 

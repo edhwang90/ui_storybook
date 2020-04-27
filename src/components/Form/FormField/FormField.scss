@@ -1,12 +1,18 @@
 @import '../../../import.scss';
 
+.input-container {
+  width: 100%;
+  display: flex;
+}
+
 .form-input {
   padding: $item-padding;
   font-family: 'Lato', 'Open sans', sans-serif;
   font-size: 1rem;
   border: 1px solid #e6e6e6;
   border-radius: 4px;
-  width: 100%;
+  display: flex;
+  flex: 1;
 
   &:hover {
     border-color: darken(#e6e6e6, 10%);
@@ -18,4 +24,39 @@
   padding-bottom: $item-padding-tb + rem;
   display: block;
   font-weight: bold;
+}
+
+.form-input-prepend,
+.form-input-append {
+  display: flex;
+  align-items: center;
+  padding: $item-padding;
+  border: 1px solid #e6e6e6;
+  background-color: #f7f7f7;
+}
+
+.form-input-prepend {
+  border-right: none;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+
+  & + .form-input {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+.form-input-append {
+  border-left: none;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+.input-container .form-input:not(:last-child) {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
 }

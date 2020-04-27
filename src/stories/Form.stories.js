@@ -3,6 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { withInfo } from '@storybook/addon-info';
 
 import { Checkbox, FormField, Select } from '../components/Form';
+import { Button } from '../components/Button';
 
 import './stories.scss';
 
@@ -93,6 +94,46 @@ export const Inputs = () => (
                   label="Select..."
                   onClick={action('change')}></Select>
         </div> 
+      </div>
+    </div>
+  </div>
+)
+
+export const InputGroups = () => (
+  <div className="row">
+    <div className="col">
+      <div className="form-group">
+        <label className="form-label">Twitter</label>
+        <FormField validateOnChange onChange={action('change')}>
+          <span className="form-input-prepend">@</span>
+          <input className="form-input" type="text" placeholder="Twitter"></input>
+        </FormField>
+      </div>
+      <div className="form-group">
+        <label className="form-label">Description</label>
+        <FormField validateOnChange onChange={action('change')}>
+          <span className="form-input-prepend">👍</span>
+          <textarea className="form-input" placeholder="Type here..."></textarea>
+        </FormField>
+      </div>
+    </div>
+    <div className="col">
+      <div className="form-group">
+        <label className="form-label">Twitter</label>
+        <FormField validateOnChange onChange={action('change')}>
+          <input className="form-input" type="text" placeholder="Twitter"></input>
+          <span className="form-input-append">@</span>
+        </FormField>
+      </div>
+
+      <div className="form-group">
+        <label className="form-label">Username</label>
+        <FormField validateOnChange onChange={e => setTestVal2(e)}>
+          <input minLength="3" className="form-input" type="text" placeholder="Username"></input>
+          <Button onClick={action('click')} className="form-input-append is-primary">
+            Click!
+          </Button>
+        </FormField>
       </div>
     </div>
   </div>

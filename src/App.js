@@ -53,7 +53,7 @@ function App() {
           <div className="form-group">
             <label className="form-label">Username</label>
             <FormField validateOnChange onChange={e => setTestVal2(e)}>
-              <input minlength="3" className="form-input" type="text" placeholder="Username"></input>
+              <input minLength="3" className="form-input" type="text" placeholder="Username"></input>
             </FormField>
           </div>
           <div className="form-group">
@@ -71,10 +71,10 @@ function App() {
         </div>
         <div className="col">
           <div className="form-group">
-                <label className="form-label">Email</label>
+                <label className="form-label">another</label>
                 <Select options={options}
                         //attr="name"
-                        //required
+                        required
                         isMultiSelect
                         //value={ [{name: 'hello', id: 5}, {name: 'goodbye', id: 9}]}
                         //value={{name: 'hello', id: 5}}
@@ -86,7 +86,7 @@ function App() {
               <div className="form-group">
             <label className="form-label">Username</label>
             <FormField validateOnChange onChange={e => setTestVal2(e)}>
-              <input minlength="3" className="form-input" type="text" placeholder="Username"></input>
+              <input minLength="3" className="form-input" type="text" placeholder="Username"></input>
             </FormField>
           </div>
         </div>

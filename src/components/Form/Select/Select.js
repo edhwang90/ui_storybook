@@ -47,15 +47,20 @@ export const Select = (props) => {
   }, [selected]);
 
   const toggleSelect = () => {
-    if (required && !selected) {
+    if (required && (!selected || Object.keys(selected).length <= 0)) {
       setError('Please select a field.');
     }
     setIsOpen(!isOpen);
   }
 
   const handleClick = (option) => {
-    setSelected(isMultiSelect ? [...selected, option] : option);
-    toggleSelect();
+    if (isMultiSelect) {
+      setSelected([...selected, option]);
+    }
+    else {
+      setSelected(option);
+      toggleSelect();
+    }
   }
 
   const resetSelect = (e) => {
@@ -112,10 +117,9 @@ export const Select = (props) => {
   }
 
   return (
-    <div className={ isMultiSelect ? `multi-select-container ${selected.length > 0 ? 'show-selected' : ''}`: 'select-container'}>
+    <div ref={menuRef} className={ isMultiSelect ? `multi-select-container ${selected.length > 0 ? 'show-selected' : ''}`: 'select-container'}>
       <div className={`select-btn${ isOpen ? ' list-open' : '' }`}
-            onClick={toggleSelect}
-            ref={menuRef}>
+            onClick={toggleSelect}>
         <div className="select-display">
           {uiLabel()}
         </div>

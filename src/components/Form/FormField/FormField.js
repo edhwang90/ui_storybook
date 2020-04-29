@@ -20,7 +20,7 @@ export const FormField = (props) => {
       }
     }
 
-    onChange(e);
+    onChange(e.target.value);
   }
 
   return (

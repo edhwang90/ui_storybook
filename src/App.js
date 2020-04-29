@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
 import { Button } from './components/Button';
-import { Select, FormField } from './components/Form'
+import { Select, FormField, DatePicker } from './components/Form'
 
 
 import './App.scss';
@@ -48,6 +48,10 @@ function App() {
     console.log(e);
   }
 
+  const testInput = (e) => {
+    console.log(e);
+  }
+
   return (
     <div className="sandbox">
       <br />
@@ -57,7 +61,7 @@ function App() {
         <div className="col">
           <div className="form-group">
             <label className="form-label">Username</label>
-            <FormField validateOnChange onChange={e => setTestVal2(e)}>
+            <FormField validateOnChange onChange={testInput}>
               <input minLength="3" className="form-input" type="text" placeholder="Username"></input>
               <span className="form-input-append"><FontAwesomeIcon icon={faCoffee} /></span>
             </FormField>
@@ -100,7 +104,7 @@ function App() {
       </div>
       <div className="row">
         <div className="col">   
-          <p>
+          <p className="form-group">
           "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
           </p>
         </div>
@@ -124,9 +128,21 @@ function App() {
           </div>
         </div>
       </div>
+      <div className="row">
+        <div className="col">
+          <div className="form-group">
+            <label className="form-label">Select a date</label>
+            <DatePicker onClick={testInput} format="MM/DD/YYYY" date="07/02/2020"></DatePicker>
+            <DatePicker onClick={testInput} placeholder="Select a date..."></DatePicker>
+          </div>
+        </div>
+        <div className="col">
+
+        </div>
+      </div>
   
 
-
+<br/><br/><br/>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import './FormField.scss';
 
@@ -31,8 +32,7 @@ export const FormField = (props) => {
                 return (
                   React.cloneElement(child, {
                     onChange: handleChange,
-                    onBlur: handleChange,
-                    validateOnChange: validateOnChange
+                    onBlur: handleChange
                   })
                 )
               }

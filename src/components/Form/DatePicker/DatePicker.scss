@@ -49,11 +49,15 @@
     vertical-align: middle;
     text-align: center;
     padding: .2rem;
+    border-radius: 4px;
+    cursor: pointer;
 
-    &:hover {
+    &:hover, &.selected {
       background-color: #e6e6e6;
-      border-radius: 4px;
-      cursor: pointer;
+    }
+
+    &.today {
+      border: 2px solid #e6e6e6;
     }
   }
 }

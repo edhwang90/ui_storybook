@@ -132,7 +132,7 @@ function App() {
         <div className="col">
           <div className="form-group">
             <label className="form-label">Select a date</label>
-            <DatePicker onClick={testInput} format="MM/DD/YYYY" date="07/02/2020"></DatePicker>
+            <DatePicker onClick={testInput} format="MM/DD/YYYY" date="03/02/2020"></DatePicker>
             <DatePicker onClick={testInput} placeholder="Select a date..."></DatePicker>
           </div>
         </div>

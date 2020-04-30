@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { filterObjectArray } from '../../../lib/utils';
 
@@ -23,6 +23,15 @@ export const Select = (props) => {
     } 
   }
 
+  const showError = useCallback(() => {
+    if (required && (!selected || Object.keys(selected).length <= 0)) {
+      setError('Please select a field.');
+    }
+    else {
+      setError('');
+    } 
+  }, [selected, required])
+
   useEffect(() => {
     const hideSelect = e => {
       if (menuRef.current.contains(e.target)) {
@@ -37,14 +46,9 @@ export const Select = (props) => {
   }, [menuRef])
 
   useEffect(() => {
-    if (required && (!selected || Object.keys(selected).length <= 0)) {
-      setError('Please select a field.');
-    }
-    else {
-      setError('');
-    }
     onClick(selected);
-  }, [selected, onClick])
+    showError();
+  }, [selected, onClick, showError])
 
   useEffect(() => {
     // Skip initial load
@@ -52,6 +56,7 @@ export const Select = (props) => {
   }, [])
 
   const toggleSelect = () => {
+    showError();
     setIsOpen(!isOpen);
   }
 

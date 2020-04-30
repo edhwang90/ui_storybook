@@ -70,7 +70,7 @@ function App() {
             <label className="form-label">Email</label>
             <Select options={options}
                     //attr="name"
-                    //required
+                    required
                     //isMultiSelect
                     //value={ [{name: 'hello', id: 5}, {name: 'goodbye', id: 9}]}
                     //value={{name: 'hello', id: 5}}
@@ -84,7 +84,7 @@ function App() {
             <label className="form-label">another</label>
             <Select options={options2}
                     attr="name"
-                    required
+                    //required
                     isMultiSelect
                     //value={ [{name: 'hello', id: 5}, {name: 'goodbye', id: 9}]}
                     //value={{name: 'hello', id: 5}}

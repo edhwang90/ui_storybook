@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
@@ -35,7 +35,6 @@ export const Calendar = (props) => {
   const { selectedDate, format, onClick } = props;
 
   const [dateObj, setDateObj] = useState(selectedDate ? moment(selectedDate, format) : moment());
-  const [selected] = useState(selectedDate ? moment(selectedDate, format) : moment());
   const [showYears, setShowYears] = useState(false);
 
   useEffect(() => {
@@ -75,7 +74,7 @@ export const Calendar = (props) => {
     ))
   )
   
-  const displayBody = () => {
+  const displayBody = useCallback(() => {
     let days = [];
     let rows = [];
     let cells = [];
@@ -91,7 +90,7 @@ export const Calendar = (props) => {
       const newDate = moment().set({'year': currentYear, 'month': currentMonth, date: j});
       const currentDate = moment();
       const highlightToday = newDate.isSame(currentDate, 'day') ? 'today' : '';
-      const highlightSelect = newDate.isSame(selected, 'day') ? 'selected' : '';
+      const highlightSelect = newDate.isSame(selectedDate, 'day') ? 'selected' : '';
 
       days.push(<td key={`tdd${j}`} 
                     onClick={(e) => onClick(newDate)} 
@@ -119,7 +118,7 @@ export const Calendar = (props) => {
     ));
 
     return monthBody;
-  }
+  }, [selectedDate, dateObj])
 
   return (
     <React.Fragment>

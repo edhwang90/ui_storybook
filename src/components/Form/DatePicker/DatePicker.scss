@@ -18,6 +18,28 @@
   overflow: auto;
 }
 
+.calendar-bottom {
+  display: flex;
+  justify-content: space-between;
+  margin-top: .5rem;
+
+  button {
+    border: 0;
+    padding: .5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 1rem;
+
+    &:hover {
+      background-color: #e6e6e6;
+    }
+
+    &:last-of-type {
+      margin-right: 0rem;
+    }
+  }
+}
+
 .calendar-top {
   display: flex;
   justify-content: space-between;

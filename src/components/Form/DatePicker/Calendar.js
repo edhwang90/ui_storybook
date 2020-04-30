@@ -1,6 +1,36 @@
 import React, { useState, useEffect, useRef } from 'react';
 import moment from 'moment';
 
+const YearList = (props) => {
+  const { currentYear, toYear } = props;
+
+  const olRef = useRef(null);
+  const liRef = useRef(null);
+  let years = [];
+
+  useEffect(() => {
+    liRef.current.scrollIntoView({block: 'center'});
+  }, [liRef])
+
+  for (let i = 1900; i <= currentYear+100; i++) {
+    let isCurrent;
+    let scrollRef;
+    if (i === currentYear) {
+      isCurrent = 'this-year';
+      scrollRef = liRef;
+    }
+    
+    const row = <li ref={scrollRef} className={isCurrent} onClick={e => toYear(e, i)} key={`dyr${i}`}>{i}</li>;
+    years.push(row);
+  }
+
+  return (
+    <ol ref={olRef} className="year-container">
+      {years}
+    </ol>
+  );
+}
+
 export const Calendar = (props) => {
   const { selectedDate, format, onClick } = props;
 
@@ -33,7 +63,6 @@ export const Calendar = (props) => {
     let newDate = initialDate.set('year', year);
 
     setDateObj(newDate);
-    //setShowYears(false);
   }
 
   const toggleYear = () => {
@@ -46,7 +75,6 @@ export const Calendar = (props) => {
     ))
   )
   
-
   const displayBody = () => {
     let days = [];
     let rows = [];
@@ -93,19 +121,6 @@ export const Calendar = (props) => {
     return monthBody;
   }
 
-  const displayYears = () => {
-    let years = [];
-    const currentYear = moment().year();
-
-    for (let i = 1900; i <= currentYear; i++) {
-      const isCurrent = i === currentYear ? 'this-year' : '';
-      const row = <li className={isCurrent} onClick={e => toYear(e, i)} key={`dyr${i}`}>{i}</li>;
-      years.push(row);
-    }
-
-    return years;
-  }
-
   return (
     <React.Fragment>
       <div className="calendar-top">
@@ -122,12 +137,7 @@ export const Calendar = (props) => {
       </div>
 
       {
-        showYears &&
-        <ol className="year-container">
-          {
-            displayYears()
-          }
-        </ol>
+        showYears && <YearList toYear={toYear} currentYear={moment(dateObj, format).year()}></YearList>
       }
 
       {

@@ -46,3 +46,9 @@ export const FormField = (props) => {
     </React.Fragment>
   )
 } 
+
+FormField.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  validateOnChange: PropTypes.bool,
+  errorMessage: PropTypes.string
+}

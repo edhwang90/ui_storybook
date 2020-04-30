@@ -34,17 +34,24 @@ export const Select = (props) => {
 
     document.addEventListener('click', hideSelect);
     return () =>  {document.removeEventListener('click', hideSelect) };
-  }, [menuRef]);
+  }, [menuRef])
 
   useEffect(() => {
-    if (selected) setError('');
-    onClick(selected);
-  }, [selected, onClick]);
-
-  const toggleSelect = () => {
     if (required && (!selected || Object.keys(selected).length <= 0)) {
       setError('Please select a field.');
     }
+    else {
+      setError('');
+    }
+    onClick(selected);
+  }, [selected, onClick])
+
+  useEffect(() => {
+    // Skip initial load
+    setError('');
+  }, [])
+
+  const toggleSelect = () => {
     setIsOpen(!isOpen);
   }
 

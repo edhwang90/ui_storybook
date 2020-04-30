@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 
 const YearList = (props) => {
   const { currentYear, toYear } = props;
 
-  const olRef = useRef(null);
   const liRef = useRef(null);
   let years = [];
 
@@ -25,10 +25,10 @@ const YearList = (props) => {
   }
 
   return (
-    <ol ref={olRef} className="year-container">
+    <ol className="year-container">
       {years}
     </ol>
-  );
+  )
 }
 
 export const Calendar = (props) => {
@@ -40,7 +40,7 @@ export const Calendar = (props) => {
 
   useEffect(() => {
     setShowYears(false);
-  }, [dateObj]);
+  }, [dateObj])
 
   const firstDay = () => {
     return moment(dateObj, format).startOf('month').format('d');
@@ -69,7 +69,7 @@ export const Calendar = (props) => {
     setShowYears(!showYears);
   }
 
-  const displayHeader = (
+  const displayHeader = () => (
     moment.weekdaysShort().map((day, index) => (
       <th key={`wks${index}`}>{day}</th>
     ))
@@ -85,7 +85,7 @@ export const Calendar = (props) => {
 
     for (let i = 0; i<firstDay(dateObj); i++) {
       days.push(<td key={`tde${i}`} className="calendar-day empty">{''}</td>)
-    };
+    }
 
     for (let j = 1; j <= daysInMonth(dateObj); j++) {
       const newDate = moment().set({'year': currentYear, 'month': currentMonth, date: j});
@@ -112,7 +112,7 @@ export const Calendar = (props) => {
       if (k === days.length - 1) {
         rows.push(cells);
       }
-    })
+    });
 
     let monthBody = rows.map((cell, index) => (
       <tr key={`mtb${index}`}>{cell}</tr>
@@ -145,7 +145,7 @@ export const Calendar = (props) => {
         <React.Fragment>
           <table className="month-table">
             <thead>
-              <tr>{ displayHeader }</tr>
+              <tr>{ displayHeader() }</tr>
             </thead>
             <tbody>
               { displayBody() }
@@ -155,6 +155,12 @@ export const Calendar = (props) => {
       }
     </React.Fragment>
   )
+}
+
+Calendar.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  selectedDate: PropTypes.string,
+  format: PropTypes.string
 }
 
 Calendar.defaultProps = {

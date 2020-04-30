@@ -21,14 +21,14 @@ export const DatePicker = (props) => {
 
     document.addEventListener('click', hideCalendar);
     return () =>  {document.removeEventListener('click', hideCalendar) };
-  }, [datepickerRef])
+  }, [datepickerRef]);
 
   const setDate = (date) => {
     const formatted = date.format(format);
     setSelectedDate(formatted);
     setIsOpen(false);
     onClick(formatted);
-  }
+  };
 
   return (
     <div className="datepicker-container" ref={datepickerRef}>

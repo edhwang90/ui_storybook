@@ -5,20 +5,10 @@ import { Calendar } from './Calendar';
 import './DatePicker.scss';
 
 export const DatePicker = (props) => {
-  const { date, format, placeholder, onClick, required, errorMessage } = props;
+  const { date, format, placeholder, onClick } = props;
   const [selectedDate, setSelectedDate] = useState(date ? date : '');
   const [isOpen, setIsOpen] = useState(false);
-  const [error, setError] = useState(errorMessage);
   const datepickerRef = useRef(null);
-
-  const showError = useCallback(() => {
-    if (required && !selectedDate) {
-      setError('Please select a date.')
-    }
-    else {
-      setError('');
-    }
-  }, [selectedDate, required])
 
   useEffect(() => {
     const hideCalendar = e => {
@@ -33,16 +23,7 @@ export const DatePicker = (props) => {
     return () =>  {document.removeEventListener('click', hideCalendar) };
   }, [datepickerRef]);
 
-  useEffect(() => {
-    showError();
-  }, [selectedDate])
-
-  useEffect(() => {
-    setError(''); // Skip initial
-  }, [])
-
   const toggleCalendar = () => {
-    showError();
     setIsOpen(!isOpen);
   }
 
@@ -51,7 +32,7 @@ export const DatePicker = (props) => {
     setSelectedDate(formatted);
     setIsOpen(false);
     onClick(formatted);
-  };
+  }
 
   const clearDate = () => {
     setSelectedDate('');
@@ -62,7 +43,7 @@ export const DatePicker = (props) => {
       <input className="form-input"
              placeholder={placeholder} 
              value={selectedDate}
-             readOnly
+             readonly
              onFocus={toggleCalendar}>
       </input>
 
@@ -83,7 +64,6 @@ export const DatePicker = (props) => {
           </div>
         )
       }
-      <span className="error-message">{error}</span>
     </div>
   )
 }

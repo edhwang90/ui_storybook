@@ -12,6 +12,7 @@ function App() {
   const [testVal, setTestVal] = useState('');
   const [testVal2, setTestVal2] = useState('');
   const [testVal3, setTestVal3] = useState('');
+  const [error, setError] = useState('error');
   // const handleClick = (e) => {
   //   console.log(e.target.value);
   // }
@@ -46,6 +47,10 @@ function App() {
 
   const submit = (e) => {
     console.log(e);
+  }
+
+  const submitForm = () => {
+    console.log('test');
   }
 
   const testInput = (e) => {
@@ -131,9 +136,6 @@ function App() {
             </FormField>
           </div>
         </div>
-      </div>
-      <div className="row">
-
       </div>
   
 

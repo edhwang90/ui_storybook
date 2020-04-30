@@ -7,7 +7,6 @@ import './Select.scss';
 export const Select = (props) => {
   const { label, value, options, attr, onClick, required, errorMessage, isMultiSelect } = props;
   const [isOpen, setIsOpen] = useState(false);
-  const [list, setList] = useState(options);
   const [selected, setSelected] = useState(isMultiSelect ? value ? value : [] : value);
   const [error, setError] = useState(errorMessage);
   const menuRef = useRef(null);
@@ -16,17 +15,13 @@ export const Select = (props) => {
     return attr ? selected[attr] : selected
   }
 
-  const filterList = () => {
+  const filteredList = () => {
     const selections = isMultiSelect ? selected : [selected];
-    if (attr) setList(filterObjectArray(options, selections, attr));
+    if (attr) return filterObjectArray(options, selections, attr);
     else {
-      setList(options.filter(option => !selections.find(filter => option === filter)));
+      return options.filter(option => !selections.find(filter => option === filter));
     } 
   }
-
-  useEffect(() => {
-    filterList();
-  }, [])
 
   useEffect(() => {
     const hideSelect = e => {
@@ -43,9 +38,8 @@ export const Select = (props) => {
 
   useEffect(() => {
     if (selected) setError('');
-    filterList();
     onClick(selected);
-  }, [selected]);
+  }, [selected, onClick]);
 
   const toggleSelect = () => {
     if (required && (!selected || Object.keys(selected).length <= 0)) {
@@ -72,6 +66,7 @@ export const Select = (props) => {
   const removeSelection = (e, toRemove) => {
     e.stopPropagation();
     const removeIndex = selected.findIndex(item => getOptionDisplay(item) === getOptionDisplay(toRemove))
+
     setSelected([
       ...selected.slice(0, removeIndex),
       ...selected.slice(removeIndex+1)
@@ -130,7 +125,7 @@ export const Select = (props) => {
             !required && uiClear()
           }
           <button className="select-chevron">
-            <svg viewBox="0 0 20 20" aria-hidden="true" aria-hidden="true" focusable="false"><path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path></svg>
           </button>
         </div>
       </div>
@@ -139,9 +134,9 @@ export const Select = (props) => {
         isOpen &&
         <ul className="select-list">
         {
-          list.length > 0
+          filteredList().length > 0
           ? (
-              list.map((option, index) => (
+            filteredList().map((option, index) => (
                 <li key={index}
                     onClick={e => handleClick(option)}>{getOptionDisplay(option)}</li>
               ))

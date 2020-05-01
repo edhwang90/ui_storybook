@@ -1,0 +1,61 @@
+@import './_Import.scss';
+
+// Clear Base
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+html, body, h1, h2, h3, h4, div, label, p, ul, ol, button, input {
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato', 'Open sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+// Modifiers
+.circular {
+  border-radius: 50%;
+}
+
+.row {
+  display: flex;
+  flex: 0;
+}
+
+.col {
+  flex: 1;
+  flex-direction: column;
+  margin-right: 1.25rem;
+
+  &:last-of-type {
+    margin-right: 0rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .row {
+    display: block;
+  }
+
+  .col {
+    margin-right: 0rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+//Form
+.form-group {
+  margin-bottom: $container-padding-tb + 0rem;
+}
+
+.error-message {
+  display: inline-block;
+  font-size: .75rem;
+  color: $error-color;
+  padding: $item-padding;
+}

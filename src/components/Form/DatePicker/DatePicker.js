@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Calendar } from './Calendar';
 
@@ -43,7 +43,7 @@ export const DatePicker = (props) => {
       <input className="form-input"
              placeholder={placeholder} 
              value={selectedDate}
-             readonly
+             readOnly
              onFocus={toggleCalendar}>
       </input>
 
@@ -57,9 +57,9 @@ export const DatePicker = (props) => {
               </Calendar>     
             }
             <div className="calendar-bottom">
-              <button onClick={clearDate}>Clear</button>
+              <button onClick={clearDate} type="button">Clear</button>
 
-              <button onClick={toggleCalendar}>Close</button>
+              <button onClick={toggleCalendar} type="button">Close</button>
             </div>
           </div>
         )

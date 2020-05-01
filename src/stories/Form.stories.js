@@ -2,8 +2,7 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withInfo } from '@storybook/addon-info';
 
-import { Checkbox, FormField, Select } from '../components/Form';
-import { Button } from '../components/Button';
+import { Checkbox, Select, DatePicker } from '../components/Form';
 
 import './stories.scss';
 
@@ -58,31 +57,38 @@ export const Inputs = () => (
       <div className="col">
         <div className="form-group">
           <label className="form-label">Text</label>
-          <FormField validateOnChange onChange={action('change')}>
-            <input className="form-input" type="text" placeholder="Username"></input>
-          </FormField>
+          <input onChange={action('change')}
+                 className="form-input"
+                 type="text" 
+                 placeholder="Username">
+          </input>
         </div>
 
         <div className="form-group">
           <label className="form-label">Password</label>
-          <FormField validateOnChange onChange={action('change')}>
-            <input className="form-input" type="password" placeholder="Password"></input>
-          </FormField>
+          <input onChange={action('change')}
+                  className="form-input" 
+                  type="password" 
+                  placeholder="Password">
+          </input>
         </div>
       </div>
       <div className="col">
         <div className="form-group">
           <label className="form-label">Email</label>
-          <FormField validateOnChange onChange={action('change')}>
-            <input className="form-input" type="email" placeholder="Email"></input>
-          </FormField>
+          <input onChange={action('change')}
+                  className="form-input" 
+                  type="email" 
+                  placeholder="Email">
+          </input>
         </div>
 
         <div className="form-group">
           <label className="form-label">Textarea</label>
-          <FormField validateOnChange onChange={action('change')}>
-            <textarea minLength="15" className="form-input" placeholder="Bio..."></textarea>
-          </FormField>
+          <textarea onChange={action('change')}
+                    className="form-input" 
+                    placeholder="Bio...">
+          </textarea>
         </div>
       </div>
     </div>
@@ -94,36 +100,53 @@ export const InputGroups = () => (
     <div className="col">
       <div className="form-group">
         <label className="form-label">Prepend Input</label>
-        <FormField validateOnChange onChange={action('change')}>
+        <div className="input-container">
           <span className="form-input-prepend">💯</span>
-          <input className="form-input" type="text" placeholder="Twitter"></input>
-        </FormField>
+          <input onChange={action('change')}
+                 className="form-input" 
+                 type="text" 
+                 placeholder="Twitter">
+          </input>
+        </div>
       </div>
       <div className="form-group">
         <label className="form-label">Prepend Textarea</label>
-        <FormField validateOnChange onChange={action('change')}>
+        <div className="input-container">
           <span className="form-input-prepend">👍</span>
-          <textarea className="form-input" placeholder="Type here..."></textarea>
-        </FormField>
+          <textarea onChange={action('change')} 
+                    className="form-input" 
+                    placeholder="Type here...">
+          </textarea>
+        </div>
       </div>
     </div>
     <div className="col">
       <div className="form-group">
         <label className="form-label">Append</label>
-        <FormField validateOnChange onChange={action('change')}>
-          <input className="form-input" type="text" placeholder="Twitter"></input>
+        <div className="input-container">
+          <input onChange={action('change')}
+                 className="form-input" 
+                 type="text" 
+                 placeholder="Twitter">
+          </input>
           <span className="form-input-append">😀</span>
-        </FormField>
+        </div>
       </div>
 
       <div className="form-group">
         <label className="form-label">Append Button</label>
-        <FormField validateOnChange onChange={e => setTestVal2(e)}>
-          <input minLength="3" className="form-input" type="text" placeholder="Username"></input>
-          <Button onClick={action('click')} className="form-input-append is-primary">
-            Click!
-          </Button>
-        </FormField>
+        <div className="input-container">
+          <input onChange={action('change')}
+                 className="form-input" 
+                 type="text" 
+                 placeholder="Username">
+          </input>
+          <button onClick={action('click')} 
+                  className="btn is-primary form-input-append"
+                  type="button">
+                  Click!
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -146,7 +169,7 @@ export const Dropdowns = () => (
           <label className="form-label">Select String</label>
           <Select options={options}
                   label="Select..."
-                  onClick={action('change')}></Select>
+                  onClick={action('select')}></Select>
         </div> 
       </div>
     </div>
@@ -158,7 +181,7 @@ export const Dropdowns = () => (
                   attr="name"
                   isMultiSelect
                   label="Select..."
-                  onClick={action('change')}></Select>
+                  onClick={action('select')}></Select>
         </div> 
       </div>
       <div className="col">
@@ -169,8 +192,27 @@ export const Dropdowns = () => (
                   isMultiSelect
                   value={ [{name: 'hello', id: 1}]}
                   label="Select..."
-                  onClick={action('change')}></Select>
+                  onClick={action('select')}></Select>
         </div> 
+      </div>
+    </div>
+  </div>
+)
+
+export const DatePickers = () => (
+  <div>
+    <div className="row">
+      <div className="col">
+        <div className="form-group">
+          <label className="form-label">Select a date</label>
+          <DatePicker onClick={action('select')} format="MM/DD/YYYY" placeholder="MM/DD/YYYY"></DatePicker>
+        </div>
+      </div>
+      <div className="col">
+        <div className="form-group">
+          <label className="form-label">Select a date</label>
+          <DatePicker onClick={action('select')} format="DD/MM/YYYY" placeholder="DD/MM/YYYY"></DatePicker>
+        </div>
       </div>
     </div>
   </div>

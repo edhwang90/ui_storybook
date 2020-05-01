@@ -1,4 +1,4 @@
-@import '../layout.scss';
+@import '../App.scss';
 
 #story-root {
   padding: 20px 40px 40px;
@@ -6,10 +6,6 @@
 
   .checkbox-container {
     margin-bottom: 20px;
-  }
-
-  .btn {
-    margin-right: 15px;
   }
 
   .link {

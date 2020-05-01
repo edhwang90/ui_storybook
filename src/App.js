@@ -2,144 +2,129 @@ import React, {useState, useEffect} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
-import { Button } from './components/Button';
-import { Select, FormField, DatePicker } from './components/Form'
+import { Select, DatePicker } from './components/Form'
 
 
 import './App.scss';
 
 function App() {
-  const [testVal, setTestVal] = useState('');
-  const [testVal2, setTestVal2] = useState('');
-  const [testVal3, setTestVal3] = useState('');
-  const [error, setError] = useState('error');
-  // const handleClick = (e) => {
-  //   console.log(e.target.value);
-  // }
-
-//   useEffect(() => {
-// console.log('ue', testVal);
-//   }, [testVal])
-  const options = [
-    '1',
-    '2',
-    '3',
-    '523512351235123512351235123512351235',
-    '235',
-    '512',
-    '3462',
-    '51',
-    '8457',
-    '93859',
-    '12',
-    '235',
-    '73',
-    '08',
-    '09',
-    '984'
+  const industryArray = [
+    'Accounting & Legal',
+    'Banking & Financial Services',
+    'Computer Software & Hardware',
+    'Consulting',
+    'Government',
+    'Education',
+    'Internet & Tech',
+    'Recruiting & Staffing',
+    'Nonprofit',
+    'Hospitality',
+    'Transportation & Logistics'
   ]
 
-  const options2 = [
-    { name: 'hello', id: 1 },
-    { name: 'goodbye', id: 2 },
-    { name: 'aufwiedersehen', id: 3}
+  const rolesArray = [
+    { name: 'Business Analyst', id: 1 },
+    { name: 'Data Analyst', id: 2 },
+    { name: 'QA Analyst', id: 3 },
+    { name: 'Front-End Developer', id: 4 },
+    { name: 'Back-End Developer', id: 5 },
+    { name: 'Fullstack Developer', id: 6 },
+    { name: 'UX Designer', id: 7 },
+    { name: 'UI Designer', id: 8 },
+    { name: 'Other', id: 10 }
   ]
+
+  const initialForm = {
+    email: { value: '' },
+    password: { value: '' },
+    industry: { value: '' },
+    role: { value: '' },
+    startDate: { value: '' }
+  }
+
+  const [email, setEmail] = useState({ value: '' });
+  const [password, setPassword] = useState({ value: '' });
+  const [industry, setIndustry] = useState({ value: '' });
+  const [role, setRole] = useState({ value: '' });
+  const [startDate, setStartDate] = useState({ value: '' });
+  const [form, setForm] = useState(initialForm)
+  
+  useEffect((e) => {
+    console.log('a', form);
+  }, [form])
+
+  const onFormChange = (field, value) => {
+    const newForm = {... form, ...validateField(field, value)}
+    setForm(newForm)
+  }
+
+  const validateField = (field, value) => {
+    const changeField = {};
+    let errorMsg = 'has error';
+    changeField[field] = { value: value, error: errorMsg}
+    return changeField
+  }
 
   const submit = (e) => {
-    console.log(e);
-  }
-
-  const submitForm = () => {
-    console.log('test');
-  }
-
-  const testInput = (e) => {
-    console.log(e);
+    e.preventDefault();
+    console.log('submit');
   }
 
   return (
     <div className="sandbox">
-      <br />
-      <br />
+      <form>
+        <div className="row">
+          <div className="col">
+            <div className="form-group">
+              <label className="form-label">Email</label>
+              <div className="input-container">
+                <input onChange={e => onFormChange('email', e.target.value)}
+                       className="form-input" 
+                       type="email" 
+                       placeholder="Email">
+                </input>
+                <span className="form-input-append"><FontAwesomeIcon icon={faCoffee} /></span>
+              </div>
+            </div>
+            <div className="form-group">
+              <label className="form-label">Password</label>
+              <div className="input-container">
+                <span className="form-input-prepend"><FontAwesomeIcon icon={faCoffee} /></span>
+                <input className="form-input"
+                       onChange={e => onFormChange('password', e.target.value)}
+                       type="password" 
+                       placeholder="Password">
+                </input>
+              </div>
+            </div>
+            <div className="form-group">
+              <label className="form-label">Industry Experience</label>
+              <Select options={industryArray}
+                      label="Select..."
+                      isMultiSelect
+                      onClick={(e) => setIndustry({ value: e})}></Select>
+            </div>
 
-      <div className="row">
-        <div className="col">
-          <div className="form-group">
-            <label className="form-label">Username</label>
-            <FormField validateOnChange onChange={testInput}>
-              <input minLength="3" className="form-input" type="text" placeholder="Username"></input>
-              <span className="form-input-append"><FontAwesomeIcon icon={faCoffee} /></span>
-            </FormField>
-          </div>
-          <div className="form-group">
-            <label className="form-label">Email</label>
-            <Select options={options}
-                    //attr="name"
-                    required
-                    //isMultiSelect
-                    //value={ [{name: 'hello', id: 5}, {name: 'goodbye', id: 9}]}
-                    //value={{name: 'hello', id: 5}}
-                    //value='1'
-                    label="Select..."
-                    onClick={(e) => submit(e)}></Select>
+            <div className="form-group">
+              <label className="form-label">Role</label>
+              <Select options={rolesArray}
+                      attr="name"
+                      label="Select..."
+                      onClick={(e) => setRole({ value: e})}></Select>
+            </div> 
+
+            <div className="form-group">
+              <label className="form-label">Select a date</label>
+              <DatePicker onClick={e => setStartDate(e)} format="MM/DD/YYYY" placeholder="MM/DD/YYYY"></DatePicker>
+            </div>
           </div>
         </div>
-        <div className="col">
-          <div className="form-group">
-            <label className="form-label">another</label>
-            <Select options={options2}
-                    attr="name"
-                    //required
-                    isMultiSelect
-                    //value={ [{name: 'hello', id: 5}, {name: 'goodbye', id: 9}]}
-                    //value={{name: 'hello', id: 5}}
-                    //value={['1', '2']}
-                    label="Select..."
-                    onClick={(e) => submit(e)}></Select>
-          </div> 
-
-              <div className="form-group">
-            <label className="form-label">Username</label>
-            <FormField validateOnChange onChange={e => setTestVal2(e)}>
-              <input minLength="3" className="form-input" type="text" placeholder="Username"></input>
-            </FormField>
+        <div className="row">
+          <div className="col">
+            <button onClick={e => submit(e)} type="submit" className="btn is-primary">Submit</button>
           </div>
         </div>
-        
-      </div>
-      <div className="row">
-        <div className="col">   
-         <div className="form-group">
-            <label className="form-label">Select a date</label>
-            <DatePicker onClick={testInput} format="MM/DD/YYYY" required date="03/02/2020"></DatePicker>
-          </div>
-          <p className="form-group">
-          "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
-          </p>
-        </div>
-        <div className="col">
-          <div className="form-group">
-            <label className="form-label">Username</label>
-            <FormField validateOnChange onChange={e => setTestVal2(e)}>
-              <span className="form-input-prepend"><FontAwesomeIcon icon={faCoffee} /></span>
-              <textarea className="form-input" placeholder="Type here..."></textarea>
-            </FormField>
-          </div>
-
-          <div className="form-group">
-            <label className="form-label">Username</label>
-            <FormField validateOnChange onChange={e => setTestVal2(e)}>
-              <input minLength="3" className="form-input" type="text" placeholder="Username"></input>
-              <Button onClick={submit} className="form-input-append is-primary">
-                Click!
-              </Button>
-            </FormField>
-          </div>
-        </div>
-      </div>
-  
-
-<br/><br/><br/>
+      </form>
     </div>
   );
 }

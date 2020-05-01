@@ -1,4 +1,4 @@
-@import '../../import.scss';
+@import './_Import.scss';
 
 .btn {
   padding: $item-padding;
@@ -92,5 +92,25 @@
 
   &:focus {
     box-shadow: 0 0 0 0.2rem rgba($success-color,.5)
+  }
+}
+
+.btn-container .btn {
+  margin-right: 1rem;
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+}
+
+.link {
+  font-size: 1rem;
+  text-decoration: none;
+  color: #007bff;
+  padding: $item-padding;
+  display: inline-block;
+
+  &:hover {
+    text-decoration: underline;
   }
 }

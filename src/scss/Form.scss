@@ -61,3 +61,20 @@
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
 }
+
+.form-group {
+  margin-bottom: $container-padding-tb + 0rem;
+}
+
+.error-message {
+  display: block;
+  font-size: .75rem;
+  color: $error-color;
+  padding-left: $item-padding-lr + 0rem;
+  padding-right: $item-padding-lr + 0rem;
+  padding-bottom: $item-padding-tb + 0rem;
+
+  &:first-of-type {
+    padding-top: $item-padding-tb + 0rem;
+  }
+}

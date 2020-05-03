@@ -47,15 +47,3 @@ ul, ol {
     margin-bottom: 1.25rem;
   }
 }
-
-//Form
-.form-group {
-  margin-bottom: $container-padding-tb + 0rem;
-}
-
-.error-message {
-  display: inline-block;
-  font-size: .75rem;
-  color: $error-color;
-  padding: $item-padding;
-}

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
-import { Select, DatePicker } from './components/Form'
+import { Select, DatePicker, useValidate } from './components/Form'
 
 
 import './App.scss';
@@ -35,40 +35,40 @@ function App() {
   ]
 
   const initialForm = {
-    email: { value: '' },
-    password: { value: '' },
-    industry: { value: '' },
-    role: { value: '' },
-    startDate: { value: '' }
+    email: { 
+      value: '',
+      rules: [{ type: 'required', value: '' }] 
+    },
+    password: { 
+      value: '',
+      rules: [{ type: 'minlength', value: 5 }, { type: 'contains', value: '@, #, %' }]
+    },
+    industry: { 
+      value: '' 
+    },
+    role: { 
+      value: '' 
+    },
+    startDate: { 
+      value: '' 
+    }
+  };
+
+  const onSubmit = (form) => {
+    if (form.error) console.log('error');
+    console.log('new submit', form);
   }
 
-  const [email, setEmail] = useState({ value: '' });
-  const [password, setPassword] = useState({ value: '' });
-  const [industry, setIndustry] = useState({ value: '' });
-  const [role, setRole] = useState({ value: '' });
-  const [startDate, setStartDate] = useState({ value: '' });
-  const [form, setForm] = useState(initialForm)
-  
-  useEffect((e) => {
-    console.log('a', form);
-  }, [form])
-
-  const onFormChange = (field, value) => {
-    const newForm = {... form, ...validateField(field, value)}
-    setForm(newForm)
-  }
-
-  const validateField = (field, value) => {
-    const changeField = {};
-    let errorMsg = 'has error';
-    changeField[field] = { value: value, error: errorMsg}
-    return changeField
-  }
-
-  const submit = (e) => {
-    e.preventDefault();
-    console.log('submit');
-  }
+  const {
+    form,
+    handleChange,
+    validate,
+    handleSubmit
+  } = useValidate({
+    initialForm,
+    onSubmit,
+    validateOnChange: false
+  })
 
   return (
     <div className="sandbox">
@@ -78,31 +78,45 @@ function App() {
             <div className="form-group">
               <label className="form-label">Email</label>
               <div className="input-container">
-                <input onChange={e => onFormChange('email', e.target.value)}
+                <input onChange={e => handleChange('email', e.target.value)}
                        className="form-input" 
+                       minLength="3"
+                      //  onBlur={e => validate('email', e.target.value)}
                        type="email" 
                        placeholder="Email">
                 </input>
                 <span className="form-input-append"><FontAwesomeIcon icon={faCoffee} /></span>
               </div>
+              { 
+                form.email.errors &&
+                form.email.errors.map((err, index) => (
+                  <span key={index} className="error-message">{err}</span>
+                ))
+              }
             </div>
             <div className="form-group">
               <label className="form-label">Password</label>
               <div className="input-container">
                 <span className="form-input-prepend"><FontAwesomeIcon icon={faCoffee} /></span>
                 <input className="form-input"
-                       onChange={e => onFormChange('password', e.target.value)}
+                       onChange={e => handleChange('password', e.target.value)}
                        type="password" 
                        placeholder="Password">
                 </input>
               </div>
+              { 
+                form.password.errors &&
+                form.password.errors.map((err, index) => (
+                  <span key={index} className="error-message">{err}</span>
+                ))
+              }
             </div>
             <div className="form-group">
               <label className="form-label">Industry Experience</label>
               <Select options={industryArray}
                       label="Select..."
                       isMultiSelect
-                      onClick={(e) => setIndustry({ value: e})}></Select>
+                      onClick={e => handleChange('industry', e)}></Select>
             </div>
 
             <div className="form-group">
@@ -110,18 +124,18 @@ function App() {
               <Select options={rolesArray}
                       attr="name"
                       label="Select..."
-                      onClick={(e) => setRole({ value: e})}></Select>
+                      onClick={e => handleChange('role', e)}></Select>
             </div> 
 
             <div className="form-group">
               <label className="form-label">Select a date</label>
-              <DatePicker onClick={e => setStartDate(e)} format="MM/DD/YYYY" placeholder="MM/DD/YYYY"></DatePicker>
+              <DatePicker onClick={e => handleChange('startDate', e)} format="MM/DD/YYYY" placeholder="MM/DD/YYYY"></DatePicker>
             </div>
           </div>
         </div>
         <div className="row">
           <div className="col">
-            <button onClick={e => submit(e)} type="submit" className="btn is-primary">Submit</button>
+            <button onClick={handleSubmit} type="button" className="btn is-primary">Submit</button>
           </div>
         </div>
       </form>

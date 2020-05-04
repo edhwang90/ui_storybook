@@ -9,7 +9,10 @@
     height: 1rem;
   }
 
-  .list-open {
+  .select-btn.list-open {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+
     .select-chevron > svg {
       transform: rotate(180deg);
     }
@@ -23,6 +26,9 @@
   background-color: #fff;
   color: $font-color;
   width: 100%;
+  transition:
+    border-color ease-in-out .2s,
+    box-shadow ease-in-out .2s;
 }
 
 .select-btn {
@@ -33,7 +39,7 @@
   align-items: center;
   word-break: break-all;
 
-  &:focus, &:hover {
+  &:hover {
     border-color: darken(#e6e6e6, 5%);
   }
 

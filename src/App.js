@@ -37,25 +37,34 @@ function App() {
   const initialForm = {
     email: { 
       value: '',
-      rules: [{ type: 'required', value: '' }] 
+      rules: [
+        { type: 'required' },
+        { type: 'type', value: 'email'}
+      ] 
     },
     password: { 
       value: '',
-      rules: [{ type: 'minlength', value: 5 }, { type: 'contains', value: '@, #, %' }]
+      rules: [
+        { type: 'minlength', value: 5 }, 
+        { type: 'contains', value: '@, #, %' },
+        { type: 'maxlength', value: 10 }
+      ]
     },
     industry: { 
-      value: '' 
+      value: '',
+      rules: [{ type: 'required' }] 
     },
     role: { 
-      value: '' 
+      value: '',
+      rules: [{type: 'required' }] 
     },
     startDate: { 
-      value: '' 
+      value: '',
+      rules: [{type: 'required' }]
     }
   };
 
   const onSubmit = (form) => {
-    if (form.error) console.log('error');
     console.log('new submit', form);
   }
 
@@ -67,7 +76,7 @@ function App() {
   } = useValidate({
     initialForm,
     onSubmit,
-    validateOnChange: false
+    validateOnChange: true
   })
 
   return (
@@ -80,7 +89,6 @@ function App() {
               <div className="input-container">
                 <input onChange={e => handleChange('email', e.target.value)}
                        className="form-input" 
-                       minLength="3"
                       //  onBlur={e => validate('email', e.target.value)}
                        type="email" 
                        placeholder="Email">
@@ -117,6 +125,12 @@ function App() {
                       label="Select..."
                       isMultiSelect
                       onClick={e => handleChange('industry', e)}></Select>
+              { 
+                form.industry.errors &&
+                form.industry.errors.map((err, index) => (
+                  <span key={index} className="error-message">{err}</span>
+                ))
+              }
             </div>
 
             <div className="form-group">
@@ -125,11 +139,23 @@ function App() {
                       attr="name"
                       label="Select..."
                       onClick={e => handleChange('role', e)}></Select>
+              { 
+                form.role.errors &&
+                form.role.errors.map((err, index) => (
+                  <span key={index} className="error-message">{err}</span>
+                ))
+              }
             </div> 
 
             <div className="form-group">
               <label className="form-label">Select a date</label>
               <DatePicker onClick={e => handleChange('startDate', e)} format="MM/DD/YYYY" placeholder="MM/DD/YYYY"></DatePicker>
+              { 
+                form.startDate.errors &&
+                form.startDate.errors.map((err, index) => (
+                  <span key={index} className="error-message">{err}</span>
+                ))
+              }
             </div>
           </div>
         </div>

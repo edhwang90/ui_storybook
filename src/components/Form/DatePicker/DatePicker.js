@@ -40,7 +40,7 @@ export const DatePicker = (props) => {
 
   return (
     <div className="datepicker-container" ref={datepickerRef}>
-      <input className="form-input"
+      <input className={`form-input ${ isOpen ? 'focused' : ''}`}
              placeholder={placeholder} 
              value={selectedDate}
              readOnly

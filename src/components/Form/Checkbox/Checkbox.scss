@@ -28,6 +28,7 @@
     border: 1px solid #e6e6e6;
     border-radius: 4px;
     align-self: normal;
+    transition: all ease-in .3s;
   }
 
   // Box hover
@@ -45,19 +46,13 @@
   &:checked + label:after, &:hover + label:after {
     content: '';
     position: absolute;
-    left: 7px;
-    top: 11px;
-    background-color: #4d4d4d;
-    width: 2px;
-    height: 2px;
-    box-shadow: 
-      2px 0 0 #4d4d4d,
-      4px 0 0 #4d4d4d,
-      4px -2px 0 #4d4d4d,
-      4px -4px 0 #4d4d4d,
-      4px -6px 0 #4d4d4d,
-      4px -8px 0 #4d4d4d;
+    left: 10px;
+    top: 5px;
     transform: rotate(45deg);
+    height: 11px;
+    width: 6px;
+    border-bottom: 2px solid #4d4d4d;
+    border-right: 2px solid #4d4d4d;
     align-self: unset;
   }
 

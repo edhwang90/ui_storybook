@@ -100,20 +100,18 @@
 }
 
 .year-container {
-  display: flex;
-  align-items: center;
-  flex-direction: column-reverse;
+  text-align: center;
   max-height: 250px;
   overflow: auto;
 
   li {
     padding: 1rem;
     cursor: pointer;
+    transition: font-size ease-in-out .2s;
   }
 
   .this-year, li:hover {
     font-size: 1.5rem;
-    background-color: #e6e6e6;
     border-radius: 4px;
   }
 }

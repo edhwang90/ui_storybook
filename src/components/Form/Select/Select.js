@@ -7,7 +7,7 @@ import './Select.scss';
 export const Select = (props) => {
   const { label, value, options, attr, onClick, isMultiSelect } = props;
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState(isMultiSelect ? value ? value : [] : value);
+  const [selected, setSelected] = useState(value || '');
   const menuRef = useRef(null);
 
   const getOptionDisplay = (selected) => {
@@ -15,7 +15,7 @@ export const Select = (props) => {
   }
 
   const filteredList = () => {
-    const selections = isMultiSelect ? selected : [selected];
+    const selections = [selected];
     if (attr) return filterObjectArray(options, selections, attr);
     else {
       return options.filter(option => !selections.find(filter => option === filter));
@@ -53,7 +53,7 @@ export const Select = (props) => {
 
   const resetSelect = (e) => {
     e.stopPropagation();
-    const updated = isMultiSelect ? [] : '';
+    const updated = '';
     setSelected(updated);
     onClick(updated);
   }

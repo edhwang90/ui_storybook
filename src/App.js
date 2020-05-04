@@ -8,6 +8,7 @@ import { Select, DatePicker, useValidate } from './components/Form'
 import './App.scss';
 
 function App() {
+
   const industryArray = [
     'Accounting & Legal',
     'Banking & Financial Services',

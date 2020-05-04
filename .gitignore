@@ -10,6 +10,7 @@
 
 # production
 /build
+/storybook-static
 
 # misc
 .DS_Store
@@ -21,3 +22,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+storybook-static/asset-manifest.json
+storybook-static/asset-manifest.json
+storybook-static/asset-manifest.json

@@ -123,7 +123,7 @@ export const useValidate = (props) => {
     setForm(newForm);
   }
 
-  const validateOnBlur = (field, value) => {
+  const validate = (field, value) => {
     const fieldObj = getFieldObj(field, value);
     const validated = validateField(fieldObj);
     const newForm = validated.error ? {...form, [field]: validated, error: true} : {...form, [field]: validated};
@@ -143,7 +143,7 @@ export const useValidate = (props) => {
   return {
     form,
     handleChange,
-    validateOnBlur,
+    validate,
     handleSubmit
   }
 }

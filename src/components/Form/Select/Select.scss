@@ -17,6 +17,11 @@
       transform: rotate(180deg);
     }
   }
+
+  .select-btn.list-disabled {
+    background-color: #f7f7f7;
+    cursor: not-allowed;
+  }
 }
 
 .select-btn, .select-list {

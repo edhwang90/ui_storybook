@@ -5,7 +5,7 @@ import { Calendar } from './Calendar';
 import './DatePicker.scss';
 
 const useDatePicker = (props) => {
-  const { value, format, placeholder, onClick } = props;
+  const { value, format, placeholder, onClick, disabled } = props;
   const [selectedDate, setSelectedDate] = useState(value ? value : '');
   const [isOpen, setIsOpen] = useState(false);
   const datepickerRef = useRef(null);
@@ -59,6 +59,7 @@ const useDatePicker = (props) => {
   return {
     datepickerRef,
     placeholder,
+    disabled,
     selectedDate,
     isOpen,
     toggleCalendar,
@@ -69,9 +70,10 @@ const useDatePicker = (props) => {
 const DatePickerUI = (props) => {
   const { datepickerRef, 
           placeholder, 
+          disabled,
           selectedDate, 
           isOpen, 
-          toggleCalendar, 
+          toggleCalendar,
           calendar } = useDatePicker(props);
 
   return (
@@ -80,6 +82,7 @@ const DatePickerUI = (props) => {
              placeholder={placeholder} 
              value={selectedDate}
              readOnly
+             disabled={disabled}
              onFocus={toggleCalendar}>
       </input>
 

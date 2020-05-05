@@ -63,14 +63,14 @@
   }
 
   &:disabled + label:after {
-    box-shadow: none;
-    background-color: #fff;
+    border: 0;
+    background-color: #f7f7f7;
   }
 
   // Disabled box.
   &:disabled + label:before {
     box-shadow: none;
-    background-color: #fff;
+    background-color: #f7f7f7;
     border-color: #e6e6e6;
   }
 }

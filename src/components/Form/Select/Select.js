@@ -5,7 +5,7 @@ import { filterObjectArray } from '../../Utils';
 import './Select.scss';
 
 const useSelect = (props) => {
-  const { label, value, options, attr, onClick, isMultiSelect } = props;
+  const { label, value, options, attr, onClick, isMultiSelect, disabled } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(isMultiSelect ? value ? value : [] : value);
   const menuRef = useRef(null);
@@ -36,6 +36,7 @@ const useSelect = (props) => {
   }, [menuRef])
 
   const toggleSelect = () => {
+    if (disabled) return;
     setIsOpen(!isOpen);
   }
 
@@ -130,6 +131,7 @@ const useSelect = (props) => {
     clearUI,
     listUI,
     menuRef,
+    disabled,
     isMultiSelect,
     toggleSelect,
     isOpen,
@@ -142,6 +144,7 @@ const SelectUI = (props) => {
           clearUI, 
           listUI, 
           menuRef, 
+          disabled,
           isMultiSelect, 
           toggleSelect, 
           isOpen, 
@@ -149,7 +152,7 @@ const SelectUI = (props) => {
 
   return (
     <div ref={menuRef} className={ isMultiSelect ? `multi-select-container ${selected.length > 0 ? 'show-selected' : ''}`: 'select-container'}>
-      <div className={`select-btn${ isOpen ? ' list-open' : '' }`}
+      <div className={`select-btn${ isOpen ? ' list-open' : '' }${ disabled ? ' list-disabled' : ''}`}
             onClick={toggleSelect}>
         <div className="select-display">
           {labelUI()}

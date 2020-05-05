@@ -24,8 +24,9 @@
 
   &:disabled {
     cursor: not-allowed;
-    background-color: #f7f7f7;
-    color: #4d4d4d;
+    background-color: #f7f7f7 !important;
+    color: #4d4d4d !important;
+    border-color: #e6e6e6 !important;
   }
 }
 

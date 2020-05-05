@@ -95,7 +95,7 @@ function App() {
                 <input onChange={e => handleChange('email', e.target.value)}
                        className="form-input" 
                        value={form.email.value}
-                      //  onBlur={e => validate('email', e.target.value)}
+                       //onBlur={e => validate('email', e.target.value)}
                        type="email" 
                        placeholder="Email">
                 </input>

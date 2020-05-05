@@ -105,11 +105,15 @@
   }
 }
 
-.btn-container .btn {
-  margin-right: 1rem;
+.btn-group {
+  margin-bottom: $container-padding-tb + 0rem;
+  
+  .btn {
+    margin-right: 1rem;
 
-  &:last-of-type {
-    margin-right: 0;
+    &:last-of-type {
+      margin-right: 0;
+    }
   }
 }
 

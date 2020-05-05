@@ -4,6 +4,7 @@ import { withInfo } from '@storybook/addon-info';
 
 import { CodeBlock } from '../components/CodeBlock';
 
+
 export default {
   title: 'Buttons',
   decorators: [withInfo],
@@ -13,43 +14,44 @@ export default {
 };
 
 export const Buttons = () => (
-  <div className="btn-container">
-      <button className="btn" 
-              onClick={action('click')} 
-              type="button">
-              Button
-      </button>
+  <div>
+    <div className="btn-group">
+        <button className="btn" 
+                onClick={action('click')} 
+                type="button">
+                Button
+        </button>
 
-      <button className="btn is-primary"
-              onClick={action('click')}
-              type="button">
-              Primary
-      </button>
+        <button className="btn is-primary"
+                onClick={action('click')}
+                type="button">
+                Primary
+        </button>
 
-      <button className="btn is-alternate"
-              onClick={action('click')}
-              type="button">
-              Alternate
-      </button>
+        <button className="btn is-alternate"
+                onClick={action('click')}
+                type="button">
+                Alternate
+        </button>
 
-      <button className="btn is-danger"
-              onClick={action('click')}
-              type="button">
-              Danger
-      </button>
+        <button className="btn is-danger"
+                onClick={action('click')}
+                type="button">
+                Danger
+        </button>
 
-      <button className="btn is-warning"
-              onClick={action('click')}
-              type="button">
-              Warning
-      </button>
+        <button className="btn is-warning"
+                onClick={action('click')}
+                type="button">
+                Warning
+        </button>
 
-      <button className="btn is-success"
-              onClick={action('click')}
-              type="button">
-              Success
-      </button>
-
+        <button className="btn is-success"
+                onClick={action('click')}
+                type="button">
+                Success
+        </button>
+    </div>
 <CodeBlock language="html">
   {
   `

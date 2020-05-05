@@ -33,20 +33,21 @@ const options2 = [
 
 export const Checkboxes = () => (
   <div>
-    <Checkbox label="Default"
-              handleToggle={action('toggle')}>
-    </Checkbox>
+    <div className="form-group">
+      <Checkbox label="Default"
+                handleToggle={action('toggle')}>
+      </Checkbox>
 
-    <Checkbox label="Prefilled"
-              value={true}
-              handleToggle={action('toggle')}>
-    </Checkbox>
+      <Checkbox label="Prefilled"
+                value={true}
+                handleToggle={action('toggle')}>
+      </Checkbox>
 
-    <Checkbox label="Disabled"
-              disabled
-              handleToggle={action('toggle')}>
-    </Checkbox>
-
+      <Checkbox label="Disabled"
+                disabled
+                handleToggle={action('toggle')}>
+      </Checkbox>
+    </div>
 <CodeBlock language="html">
   {
   `
@@ -69,10 +70,10 @@ export const Checkboxes = () => (
   </div>
 )
 
-// Checkboxes.Proptypes = {
-//   test1: PropTypes.string,
-//   test2: PropTypes.string
-// }
+Checkbox.Proptypes = {
+  test1: PropTypes.string,
+  test2: PropTypes.string
+}
 
 export const Inputs = () => (
   <div className="story-inputs">

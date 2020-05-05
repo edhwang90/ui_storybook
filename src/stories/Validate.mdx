@@ -1,0 +1,18 @@
+import { Meta, Story, Props } from '@storybook/addon-docs/blocks';
+import { Checkbox, Select, DatePicker } from '../components/Form';
+
+<Meta title='Form2' component={Checkbox} />
+
+# Form2
+
+Some **markdown** description, or whatever you want.
+
+<Story name='basic'>
+  <Checkbox label="Default"
+            handleToggle={action('toggle')}>
+  </Checkbox>
+</Story>
+
+## Props
+
+<Props of={Checkbox} />

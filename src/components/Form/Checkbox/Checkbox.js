@@ -1,22 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import PropTypes from 'prop-types';
+import { generateNumber } from '../../Utils';
 
 import './Checkbox.scss';
 
-export const Checkbox = (props) => {
-  const { data, id, label, toggleProp, handleToggle, disabled } = props;
-  const [checked, setCheck] = useState(toggleProp)
+const useCheckbox = (props) => {
+  const { label, value, handleToggle, disabled } = props;
+  const [checked, setCheck] = useState(value || false);
+
+  const id = generateNumber();
 
   const checkToggle = () => {
     setCheck(!checked);
-    handleToggle(data);
+    handleToggle(!checked);
   }
+
+  return {
+    id,
+    checked,
+    label,
+    checkToggle,
+    disabled
+  }
+}
+
+const CheckboxUI = (props) => {
+  const { id, checked, label, checkToggle, disabled } = useCheckbox(props);
 
   return (
     <div className="checkbox-container">
       <input className="checkbox" type="checkbox" 
       checked={checked} 
-      id={'checkbox' + id} 
+      value={checked}
+      id={'checkbox' + id}
       onChange={checkToggle}
       disabled={disabled}/>
       <label htmlFor={'checkbox' + id}><span>{label}</span></label>
@@ -24,7 +40,8 @@ export const Checkbox = (props) => {
   )
 }
 
-Checkbox.propTypes = {
-  label: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired
+CheckboxUI.propTypes = {
+  label: PropTypes.string.isRequired
 }
+
+export const Checkbox = memo(CheckboxUI);

@@ -119,6 +119,7 @@ export const useValidate = (props) => {
     else {
       newForm = {...form, [field]: fieldObj}
     }
+    console.log('form', newForm);
     setForm(newForm);
   }
 

@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, memo } from 'react';
 import PropTypes from 'prop-types';
 import { Calendar } from './Calendar';
 
 import './DatePicker.scss';
 
-export const DatePicker = (props) => {
-  const { date, format, placeholder, onClick } = props;
-  const [selectedDate, setSelectedDate] = useState(date ? date : '');
+const useDatePicker = (props) => {
+  const { value, format, placeholder, onClick } = props;
+  const [selectedDate, setSelectedDate] = useState(value ? value : '');
   const [isOpen, setIsOpen] = useState(false);
   const datepickerRef = useRef(null);
 
@@ -38,6 +38,42 @@ export const DatePicker = (props) => {
     setSelectedDate('');
   }
 
+  const calendar = () => (
+    isOpen && (
+      <div className="calendar-container">
+        {
+          <Calendar selectedDate={selectedDate}
+                    format={format}
+                    onClick={setDate}>
+          </Calendar>     
+        }
+        <div className="calendar-bottom">
+          <button onClick={clearDate} type="button">Clear</button>
+
+          <button onClick={toggleCalendar} type="button">Close</button>
+        </div>
+      </div>
+    )
+  )
+
+  return {
+    datepickerRef,
+    placeholder,
+    selectedDate,
+    isOpen,
+    toggleCalendar,
+    calendar
+  }
+}
+
+const DatePickerUI = (props) => {
+  const { datepickerRef, 
+          placeholder, 
+          selectedDate, 
+          isOpen, 
+          toggleCalendar, 
+          calendar } = useDatePicker(props);
+
   return (
     <div className="datepicker-container" ref={datepickerRef}>
       <input className={`form-input ${ isOpen ? 'focused' : ''}`}
@@ -47,32 +83,20 @@ export const DatePicker = (props) => {
              onFocus={toggleCalendar}>
       </input>
 
-      {
-        isOpen && (
-          <div className="calendar-container">
-            {
-              <Calendar selectedDate={selectedDate}
-                        format={format}
-                        onClick={setDate}>
-              </Calendar>     
-            }
-            <div className="calendar-bottom">
-              <button onClick={clearDate} type="button">Clear</button>
-
-              <button onClick={toggleCalendar} type="button">Close</button>
-            </div>
-          </div>
-        )
-      }
+      { calendar() }
     </div>
   )
 }
 
-DatePicker.propTypes = {
-  date: PropTypes.string,
-  format: PropTypes.string
+DatePickerUI.propTypes = {
+  value: PropTypes.string,
+  format: PropTypes.string,
+  placeholder: PropTypes.string,
+  onClick: PropTypes.func
 }
 
-DatePicker.defaultProps = {
+DatePickerUI.defaultProps = {
   format: 'MM/DD/YYYY'
 }
+
+export const DatePicker = memo(DatePickerUI);

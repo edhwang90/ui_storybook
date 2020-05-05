@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
-import { Select, DatePicker, useValidate } from './components/Form'
+import { Checkbox, Select, DatePicker, useValidate } from './components/Form'
 
 
 import './App.scss';
@@ -57,11 +57,15 @@ function App() {
     },
     role: { 
       value: '',
-      rules: [{type: 'required' }] 
+      rules: [{ type: 'required' }] 
     },
     startDate: { 
       value: '',
-      rules: [{type: 'required' }]
+      rules: [{ type: 'required' }]
+    },
+    terms: {
+      value: '',
+      rules: [{ type: 'required' }]
     }
   };
 
@@ -90,6 +94,7 @@ function App() {
               <div className="input-container">
                 <input onChange={e => handleChange('email', e.target.value)}
                        className="form-input" 
+                       value={form.email.value}
                       //  onBlur={e => validate('email', e.target.value)}
                        type="email" 
                        placeholder="Email">
@@ -108,6 +113,7 @@ function App() {
               <div className="input-container">
                 <span className="form-input-prepend"><FontAwesomeIcon icon={faCoffee} /></span>
                 <input className="form-input"
+                       value={form.password.value}
                        onChange={e => handleChange('password', e.target.value)}
                        type="password" 
                        placeholder="Password">
@@ -123,6 +129,7 @@ function App() {
             <div className="form-group">
               <label className="form-label">Industry Experience</label>
               <Select options={industryArray}
+                      value={form.industry.value}
                       label="Select..."
                       isMultiSelect
                       onClick={e => handleChange('industry', e)}></Select>
@@ -137,6 +144,7 @@ function App() {
             <div className="form-group">
               <label className="form-label">Role</label>
               <Select options={rolesArray}
+                      value={form.role.value}
                       attr="name"
                       label="Select..."
                       onClick={e => handleChange('role', e)}></Select>
@@ -154,6 +162,18 @@ function App() {
               { 
                 form.startDate.errors &&
                 form.startDate.errors.map((err, index) => (
+                  <span key={index} className="error-message">{err}</span>
+                ))
+              }
+            </div>
+
+            <div className="form-group">
+              <Checkbox label="Agree to terms"
+                        handleToggle={e => handleChange('terms', e)}>
+              </Checkbox>
+              { 
+                form.terms.errors &&
+                form.terms.errors.map((err, index) => (
                   <span key={index} className="error-message">{err}</span>
                 ))
               }

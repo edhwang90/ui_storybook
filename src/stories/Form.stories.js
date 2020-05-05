@@ -30,23 +30,18 @@ const options2 = [
 
 export const Checkboxes = () => (
   <div>
-    <Checkbox toggleProp={false}
-              label="Default"
-              id={1}
+    <Checkbox label="Default"
               handleToggle={action('toggle')}>
     </Checkbox>
 
-    <Checkbox toggleProp={true}
-            label="Prefilled"
-            id={2}
-            handleToggle={action('toggle')}>
+    <Checkbox label="Prefilled"
+              value={true}
+              handleToggle={action('toggle')}>
     </Checkbox>
 
-    <Checkbox toggleProp={false}
-            label="Disabled"
-            id={3}
-            disabled
-            handleToggle={action('toggle')}>
+    <Checkbox label="Disabled"
+              disabled
+              handleToggle={action('toggle')}>
     </Checkbox>
   </div>
 )
@@ -205,7 +200,7 @@ export const DatePickers = () => (
       <div className="col">
         <div className="form-group">
           <label className="form-label">Select a date</label>
-          <DatePicker onClick={action('select')} format="MM/DD/YYYY" placeholder="MM/DD/YYYY"></DatePicker>
+          <DatePicker onClick={action('select')} value="12/01/2020" format="MM/DD/YYYY" placeholder="MM/DD/YYYY"></DatePicker>
         </div>
       </div>
       <div className="col">

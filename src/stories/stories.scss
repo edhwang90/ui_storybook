@@ -8,7 +8,11 @@
     margin-bottom: 20px;
   }
 
-  .link {
-    padding: .75rem 1rem; //display purposes
+  p {
+    margin-bottom: 1rem;
+
+    &:last-of-type {
+      padding-top: 2rem;
+    }
   }
 }

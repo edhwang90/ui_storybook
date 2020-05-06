@@ -127,4 +127,8 @@
   &:hover {
     text-decoration: underline;
   }
+
+  &.inline {
+    padding: 0;
+  }
 }

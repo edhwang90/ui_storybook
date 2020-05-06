@@ -1,6 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
 import { action } from '@storybook/addon-actions';
 import { withInfo } from '@storybook/addon-info';
 
@@ -13,7 +11,7 @@ export default {
   title: 'Form',
   decorators: [withInfo],
   parameters: {
-    info: { source: false, inline: true, propTables: [Checkbox] }
+    info: { source: false, inline: true, propTables: false } //propTables: [Checkbox]
   }
 };
 

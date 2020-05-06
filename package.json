@@ -44,12 +44,13 @@
     ]
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^5.3.18",
+    "@babel/core": "^7.9.6",
+    "@storybook/addon-actions": "^6.0.0-beta.2",
     "@storybook/addon-docs": "^6.0.0-beta.2",
     "@storybook/addon-info": "^5.3.18",
-    "@storybook/addon-links": "^5.3.18",
-    "@storybook/addons": "^5.3.18",
+    "@storybook/addon-links": "^6.0.0-beta.2",
+    "@storybook/addons": "^6.0.0-beta.2",
     "@storybook/preset-create-react-app": "^2.1.1",
-    "@storybook/react": "^5.3.18"
+    "@storybook/react": "^6.0.0-beta.2"
   }
 }

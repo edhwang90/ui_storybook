@@ -19,10 +19,10 @@ let wrapped = shallow(<Select options={options} onClick={ () => {} }></Select>);
 
 const SelectHook = () => {
   const props = useSelect({ options: options, onClick: () => {} });
-  return <div {...props} />;
+  return <div {...props}></div>;
 };
 
-const hookWrapper = shallow(<SelectHook />);
+const hookWrapper = shallow(<SelectHook></SelectHook>);
 
 describe('Select', () => {
 
@@ -46,10 +46,10 @@ describe('Select', () => {
 
 const MultiSelectHook = () => {
   const props = useSelect({ isMultiSelect: true, options: options, onClick: () => {} });
-  return <div {...props} />;
+  return <div {...props}></div>;
 };
 
-const multiHookWrapper = shallow(<MultiSelectHook />);
+const multiHookWrapper = shallow(<MultiSelectHook></MultiSelectHook>);
 
 describe('MultiSelect', () => {
 

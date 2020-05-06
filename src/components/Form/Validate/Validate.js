@@ -68,7 +68,7 @@ export const useValidate = (props) => {
   const validateField = (fieldObj) => {
     let validateObj = fieldObj;
     let errorsArr = [];
-
+ 
     for (let i = 0; i<validateObj.rules?.length; i++) {
       const rule = validateObj.rules[i];
 
@@ -80,6 +80,7 @@ export const useValidate = (props) => {
           break;
         case 'type': 
           const checkedType = checkType(validateObj.value, rule.value);
+
           if (checkedType.error) {
             errorsArr.push(checkedType.message);
           }
@@ -115,7 +116,7 @@ export const useValidate = (props) => {
 
     if (validateOnChange) {
       const validated = validateField(fieldObj);
-      newForm = validated.error ? {...form, [field]: validated, error: true} : {...form, [field]: validated};
+      newForm = validated.errors?.length > 0 ? {...form, [field]: validated, error: true} : {...form, [field]: validated};
     }
     else {
       newForm = {...form, [field]: fieldObj}
@@ -126,7 +127,7 @@ export const useValidate = (props) => {
   const validate = (field, value) => {
     const fieldObj = getFieldObj(field, value);
     const validated = validateField(fieldObj);
-    const newForm = validated.error ? {...form, [field]: validated, error: true} : {...form, [field]: validated};
+    const newForm = validated.errors?.length > 0 ? {...form, [field]: validated, error: true} : {...form, [field]: validated};
     setForm(newForm);
   }
 

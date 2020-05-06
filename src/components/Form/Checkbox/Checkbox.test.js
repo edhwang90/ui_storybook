@@ -8,13 +8,13 @@ let wrapped = shallow(<Checkbox handleToggle={ () => {} } label="Test Checkbox">
 
 const CheckboxHook = () => {
   const props = useCheckbox({ handleToggle: () => {} });
-  return <div {...props} />;
+  return <div {...props}></div>;
 };
 
-const hookWrapper = shallow(<CheckboxHook />);
+const hookWrapper = shallow(<CheckboxHook></CheckboxHook>);
 
 describe('Checkbox', () => {
-  
+
   it('renders the checkbox label', () => { 
     const label = 'Test Checkbox';
     expect(wrapped.find('label').text()).toEqual(label);

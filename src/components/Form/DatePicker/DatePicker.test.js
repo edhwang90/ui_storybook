@@ -7,10 +7,10 @@ let wrapped = shallow(<DatePicker onClick={ () => {} }></DatePicker>);
 
 const DatePickerHook = () => {
   const props = useDatePicker({ onClick: () => {} });
-  return <div {...props} />;
+  return <div {...props}></div>;
 };
 
-const hookWrapper = shallow(<DatePickerHook />);
+const hookWrapper = shallow(<DatePickerHook></DatePickerHook>);
 
 describe('DatePicker', () => {
 

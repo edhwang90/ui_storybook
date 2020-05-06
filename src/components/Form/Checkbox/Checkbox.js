@@ -4,13 +4,13 @@ import { generateNumber } from '../../Utils';
 
 import './Checkbox.scss';
 
-const useCheckbox = (props) => {
+export const useCheckbox = (props) => {
   const { label, value, handleToggle, disabled } = props;
   const [checked, setCheck] = useState(value || false);
 
   const id = generateNumber();
 
-  const checkToggle = () => {
+  const checkToggle = (e) => {
     setCheck(!checked);
     handleToggle(!checked);
   }

@@ -93,7 +93,7 @@ export const Calendar = (props) => {
       const highlightSelect = newDate.isSame(selectedDate, 'day') ? 'selected' : '';
 
       days.push(<td key={`tdd${j}`} 
-                    onClick={(e) => onClick(newDate)} 
+                    onClick={(e) => onClick(newDate.format(format))} 
                     className={`calendar-day ${highlightToday} ${highlightSelect}`}>
                     {j}
                 </td>)

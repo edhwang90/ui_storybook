@@ -4,7 +4,7 @@ import { Calendar } from './Calendar';
 
 import './DatePicker.scss';
 
-const useDatePicker = (props) => {
+export const useDatePicker = (props) => {
   const { value, format, placeholder, onClick, disabled } = props;
   const [selectedDate, setSelectedDate] = useState(value ? value : '');
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +28,7 @@ const useDatePicker = (props) => {
   }
 
   const setDate = (date) => {
-    const formatted = date.format(format);
+    const formatted = date;//.format(format);
     setSelectedDate(formatted);
     setIsOpen(false);
     onClick(formatted);
@@ -37,6 +37,29 @@ const useDatePicker = (props) => {
   const clearDate = () => {
     setSelectedDate('');
   }
+
+  return {
+    datepickerRef,
+    placeholder,
+    disabled,
+    selectedDate,
+    isOpen,
+    toggleCalendar,
+    clearDate,
+    setDate
+  }
+}
+
+export const DatePicker = memo((props) => {
+  const { datepickerRef, 
+          placeholder, 
+          disabled,
+          format,
+          selectedDate, 
+          isOpen, 
+          toggleCalendar,
+          clearDate,
+          setDate } = useDatePicker(props);
 
   const calendar = () => (
     isOpen && (
@@ -55,26 +78,6 @@ const useDatePicker = (props) => {
       </div>
     )
   )
-
-  return {
-    datepickerRef,
-    placeholder,
-    disabled,
-    selectedDate,
-    isOpen,
-    toggleCalendar,
-    calendar
-  }
-}
-
-export const DatePicker = memo((props) => {
-  const { datepickerRef, 
-          placeholder, 
-          disabled,
-          selectedDate, 
-          isOpen, 
-          toggleCalendar,
-          calendar } = useDatePicker(props);
 
   return (
     <div className="datepicker-container" ref={datepickerRef}>

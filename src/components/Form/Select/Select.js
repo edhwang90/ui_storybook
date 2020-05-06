@@ -4,7 +4,7 @@ import { filterObjectArray } from '../../Utils';
 
 import './Select.scss';
 
-const useSelect = (props) => {
+export const useSelect = (props) => {
   const { label, value, options, attr, onClick, isMultiSelect, disabled } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(isMultiSelect ? value ? value : [] : value);
@@ -70,6 +70,37 @@ const useSelect = (props) => {
     onClick(updated);
   }
 
+  return {
+    menuRef,
+    label,
+    disabled,
+    isMultiSelect,
+    toggleSelect,
+    getOptionDisplay,
+    filteredList,
+    resetSelect,
+    handleClick,
+    removeSelection,
+    isOpen,
+    selected
+  }
+}
+
+export const Select = memo((props) => {
+  const { menuRef, 
+          label,
+          disabled,
+          isMultiSelect, 
+          getOptionDisplay,
+          toggleSelect, 
+          filteredList,
+          resetSelect,
+          handleClick,
+          removeSelection,
+          isOpen, 
+          selected  } = useSelect(props);
+
+
   // Display purposes: Multiselect vs Select
   const labelUI = () => {
     if (isMultiSelect) {
@@ -126,30 +157,6 @@ const useSelect = (props) => {
     </ul>
   )
 
-  return {
-    labelUI,
-    clearUI,
-    listUI,
-    menuRef,
-    disabled,
-    isMultiSelect,
-    toggleSelect,
-    isOpen,
-    selected
-  }
-}
-
-const Select = memo((props) => {
-  const { labelUI, 
-          clearUI, 
-          listUI, 
-          menuRef, 
-          disabled,
-          isMultiSelect, 
-          toggleSelect, 
-          isOpen, 
-          selected  } = useSelect(props);
-
   return (
     <div ref={menuRef} className={ isMultiSelect ? `multi-select-container ${selected.length > 0 ? 'show-selected' : ''}`: 'select-container'}>
       <div className={`select-btn${ isOpen ? ' list-open' : '' }${ disabled ? ' list-disabled' : ''}`}
@@ -175,8 +182,8 @@ const Select = memo((props) => {
 
 Select.propTypes = {
   options: PropTypes.array.isRequired,
-  label: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
+  label: PropTypes.string,
   value: PropTypes.any,
   attr: (props, propName, componentName) => {
           if (props['options'][0] instanceof Object && (props[propName] === undefined || typeof(props[propName]) !== 'string')) {
@@ -189,6 +196,7 @@ Select.propTypes = {
 }
 
 Select.defaultProps = {
+  label: 'Select...',
   isMultiSelect: false,
   required: false,
   disabled: false

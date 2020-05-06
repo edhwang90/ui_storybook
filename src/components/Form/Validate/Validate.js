@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const checkMinlength = (value, ruleValue) => {
   const valueLength = value.length
@@ -145,4 +146,14 @@ export const useValidate = (props) => {
     validate,
     handleSubmit
   }
+}
+
+useValidate.propTypes = {
+  initialForm: PropTypes.object.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  validateOnChange: PropTypes.bool
+}
+
+useValidate.defaultProps = {
+  validateOnChange: false
 }

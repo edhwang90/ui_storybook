@@ -13,7 +13,7 @@ export default {
   title: 'Form',
   decorators: [withInfo],
   parameters: {
-    info: { source: false, inline: true, propTables: false }
+    info: { source: false, inline: true, propTables: [Checkbox] }
   }
 };
 
@@ -69,11 +69,6 @@ export const Checkboxes = () => (
 </CodeBlock>
   </div>
 )
-
-Checkbox.Proptypes = {
-  test1: PropTypes.string,
-  test2: PropTypes.string
-}
 
 export const Inputs = () => (
   <div className="story-inputs">

@@ -139,7 +139,7 @@ const useSelect = (props) => {
   }
 }
 
-const SelectUI = (props) => {
+const Select = memo((props) => {
   const { labelUI, 
           clearUI, 
           listUI, 
@@ -171,9 +171,9 @@ const SelectUI = (props) => {
       { listUI() }
     </div>
   )
-}
+});
 
-SelectUI.propTypes = {
+Select.propTypes = {
   options: PropTypes.array.isRequired,
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
@@ -184,7 +184,12 @@ SelectUI.propTypes = {
           }
         },
   isMultiSelect: PropTypes.bool,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  disabled: PropTypes.bool
 }
 
-export const Select = memo(SelectUI);
+Select.defaultProps = {
+  isMultiSelect: false,
+  required: false,
+  disabled: false
+}

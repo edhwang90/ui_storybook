@@ -67,7 +67,7 @@ const useDatePicker = (props) => {
   }
 }
 
-const DatePickerUI = (props) => {
+export const DatePicker = memo((props) => {
   const { datepickerRef, 
           placeholder, 
           disabled,
@@ -89,17 +89,18 @@ const DatePickerUI = (props) => {
       { calendar() }
     </div>
   )
-}
+});
 
-DatePickerUI.propTypes = {
+DatePicker.propTypes = {
+  onClick: PropTypes.func.isRequired,
   value: PropTypes.string,
   format: PropTypes.string,
   placeholder: PropTypes.string,
-  onClick: PropTypes.func
+  disabled: PropTypes.bool
 }
 
-DatePickerUI.defaultProps = {
-  format: 'MM/DD/YYYY'
+DatePicker.defaultProps = {
+  format: 'MM/DD/YYYY',
+  placeholder: 'MM/DD/YYYY',
+  disabled: false
 }
-
-export const DatePicker = memo(DatePickerUI);

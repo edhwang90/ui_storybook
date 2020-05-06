@@ -24,7 +24,7 @@ const useCheckbox = (props) => {
   }
 }
 
-const CheckboxUI = (props) => {
+export const Checkbox = memo((props) => {
   const { id, checked, label, checkToggle, disabled } = useCheckbox(props);
 
   return (
@@ -38,10 +38,16 @@ const CheckboxUI = (props) => {
       <label htmlFor={'checkbox' + id}><span>{label}</span></label>
     </div>
   )
+})
+
+Checkbox.propTypes = {
+  label: PropTypes.string.isRequired,
+  handleToggle: PropTypes.func.isRequired,
+  value: PropTypes.bool,
+  disabled: PropTypes.bool,
 }
 
-CheckboxUI.propTypes = {
-  label: PropTypes.string.isRequired
+Checkbox.defaultProps = {
+  value: false,
+  disabled: false
 }
-
-export const Checkbox = memo(CheckboxUI);

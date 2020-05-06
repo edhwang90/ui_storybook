@@ -100,7 +100,6 @@ export const Select = memo((props) => {
           isOpen, 
           selected  } = useSelect(props);
 
-
   // Display purposes: Multiselect vs Select
   const labelUI = () => {
     if (isMultiSelect) {

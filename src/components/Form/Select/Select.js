@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, memo } from 'react';
 import PropTypes from 'prop-types';
-import { filterObjectArray } from '../../Utils';
+import { filterObjectArray, traverseNodes } from '../../Utils';
 
 import './Select.scss';
 
@@ -8,8 +8,6 @@ export const useSelect = (props) => {
   const { className, label, value, options, attr, onClick, isMultiSelect, disabled } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(isMultiSelect ? value ? value : [] : value);
-  const menuRef = useRef(null);
-  const btnRef = useRef(null);
 
   const getOptionDisplay = (selected) => {
     return attr ? selected[attr] : selected
@@ -23,23 +21,13 @@ export const useSelect = (props) => {
     } 
   }
 
-  useEffect(() => {
-    const hideSelect = e => {
-      if (menuRef.current.contains(e.target)) {
-        return;
-      }
-
-      setIsOpen(false);
-    };
-
-    document.addEventListener('click', hideSelect);
-    return () =>  {document.removeEventListener('click', hideSelect) };
-  }, [menuRef])
-
   const toggleSelect = () => {
     if (disabled) return;
-    if (!isOpen) btnRef.current.focus();
     setIsOpen(!isOpen);
+  }
+  
+  const closeSelect = () => {
+    setIsOpen(false);
   }
 
   const handleClick = (option) => {
@@ -53,6 +41,8 @@ export const useSelect = (props) => {
       toggleSelect();
     }
   }
+
+
 
   const resetSelect = (e) => {
     e.stopPropagation();
@@ -74,37 +64,74 @@ export const useSelect = (props) => {
 
   return {
     className,
-    menuRef,
-    btnRef,
     label,
     disabled,
     isMultiSelect,
-    toggleSelect,
+    isOpen,
+    selected,
     getOptionDisplay,
+    toggleSelect,
+    closeSelect,
     filteredList,
     resetSelect,
     handleClick,
-    removeSelection,
-    isOpen,
-    selected
+    removeSelection
   }
 }
 
 export const Select = memo((props) => {
   const { className,
-          menuRef, 
-          btnRef,
           label,
           disabled,
           isMultiSelect, 
+          isOpen, 
+          selected,
           getOptionDisplay,
           toggleSelect, 
+          closeSelect,
           filteredList,
           resetSelect,
           handleClick,
-          removeSelection,
-          isOpen, 
-          selected  } = useSelect(props);
+          removeSelection  } = useSelect(props);
+
+  const menuRef = useRef(null);
+  const btnRef = useRef(null);
+  const listRef = useRef(null);
+
+  const onOutsideClick = e => {
+    if (menuRef.current.contains(e.target)) {
+      return;
+    }
+
+    closeSelect();
+    // unbind
+    document.removeEventListener('click', onOutsideClick);
+  };
+
+  const handleSelect = (e) => {
+    if (!isOpen) {
+      btnRef.current.focus();
+    }
+    toggleSelect();
+    document.addEventListener('click', onOutsideClick);
+  }
+
+  const handleSelectEnter = (e) => {
+    if (e.keyCode === 13) {
+      toggleSelect();
+    }
+  }
+
+  const handleKeyDown = (e, option) => {
+    // key: enter
+    if (e.keyCode === 13) {
+      e.stopPropagation();
+      handleClick(option);
+    }
+    else if (e.keyCode === 27) {
+      closeSelect();
+    }
+  }
 
   // Display purposes: Multiselect vs Select
   const labelUI = () => {
@@ -148,13 +175,14 @@ export const Select = memo((props) => {
 
   const listUI = () => (
     isOpen &&
-    <ul className="select-list">
+    <ul tabIndex="0" className="select-list" ref={listRef} onKeyDown={e => traverseNodes(e, listRef, 'li')}>
     {
       filteredList().length > 0
       ? (
-        filteredList().map((option, index) => (
-            <li key={index}
-                onClick={e => handleClick(option)}>{getOptionDisplay(option)}</li>
+          filteredList().map((option, index) => (
+            <li key={index} tabIndex="0" onKeyDown={e => handleKeyDown(e, option)} onClick={e => handleClick(option)}>
+              {getOptionDisplay(option)}
+            </li>
           ))
         )
       : <li>No available options.</li>
@@ -163,11 +191,12 @@ export const Select = memo((props) => {
   )
 
   return (
-    <div ref={menuRef} className={ isMultiSelect ? `multi-select-container ${selected.length > 0 ? 'show-selected' : ''}`: `select-container`}>
+    <div onKeyDown={handleSelectEnter} ref={menuRef} className={ isMultiSelect ? `multi-select-container ${selected.length > 0 ? 'show-selected' : ''}`: `select-container`}>
       <div className={`select-btn${ isOpen ? ' list-open' : '' }${ disabled ? ' list-disabled' : ''} ${className}`}
            ref={btnRef}
-           tabIndex="1" //focus hack
-           onClick={toggleSelect}>
+           role="button"
+           tabIndex="0"
+           onClick={handleSelect}>
         <div className="select-display">
           {labelUI()}
         </div>

@@ -9,23 +9,12 @@ export const useDatePicker = (props) => {
   const [selectedDate, setSelectedDate] = useState(value ? value : '');
   const [isOpen, setIsOpen] = useState(false);
 
-  const datepickerRef = useRef(null);
-
-  useEffect(() => {
-    const hideCalendar = e => {
-      if (datepickerRef.current.contains(e.target)) {
-        return;
-      }
-
-      setIsOpen(false);
-    };
-
-    document.addEventListener('click', hideCalendar);
-    return () =>  {document.removeEventListener('click', hideCalendar) };
-  }, [datepickerRef]);
-
   const toggleCalendar = () => {
     setIsOpen(!isOpen);
+  }
+
+  const closeCalendar = () => {
+    setIsOpen(false);
   }
 
   const setDate = (date) => {
@@ -41,13 +30,13 @@ export const useDatePicker = (props) => {
 
   return {
     className,
-    datepickerRef,
     placeholder,
     format,
     disabled,
     selectedDate,
     isOpen,
     toggleCalendar,
+    closeCalendar,
     clearDate,
     setDate
   }
@@ -55,16 +44,37 @@ export const useDatePicker = (props) => {
 
 export const DatePicker = memo((props) => {
   const { className,
-          inputRef,
-          datepickerRef, 
           placeholder, 
           disabled,
           format,
           selectedDate, 
           isOpen, 
           toggleCalendar,
+          closeCalendar,
           clearDate,
           setDate } = useDatePicker(props);
+
+  const datepickerRef = useRef(null);
+
+  const onOutsideClick = e => {
+    if (datepickerRef.current.contains(e.target)) {
+      return;
+    }
+
+    closeCalendar();
+    document.removeEventListener('click', onOutsideClick);
+  };
+
+  const toggle = () => {
+    toggleCalendar();
+    document.addEventListener('click', onOutsideClick);
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 27) {
+      closeCalendar();
+    }
+  }
 
   const calendar = () => (
     isOpen && (
@@ -78,21 +88,20 @@ export const DatePicker = memo((props) => {
         <div className="calendar-bottom">
           <button onClick={clearDate} type="button">Clear</button>
 
-          <button onClick={toggleCalendar} type="button">Close</button>
+          <button onClick={toggle} type="button">Close</button>
         </div>
       </div>
     )
   )
 
   return (
-    <div className="datepicker-container" ref={datepickerRef}>
+    <div onKeyDown={handleKeyDown} className="datepicker-container" ref={datepickerRef}>
       <input className={`form-input ${className}`}
-             ref={inputRef}
              placeholder={placeholder} 
              value={selectedDate}
              readOnly
              disabled={disabled}
-             onFocus={toggleCalendar}>
+             onFocus={toggle}>
       </input>
 
       { calendar() }

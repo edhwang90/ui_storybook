@@ -60,6 +60,12 @@
   }
 }
 
+.btn.is-clear {
+  background-color: transparent;
+  color: $font-color;
+  border: 0;
+}
+
 .btn.is-danger {
   background-color: $error-color;
   border-color: $error-color;

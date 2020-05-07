@@ -68,6 +68,12 @@ export const Calendar = (props) => {
     setShowYears(!showYears);
   }
 
+  const onEnter = (e, date) => {
+    if (e.keyCode === 13) {
+      onClick(date);
+    }
+  }
+
   const displayHeader = () => (
     moment.weekdaysShort().map((day, index) => (
       <th key={`wks${index}`}>{day}</th>
@@ -92,7 +98,8 @@ export const Calendar = (props) => {
       const highlightToday = newDate.isSame(currentDate, 'day') ? 'today' : '';
       const highlightSelect = newDate.isSame(selectedDate, 'day') ? 'selected' : '';
 
-      days.push(<td key={`tdd${j}`} 
+      days.push(<td tabIndex="0" key={`tdd${j}`} 
+                    onKeyDown={(e) => onEnter(e, newDate.format(format))}
                     onClick={(e) => onClick(newDate.format(format))} 
                     className={`calendar-day ${highlightToday} ${highlightSelect}`}>
                     {j}
@@ -123,14 +130,21 @@ export const Calendar = (props) => {
   return (
     <React.Fragment>
       <div className="calendar-top">
-        <button onClick={e => toMonth('subtract')} className="prev-month" type="button">
+        <button tabIndex="0"
+                onClick={e => toMonth('subtract')} 
+                className="btn is-clear prev-month" type="button">
           <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path></svg>
         </button>
         <div>
           <label>{moment(dateObj).format('MMMM')}</label>
-          <button onClick={toggleYear} type="button">{moment(dateObj).format('YYYY')}</button>
+          <button tabIndex="0"
+                  className="btn is-clear"
+                  onClick={toggleYear} 
+                  type="button">{moment(dateObj).format('YYYY')}</button>
         </div>
-        <button onClick={e => toMonth('add')} className="next-month" type="button">
+        <button tabIndex="0"
+                onClick={e => toMonth('add')} 
+                className="btn is-clear next-month" type="button">
           <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path></svg>
         </button>
       </div>

@@ -14,12 +14,6 @@ const ToggleHook = () => {
 const hookWrapper = shallow(<ToggleHook></ToggleHook>);
 
 describe('Toggle', () => {
-
-  // it('renders the checkbox label', () => { 
-  //   const label = 'Test Checkbox';
-  //   expect(wrapped.find('label').text()).toEqual(label);
-  // });
-
   it('toggles checkbox/switch', () => { 
     hookWrapper.props().toggle();
     expect(hookWrapper.prop('toggled')).toEqual(true);

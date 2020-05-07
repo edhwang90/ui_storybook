@@ -7,10 +7,7 @@ export const useToggle = (props) => {
   const { type, className, toggleFor, value, handleToggle, disabled } = props;
   const [toggled, setToggled] = useState(value || false);
 
-  const toggleRef = useRef(null);
-
   const toggle = (e) => {
-    toggleRef.current.focus();
     setToggled(!toggled);
     handleToggle(!toggled);
   }
@@ -18,7 +15,6 @@ export const useToggle = (props) => {
   return {
     type,
     className,
-    toggleRef,
     toggled,
     toggleFor,
     toggle,
@@ -27,7 +23,21 @@ export const useToggle = (props) => {
 }
 
 export const Toggle = memo((props) => {
-  const { type, toggleRef, className, toggled, toggleFor, toggle, disabled } = useToggle(props);
+  const { type, className, toggled, toggleFor, toggle, disabled } = useToggle(props);
+
+  const toggleRef = useRef(null);
+
+  const handleToggle = () => {
+    toggleRef.current.focus();
+    toggle();
+  }
+
+  const handleKeyDown = (e) => {
+    // key: space
+    if (e.keyCode === 32) {
+      toggle();
+    }
+  }
 
   return (
     <React.Fragment>
@@ -35,12 +45,14 @@ export const Toggle = memo((props) => {
              checked={toggled} 
              value={toggled}
              id={toggleFor}
-             onChange={toggle}
+             onChange={handleToggle}
              disabled={disabled}/>
       <span className={className} 
             ref={toggleRef}
-            tabIndex="-1" // focus hack 
-            onClick={toggle}></span>
+            role="button"
+            tabIndex="0"
+            onKeyDown={handleKeyDown}
+            onClick={handleToggle}></span>
     </React.Fragment>
   )
 })

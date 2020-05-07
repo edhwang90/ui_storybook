@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
-import { Checkbox, Select, DatePicker, useValidate } from './components/Form'
+import { Checkbox, Toggle, Select, DatePicker, useValidate } from './components/Form'
 
 
 import './App.scss';
@@ -63,6 +63,10 @@ function App() {
       value: '',
       rules: [{ type: 'required' }]
     },
+    flexible: {
+      value: '',
+      rules: [{ type: 'required' }]
+    },
     terms: {
       value: '',
       rules: [{ type: 'required' }]
@@ -90,10 +94,10 @@ function App() {
         <div className="row">
           <div className="col">
             <div className="form-group">
-              <label className="form-label">Email</label>
+              <label className="form-label">Email<span className="required">*</span></label>
               <div className="input-container">
                 <input onChange={e => handleChange('email', e.target.value)}
-                       className="form-input" 
+                       className={`form-input ${form.email.errors?.length > 0 ? 'form-error' : ''}`}
                        value={form.email.value}
                        //onBlur={e => validate('email', e.target.value)}
                        type="email" 
@@ -109,10 +113,10 @@ function App() {
               }
             </div>
             <div className="form-group">
-              <label className="form-label">Password</label>
+              <label className="form-label">Password<span className="required">*</span></label>
               <div className="input-container">
                 <span className="form-input-prepend"><FontAwesomeIcon icon={faCoffee} /></span>
-                <input className="form-input"
+                <input className={`form-input ${form.password.errors?.length > 0 ? 'form-error' : ''}`}
                        value={form.password.value}
                        onChange={e => handleChange('password', e.target.value)}
                        type="password" 
@@ -127,9 +131,10 @@ function App() {
               }
             </div>
             <div className="form-group">
-              <label className="form-label">Industry Experience</label>
+              <label className="form-label">Industry Experience<span className="required">*</span></label>
               <Select options={industryArray}
                       value={form.industry.value}
+                      className={form.industry.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
                       isMultiSelect
                       onClick={e => handleChange('industry', e)}></Select>
@@ -142,9 +147,10 @@ function App() {
             </div>
 
             <div className="form-group">
-              <label className="form-label">Role</label>
+              <label className="form-label">Role<span className="required">*</span></label>
               <Select options={rolesArray}
                       value={form.role.value}
+                      className={form.role.errors?.length > 0 ? 'form-error' : ''}
                       attr="name"
                       label="Select..."
                       onClick={e => handleChange('role', e)}></Select>
@@ -157,8 +163,11 @@ function App() {
             </div> 
 
             <div className="form-group">
-              <label className="form-label">Select a date</label>
-              <DatePicker onClick={e => handleChange('startDate', e)} format="MM/DD/YYYY" placeholder="MM/DD/YYYY"></DatePicker>
+              <label className="form-label">Select a date<span className="required">*</span></label>
+              <DatePicker onClick={e => handleChange('startDate', e)} 
+                          className={form.startDate.errors?.length > 0 ? 'form-error' : ''}
+                          format="MM/DD/YYYY" 
+                          placeholder="MM/DD/YYYY"></DatePicker>
               { 
                 form.startDate.errors &&
                 form.startDate.errors.map((err, index) => (
@@ -168,15 +177,41 @@ function App() {
             </div>
 
             <div className="form-group">
-              <Checkbox label="Agree to terms"
+              <div className="row">
+                <Toggle type="switch"
+                        toggleFor="flexibleDate"
+                        className={form.flexible.errors?.length > 0 ? 'form-error' : ''}
+                        handleToggle={e => handleChange('flexible', e)}>
+                </Toggle>
+                <label className="toggle-label" htmlFor="flexibleDate">Flexible date<span className="required">*</span></label>
+              </div>
+              <div className="row">
+                { 
+                  form.flexible.errors &&
+                  form.flexible.errors.map((err, index) => (
+                    <span key={index} className="error-message">{err}</span>
+                  ))
+                }
+              </div>
+            </div>
+
+            <div className="form-group">
+              <div className="row">
+                <Toggle type="checkbox"
+                        toggleFor="agreeTerms"
+                        className={form.terms.errors?.length > 0 ? 'form-error' : ''}
                         handleToggle={e => handleChange('terms', e)}>
-              </Checkbox>
-              { 
-                form.terms.errors &&
-                form.terms.errors.map((err, index) => (
-                  <span key={index} className="error-message">{err}</span>
-                ))
-              }
+                </Toggle>
+                <label htmlFor="agreeTerms" className="toggle-label">Agree to terms<span className="required">*</span></label>
+              </div>
+              <div className="row">
+                { 
+                  form.terms.errors &&
+                  form.terms.errors.map((err, index) => (
+                    <span key={index} className="error-message">{err}</span>
+                  ))
+                }
+              </div>
             </div>
           </div>
         </div>

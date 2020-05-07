@@ -1,0 +1,111 @@
+.switch, .checkbox {
+  position: absolute;
+  opacity: 0;
+
+  & + span {
+    position: relative;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+  }
+
+  & + span:before {
+    content: '';
+    display: inline-block;
+    vertical-align: text-top;
+    border: 1px solid #e6e6e6;
+    background: #fff;
+    align-self: normal;
+    transition: all ease-in .3s;
+  }
+
+  // Container hover
+  & + span:hover:before {
+    background: #fff;
+    border-color: darken(#e6e6e6, 10%);
+  }
+
+  & + span:focus:before {
+    outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.3rem rgba(0,123,255,.25);
+  }
+
+  & + span:after {
+    content: '';
+    position: absolute;
+  }
+
+  // Disabled state label.
+  &:disabled + span {
+    color: #e6e6e6;
+    cursor: not-allowed;
+  }
+
+  &:disabled + span:after {
+    border: 0;
+    background-color: #f7f7f7;
+  }
+
+  // Disabled box.
+  &:disabled + span:before {
+    box-shadow: none;
+    background-color: #f7f7f7;
+    border-color: #e6e6e6;
+  }
+}
+
+.switch {
+  // Container
+  & + span:before {
+    width: 2.5rem;
+    min-width: 2.5rem;
+    height: 1.5626rem;
+    border-radius: 1.5625rem;
+  }
+
+  // Box checked
+  &:checked + span:before {
+    background: #4d4d4d;
+  }
+
+  // Toggle
+  & + span:after {
+    left: .3125rem;
+    top: .3125rem;
+    height: .9375rem;
+    width: .9375rem;
+    background-color: #4d4d4d;
+    border-radius: 50%;
+    align-self: unset;
+    transition: transform ease-in-out .2s;
+  }
+
+  &:checked + span:after {
+    content: '';
+    background-color: #ffffff;
+    transform: translateX(.9375rem);
+  }
+}
+
+.checkbox {
+  // Box.
+  & + span:before {
+    width: 1.5625rem;
+    min-width: 1.5625rem;
+    height: 1.5625rem;
+    border-radius: 4px;
+  }
+
+  // Checkmark
+  &:checked + span:after, &:hover + span:after {
+    left: .6rem;
+    top: .3125rem;
+    transform: rotate(45deg);
+    height: .6875rem;
+    width: .375rem;
+    border-bottom: .125rem solid #4d4d4d;
+    border-right: .125rem solid #4d4d4d;
+    align-self: unset;
+  }
+}

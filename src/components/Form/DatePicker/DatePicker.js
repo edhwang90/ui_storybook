@@ -5,9 +5,10 @@ import { Calendar } from './Calendar';
 import './DatePicker.scss';
 
 export const useDatePicker = (props) => {
-  const { value, format, placeholder, onClick, disabled } = props;
+  const { className, format, value, placeholder, onClick, disabled } = props;
   const [selectedDate, setSelectedDate] = useState(value ? value : '');
   const [isOpen, setIsOpen] = useState(false);
+
   const datepickerRef = useRef(null);
 
   useEffect(() => {
@@ -28,19 +29,21 @@ export const useDatePicker = (props) => {
   }
 
   const setDate = (date) => {
-    const formatted = date;//.format(format);
-    setSelectedDate(formatted);
+    setSelectedDate(date);
     setIsOpen(false);
-    onClick(formatted);
+    onClick(date);
   }
 
   const clearDate = () => {
     setSelectedDate('');
+    onClick('');
   }
 
   return {
+    className,
     datepickerRef,
     placeholder,
+    format,
     disabled,
     selectedDate,
     isOpen,
@@ -51,7 +54,9 @@ export const useDatePicker = (props) => {
 }
 
 export const DatePicker = memo((props) => {
-  const { datepickerRef, 
+  const { className,
+          inputRef,
+          datepickerRef, 
           placeholder, 
           disabled,
           format,
@@ -81,7 +86,8 @@ export const DatePicker = memo((props) => {
 
   return (
     <div className="datepicker-container" ref={datepickerRef}>
-      <input className={`form-input ${ isOpen ? 'focused' : ''}`}
+      <input className={`form-input ${className}`}
+             ref={inputRef}
              placeholder={placeholder} 
              value={selectedDate}
              readOnly
@@ -96,6 +102,7 @@ export const DatePicker = memo((props) => {
 
 DatePicker.propTypes = {
   onClick: PropTypes.func.isRequired,
+  className: PropTypes.string,
   value: PropTypes.string,
   format: PropTypes.string,
   placeholder: PropTypes.string,

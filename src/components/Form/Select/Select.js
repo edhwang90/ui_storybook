@@ -5,10 +5,11 @@ import { filterObjectArray } from '../../Utils';
 import './Select.scss';
 
 export const useSelect = (props) => {
-  const { label, value, options, attr, onClick, isMultiSelect, disabled } = props;
+  const { className, label, value, options, attr, onClick, isMultiSelect, disabled } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(isMultiSelect ? value ? value : [] : value);
   const menuRef = useRef(null);
+  const btnRef = useRef(null);
 
   const getOptionDisplay = (selected) => {
     return attr ? selected[attr] : selected
@@ -37,6 +38,7 @@ export const useSelect = (props) => {
 
   const toggleSelect = () => {
     if (disabled) return;
+    if (!isOpen) btnRef.current.focus();
     setIsOpen(!isOpen);
   }
 
@@ -71,7 +73,9 @@ export const useSelect = (props) => {
   }
 
   return {
+    className,
     menuRef,
+    btnRef,
     label,
     disabled,
     isMultiSelect,
@@ -87,7 +91,9 @@ export const useSelect = (props) => {
 }
 
 export const Select = memo((props) => {
-  const { menuRef, 
+  const { className,
+          menuRef, 
+          btnRef,
           label,
           disabled,
           isMultiSelect, 
@@ -157,9 +163,11 @@ export const Select = memo((props) => {
   )
 
   return (
-    <div ref={menuRef} className={ isMultiSelect ? `multi-select-container ${selected.length > 0 ? 'show-selected' : ''}`: 'select-container'}>
-      <div className={`select-btn${ isOpen ? ' list-open' : '' }${ disabled ? ' list-disabled' : ''}`}
-            onClick={toggleSelect}>
+    <div ref={menuRef} className={ isMultiSelect ? `multi-select-container ${selected.length > 0 ? 'show-selected' : ''}`: `select-container`}>
+      <div className={`select-btn${ isOpen ? ' list-open' : '' }${ disabled ? ' list-disabled' : ''} ${className}`}
+           ref={btnRef}
+           tabIndex="1" //focus hack
+           onClick={toggleSelect}>
         <div className="select-display">
           {labelUI()}
         </div>
@@ -182,6 +190,7 @@ export const Select = memo((props) => {
 Select.propTypes = {
   options: PropTypes.array.isRequired,
   onClick: PropTypes.func.isRequired,
+  className: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.any,
   attr: (props, propName, componentName) => {

@@ -17,14 +17,11 @@ ul, ol {
   list-style: none;
 }
 
-// Modifiers
-.circular {
-  border-radius: 50%;
-}
-
+// Grid
 .row {
   display: flex;
   flex: 0;
+  align-items: center;
 }
 
 .col {
@@ -35,6 +32,34 @@ ul, ol {
   &:last-of-type {
     margin-right: 0rem;
   }
+}
+
+// Modifiers
+.to-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+}
+
+.to-col {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.circular {
+  border-radius: 50% !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-left {
+  text-align: left !important;
 }
 
 @media (max-width: 520px) {

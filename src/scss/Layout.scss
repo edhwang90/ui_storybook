@@ -22,7 +22,6 @@ ul, ol {
 .row {
   display: flex;
   flex: 0;
-  align-items: center;
 }
 
 .col {
@@ -49,6 +48,10 @@ ul, ol {
 
 .circular {
   border-radius: 50% !important;
+}
+
+.flex-center {
+  align-items: center !important;
 }
 
 .text-center {

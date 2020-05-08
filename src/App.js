@@ -177,7 +177,7 @@ function App() {
             </div>
 
             <div className="form-group">
-              <div className="row">
+              <div className="row flex-center">
                 <Toggle type="switch"
                         toggleFor="flexibleDate"
                         className={form.flexible.errors?.length > 0 ? 'form-error' : ''}
@@ -196,7 +196,7 @@ function App() {
             </div>
 
             <div className="form-group">
-              <div className="row">
+              <div className="row flex-center">
                 <Toggle type="checkbox"
                         toggleFor="agreeTerms"
                         className={form.terms.errors?.length > 0 ? 'form-error' : ''}

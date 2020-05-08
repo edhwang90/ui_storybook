@@ -64,6 +64,11 @@
   background-color: transparent;
   color: $font-color;
   border: 0;
+
+  &:hover {
+    background-color: darken(#ffffff, 10%);
+    border-color: darken(#ffffff, 10%);
+  }
 }
 
 .btn.is-danger {

@@ -101,9 +101,14 @@ export const DatePicker = memo((props) => {
           </Calendar>     
         }
         <div className="calendar-bottom">
-          <button onClick={clearDate} type="button">Clear</button>
+          <button className="btn is-clear" 
+                  onClick={clearDate} 
+                  type="button">Clear</button>
 
-          <button onClick={toggle} onKeyDown={e => handleExitBlur(e)} type="button">Close</button>
+          <button className="btn is-clear" 
+                  onClick={toggle} 
+                  onKeyDown={e => handleExitBlur(e)} 
+                  type="button">Close</button>
         </div>
       </div>
     )

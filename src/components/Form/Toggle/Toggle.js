@@ -26,6 +26,7 @@ export const Toggle = memo((props) => {
   const { type, className, toggled, toggleFor, toggle, disabled } = useToggle(props);
 
   const handleToggle = () => {
+    if (disabled) return;
     toggle();
   }
 

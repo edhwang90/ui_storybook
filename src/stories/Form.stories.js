@@ -2,7 +2,7 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withInfo } from '@storybook/addon-info';
 
-import { Checkbox, Select, DatePicker } from '../components/Form';
+import { Toggle, Select, DatePicker } from '../components/Form';
 import { CodeBlock } from '../components/CodeBlock';
 
 import './stories.scss';
@@ -32,36 +32,133 @@ const options2 = [
 export const Checkboxes = () => (
   <div>
     <div className="form-group">
-      <Checkbox label="Default"
+      <div className="row flex-center">
+        <Toggle type="checkbox"
+                toggleFor="Default"
                 handleToggle={action('toggle')}>
-      </Checkbox>
+        </Toggle>
+        <label htmlFor="Default" className="toggle-label">Default</label>
+      </div>
+    </div>
 
-      <Checkbox label="Prefilled"
+    <div className="form-group">
+      <div className="row flex-center">
+        <Toggle type="checkbox"
+                toggleFor="Prefilled"
                 value={true}
                 handleToggle={action('toggle')}>
-      </Checkbox>
+        </Toggle>
+        <label htmlFor="Prefilled" className="toggle-label">Prefilled</label>
+      </div>
+    </div>
 
-      <Checkbox label="Disabled"
+    <div className="form-group">
+      <div className="row flex-center">
+        <Toggle type="checkbox"
+                toggleFor="Disabled"
                 disabled
                 handleToggle={action('toggle')}>
-      </Checkbox>
+        </Toggle>
+        <label htmlFor="Disabled" className="toggle-label">Disabled</label>
+      </div>
     </div>
+  
 <CodeBlock language="html">
   {
   `
-  <Checkbox label="Default"
+  <div className="row flex-center">
+    <Toggle type="checkbox"
+            toggleFor="Default"
             handleToggle={fn}>
-  </Checkbox>
+    </Toggle>
+    <label htmlFor="Default" className="toggle-label">Default</label>
+  </div>
 
-  <Checkbox label="Prefilled"
+  <div className="row flex-center">
+    <Toggle type="checkbox"
+            toggleFor="Prefilled"
             value={true}
             handleToggle={fn}>
-  </Checkbox>
+    </Toggle>
+    <label htmlFor="Prefilled" className="toggle-label">Prefilled</label>
+  </div>
 
-  <Checkbox label="Disabled"
+  <div className="row flex-center">
+    <Toggle type="checkbox"
+            toggleFor="Disabled"
             disabled
             handleToggle={fn}>
-  </Checkbox>
+    </Toggle>
+    <label htmlFor="Disabled" className="toggle-label">Disabled</label>
+  </div>
+  `
+  }
+</CodeBlock>
+  </div>
+)
+
+export const Switches = () => (
+  <div>
+    <div className="form-group">
+      <div className="row flex-center">
+        <Toggle type="switch"
+                toggleFor="Default"
+                handleToggle={action('toggle')}>
+        </Toggle>
+        <label htmlFor="Default" className="toggle-label">Default</label>
+      </div>
+    </div>
+
+    <div className="form-group">
+      <div className="row flex-center">
+        <Toggle type="switch"
+                toggleFor="Prefilled"
+                value={true}
+                handleToggle={action('toggle')}>
+        </Toggle>
+        <label htmlFor="Prefilled" className="toggle-label">Prefilled</label>
+      </div>
+    </div>
+
+    <div className="form-group">
+      <div className="row flex-center">
+        <Toggle type="switch"
+                toggleFor="Disabled"
+                disabled
+                handleToggle={action('toggle')}>
+        </Toggle>
+        <label htmlFor="Disabled" className="toggle-label">Disabled</label>
+      </div>
+    </div>
+  
+<CodeBlock language="html">
+  {
+  `
+  <div className="row flex-center">
+    <Toggle type="switch"
+            toggleFor="Default"
+            handleToggle={fn}>
+    </Toggle>
+    <label htmlFor="Default" className="toggle-label">Default</label>
+  </div>
+
+  <div className="row flex-center">
+    <Toggle type="switch"
+            toggleFor="Prefilled"
+            value={true}
+            handleToggle={fn}>
+    </Toggle>
+    <label htmlFor="Prefilled" className="toggle-label">Prefilled</label>
+  </div>
+
+  <div className="row flex-center">
+    <Toggle type="switch"
+            toggleFor="Disabled"
+            disabled
+            handleToggle={fn}>
+    </Toggle>
+    <label htmlFor="Disabled" className="toggle-label">Disabled</label>
+  </div>
   `
   }
 </CodeBlock>
@@ -115,27 +212,27 @@ export const Inputs = () => (
   <div className="form-group">
     <label className="form-label">Text</label>
     <input onChange={fn}
-            className="form-input"
-            type="text" 
-            placeholder="Username">
+           className="form-input"
+           type="text" 
+           placeholder="Username">
     </input>
   </div>
 
   <div className="form-group">
     <label className="form-label">Password</label>
     <input onChange={fn}
-            className="form-input" 
-            type="password" 
-            placeholder="Password">
+           className="form-input" 
+           type="password" 
+           placeholder="Password">
     </input>
   </div>
 
   <div className="form-group">
     <label className="form-label">Email</label>
     <input onChange={fn}
-            className="form-input" 
-            type="email" 
-            placeholder="Email">
+           className="form-input" 
+           type="email" 
+           placeholder="Email">
     </input>
   </div>
 
@@ -354,13 +451,18 @@ export const DatePickers = () => (
       <div className="col">
         <div className="form-group">
           <label className="form-label">Select a date</label>
-          <DatePicker onClick={action('select')} value="12/01/2020" format="MM/DD/YYYY" placeholder="MM/DD/YYYY"></DatePicker>
+          <DatePicker onClick={action('select')} 
+                      value="12/01/2020" 
+                      format="MM/DD/YYYY" 
+                      placeholder="MM/DD/YYYY"></DatePicker>
         </div>
       </div>
       <div className="col">
         <div className="form-group">
           <label className="form-label">Select a date</label>
-          <DatePicker onClick={action('select')} format="DD/MM/YYYY" placeholder="DD/MM/YYYY"></DatePicker>
+          <DatePicker onClick={action('select')} 
+                      format="DD/MM/YYYY" 
+                      placeholder="DD/MM/YYYY"></DatePicker>
         </div>
       </div>
     </div>
@@ -369,11 +471,16 @@ export const DatePickers = () => (
   `
   <div className="form-group">
     <label className="form-label">Select a date</label>
-    <DatePicker onClick={fn} value="12/01/2020" format="MM/DD/YYYY" placeholder="MM/DD/YYYY"></DatePicker>
+    <DatePicker onClick={fn} 
+                value="12/01/2020" 
+                format="MM/DD/YYYY" 
+                placeholder="MM/DD/YYYY"></DatePicker>
   </div>
   <div className="form-group">
     <label className="form-label">Select a date</label>
-    <DatePicker onClick={fn} format="DD/MM/YYYY" placeholder="DD/MM/YYYY"></DatePicker>
+    <DatePicker onClick={fn} 
+                format="DD/MM/YYYY" 
+                placeholder="DD/MM/YYYY"></DatePicker>
   </div>
   `
   }

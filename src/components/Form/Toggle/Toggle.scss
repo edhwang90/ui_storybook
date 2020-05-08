@@ -86,6 +86,10 @@
     background-color: #ffffff;
     transform: translateX(.9375rem);
   }
+
+  &:disabled + span:after {
+    background-color: #e6e6e6;
+  }
 }
 
 .checkbox {

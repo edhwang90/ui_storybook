@@ -2,4 +2,5 @@ export { filterObjectArray,
          generateNumber,
          partial,
          pipe,
-         traverseNodes } from './Utils';
+         traverseNodes,
+         traverseTable } from './Utils';

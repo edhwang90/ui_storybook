@@ -98,6 +98,10 @@
     &.today {
       border: 2px solid #e6e6e6;
     }
+
+    &:focus {
+      outline: dotted;
+    }
   }
 }
 
@@ -118,7 +122,11 @@
     border-radius: 4px;
   }
 
-  li:hover, li:focus {
+  li:hover {
     background-color: #f7f7f7;
+  }
+
+  li:focus {
+    outline: dotted;
   }
 }

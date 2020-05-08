@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, memo } from 'react';
 import PropTypes from 'prop-types';
 import { Calendar } from './Calendar';
+import { traverseTable } from '../../Utils';
 
 import './DatePicker.scss';
 
@@ -71,13 +72,14 @@ export const DatePicker = memo((props) => {
   }
 
   const handleKeyDown = (e) => {
-    console.log('asdf');
     // key: escape
     if (e.keyCode === 27) {
+      e.stopPropagation();
       closeCalendar();
     }
     // key: enter, space
     else if (e.keyCode === 13 || e.keyCode === 32) {
+      e.stopPropagation();
       toggleCalendar();
     }
   }
@@ -94,14 +96,17 @@ export const DatePicker = memo((props) => {
         <div className="calendar-bottom">
           <button onClick={clearDate} type="button">Clear</button>
 
-          <button onClick={toggle} type="button">Close</button>
+          <button onClick={toggle} onBlur={toggle} type="button">Close</button>
         </div>
       </div>
     )
   )
 
   return (
-    <div onKeyDown={handleKeyDown} className="datepicker-container" ref={datepickerRef}>
+    <div className="datepicker-container" 
+         ref={datepickerRef}
+         tabIndex="-1"
+         onKeyDown={e => traverseTable(e, datepickerRef, closeCalendar)}>
       <input className={`form-input ${className}`}
              placeholder={placeholder} 
              value={selectedDate}

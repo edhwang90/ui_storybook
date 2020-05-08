@@ -2,11 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
+import { traverseNodes } from '../../Utils';
+
 const YearList = (props) => {
-  const { currentYear, toYear } = props;
+  const { currentYear, toYear, toggleYear } = props;
 
   const liRef = useRef(null);
-
+  const yearsRef = useRef(null);
 
   useEffect(() => {
     liRef.current.scrollIntoView({block: 'center'});
@@ -15,8 +17,12 @@ const YearList = (props) => {
   const onYearKeyDown = (e, year) => {
     // keys: enter, space
     if (e.keyCode === 13 || e.keyCode === 32) {
-      e.stopPropagation();
       toYear(e, year);
+    }
+    // key: escape
+    else if (e.keyCode === 27) {
+      console.log('es')
+      toggleYear();
     }
   }
 
@@ -46,7 +52,10 @@ const YearList = (props) => {
 
 
   return (
-    <ol className="year-container">
+    <ol className="year-container"
+        ref={yearsRef}
+        tabIndex="-1"
+        onKeyDown={e => traverseNodes(e, yearsRef, 'li', toggleYear)} >
       {displayYears()}
     </ol>
   )
@@ -71,7 +80,6 @@ export const Calendar = (props) => {
   }
 
   const toMonth = (e, increment) => {
-    e.stopPropagation();
     let initialDate = moment(dateObj, format);
     let incrementDate = initialDate[increment](1, 'M');
 
@@ -79,7 +87,6 @@ export const Calendar = (props) => {
   }
 
   const toYear = (e, year) => {
-    e.stopPropagation();
     let initialDate = moment(dateObj, format);
     let newDate = initialDate.set('year', year);
 
@@ -87,18 +94,11 @@ export const Calendar = (props) => {
   }
 
   const toggleYear = (e) => {
-    e.stopPropagation();
     setShowYears(!showYears);
-  }
-
-  // hack to remove
-  const stopPropagation = (e) => {
-    e.stopPropagation();
   }
 
   const onMonthKeyDown = (e, date) => {
     // keys: enter, space
-    e.stopPropagation();
     if (e.keyCode === 13 || e.keyCode === 32) {
       onClick(date);
     }
@@ -132,7 +132,7 @@ export const Calendar = (props) => {
                     onKeyDown={(e) => onMonthKeyDown(e, newDate.format(format))}
                     onClick={(e) => onClick(newDate.format(format))} 
                     className={`calendar-day ${highlightToday} ${highlightSelect}`}
-                    aria-label="Select day">
+                    aria-label={`Select the date: ${moment(dateObj).set('date', j).format('MMMM DD YYYY')}`}>
                     {j}
                 </td>)
     }
@@ -162,34 +162,31 @@ export const Calendar = (props) => {
     <React.Fragment>
       <div className="calendar-top">
         <button tabIndex="0"
-                onKeyDown={stopPropagation}
                 onClick={e => toMonth(e, 'subtract')} 
                 className="btn is-clear prev-month" 
                 type="button"
-                aria-label="To previous month">
+                aria-label={`To previous month (${moment(dateObj).subtract(1, 'M').format('MMMM')})`}>
           <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path></svg>
         </button>
         <div>
           <label>{moment(dateObj).format('MMMM')}</label>
           <button tabIndex="0"
                   className="btn is-clear"
-                  onKeyDown={stopPropagation}
                   onClick={toggleYear} 
                   type="button"
                   aria-label="Select year">{moment(dateObj).format('YYYY')}</button>
         </div>
         <button tabIndex="0"
-                onKeyDown={stopPropagation}
                 onClick={e => toMonth(e, 'add')} 
                 className="btn is-clear next-month" 
                 type="button"
-                aria-label="To next month">
+                aria-label={`To next month (${moment(dateObj).add(1, 'M').format('MMMM')})`}>
           <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path></svg>
         </button>
       </div>
 
       {
-        showYears && <YearList toYear={toYear} currentYear={moment(dateObj, format).year()}></YearList>
+        showYears && <YearList toggleYear={toggleYear} toYear={toYear} currentYear={moment(dateObj, format).year()}></YearList>
       }
 
       {

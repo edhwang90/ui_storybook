@@ -31,6 +31,7 @@ export const useSelect = (props) => {
   }
 
   const handleClick = (option) => {
+    document.body.blur();
     if (isMultiSelect) {
       setSelected([...selected, option]);
       onClick([...selected, option]);
@@ -113,6 +114,7 @@ export const Select = memo((props) => {
   const handleKeyToggle = (e) => {
     // keys: enter, space
     if (e.keyCode === 13 || e.keyCode === 32) {
+      e.preventDefault();
       handleSelect();
     }
   }
@@ -120,12 +122,12 @@ export const Select = memo((props) => {
   const handleKeyDown = (e, option) => {
     // key: enter
     if (e.keyCode === 13 || e.keyCode === 32) {
-      e.stopPropagation();
+      e.preventDefault();
       handleClick(option);
     }
     // key: escape
     else if (e.keyCode === 27) {
-      e.stopPropagation();
+      e.preventDefault();
       closeSelect();
     }
   }
@@ -179,13 +181,16 @@ export const Select = memo((props) => {
 
   const listUI = () => (
     isOpen &&
-    <ul tabIndex="-1" className="select-list" ref={listRef} onKeyDown={e => traverseNodes(e, listRef, 'li')}>
+    <ul tabIndex="-1" 
+        className="select-list" 
+        ref={listRef} 
+        onKeyDown={e => traverseNodes(e, listRef, 'li', toggleSelect)}>
     {
       filteredList().length > 0
       ? (
           filteredList().map((option, index) => (
             <li key={index} 
-                tabIndex="0" 
+                tabIndex="0"
                 onKeyDown={e => handleKeyDown(e, option)} 
                 onClick={e => handleClick(option)}
                 aria-label={`Select option ${getOptionDisplay(option)}`}>
@@ -199,8 +204,7 @@ export const Select = memo((props) => {
   )
 
   return (
-    <div 
-         ref={menuRef} 
+    <div ref={menuRef}
          className={ isMultiSelect ? `multi-select-container ${selected.length > 0 ? 'show-selected' : ''}`: `select-container`}>
       <div className={`select-btn${ isOpen ? ' list-open' : '' }${ disabled ? ' list-disabled' : ''} ${className}`}
            tabIndex="0"

@@ -10,8 +10,8 @@ const _pipe = (fn, gn) => (...args) => gn(fn(...args));
 
 export const pipe = (...fns) => fns.reduce(_pipe);
 
-export const traverseNodes = (evt, el, nodeType) => {
-  const allOptions = el.current.querySelectorAll('li');
+export const traverseNodes = (evt, el, nodeType, endFn) => {
+  const allOptions = el.current.children;
   const list = [].slice.call(allOptions)
   const selected = list.findIndex(x => x === evt.target);
 
@@ -19,6 +19,7 @@ export const traverseNodes = (evt, el, nodeType) => {
   if (evt.keyCode === 40) {
     evt.preventDefault();
     evt.stopPropagation();
+ 
     const next = selected >= list.length - 1 ? 0 : selected + 1
     list[next].focus();
   }
@@ -29,4 +30,35 @@ export const traverseNodes = (evt, el, nodeType) => {
     const previous = selected <= 0 ? list.length - 1 : selected - 1
     list[previous].focus();
   }
+
+  // if tab out
+  evt.target.addEventListener('blur', e => {
+    if (e.relatedTarget?.nodeName !== nodeType.toUpperCase()) {
+      e.preventDefault();
+      endFn();
+    }
+  });
 }
+
+export const traverseTable = (evt, el) => {
+  const tds = el.current.querySelectorAll('td');
+  const clickable = [].slice.call(tds).filter(el => !el.classList.contains('empty'));
+  const selected = clickable.findIndex(d => d === evt.target);
+
+  // key: down
+  if (evt.keyCode === 40 || evt.keyCode === 39) {
+    evt.preventDefault();
+    evt.stopPropagation();
+  
+    const next = selected >= clickable.length - 1 ? 0 : selected + 1
+    clickable[next].focus();
+  }
+  // key: up
+  else if (evt.keyCode === 38 || evt.keyCode === 37) {
+    evt.preventDefault();
+    evt.stopPropagation();
+    const previous = selected <= 0 ? clickable.length - 1 : selected - 1
+    clickable[previous].focus();
+  }
+}
+

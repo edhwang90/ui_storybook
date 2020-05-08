@@ -105,10 +105,15 @@
     cursor: pointer;
     outline: none;
 
-    &:hover, &:focus {
+    &:hover {
       outline: none;
       background-color: #e6e6e6;
     }
+
+    // for debugging accessibility
+    // &:focus {
+    //   outline: dotted;
+    // }
   }
 }
 

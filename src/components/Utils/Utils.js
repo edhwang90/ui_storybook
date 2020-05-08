@@ -32,17 +32,20 @@ export const traverseNodes = (evt, el, nodeType, endFn) => {
   }
 
   // if tab out
-  evt.target.addEventListener('blur', e => {
-    if (e.relatedTarget?.nodeName !== nodeType.toUpperCase()) {
-      e.preventDefault();
-      endFn();
-    }
-  });
+  if (endFn) {
+    evt.target.addEventListener('blur', e => {
+      if (e.relatedTarget?.nodeName !== nodeType.toUpperCase()) {
+        e.preventDefault();
+        endFn();
+      }
+    });
+  }
 }
 
 export const traverseTable = (evt, el) => {
   const tds = el.current.querySelectorAll('td');
-  const clickable = [].slice.call(tds).filter(el => !el.classList.contains('empty'));
+  // skip empties
+  const clickable = [].slice.call(tds).filter(el => el.textContent.length > 0);
   const selected = clickable.findIndex(d => d === evt.target);
 
   // key: down

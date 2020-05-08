@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef, memo } from 'react';
+import React, { useState, useRef, memo } from 'react';
 import PropTypes from 'prop-types';
 import { Calendar } from './Calendar';
-import { traverseTable } from '../../Utils';
 
 import './DatePicker.scss';
 
@@ -71,6 +70,7 @@ export const DatePicker = memo((props) => {
     document.addEventListener('click', onOutsideClick);
   }
 
+  // Accessibility: key downs: escape (close), enter/space (open)
   const handleKeyDown = (e) => {
     // key: escape
     if (e.keyCode === 27) {
@@ -81,6 +81,13 @@ export const DatePicker = memo((props) => {
     else if (e.keyCode === 13 || e.keyCode === 32) {
       e.stopPropagation();
       toggleCalendar();
+    }
+  }
+
+  // Accessibility close on blur
+  const handleExitBlur = (e) => {
+    if (e.keyCode === 9 && !e.shiftKey) {
+      closeCalendar();
     }
   }
 
@@ -96,7 +103,7 @@ export const DatePicker = memo((props) => {
         <div className="calendar-bottom">
           <button onClick={clearDate} type="button">Clear</button>
 
-          <button onClick={toggle} onBlur={toggle} type="button">Close</button>
+          <button onClick={toggle} onKeyDown={e => handleExitBlur(e)} type="button">Close</button>
         </div>
       </div>
     )
@@ -104,10 +111,8 @@ export const DatePicker = memo((props) => {
 
   return (
     <div className="datepicker-container" 
-         ref={datepickerRef}
-         tabIndex="-1"
-         onKeyDown={e => traverseTable(e, datepickerRef, closeCalendar)}>
-      <input className={`form-input ${className}`}
+         ref={datepickerRef}>
+      <input className={`form-input ${className} ${isOpen ? 'calendar-open' : ''}`}
              placeholder={placeholder} 
              value={selectedDate}
              readOnly

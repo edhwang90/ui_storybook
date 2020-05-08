@@ -2,6 +2,11 @@
 
 .datepicker-container {
   position: relative;
+
+  .form-input.calendar-open {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.3rem rgba(0,123,255,.25);
+  }
 }
 
 .calendar-container {
@@ -79,6 +84,11 @@
 
 .month-table {
   width: 100%;
+
+  &:focus {
+    outline: dotted;
+  }
+
   th {
     font-weight: normal;
     color: #cdcdcd;

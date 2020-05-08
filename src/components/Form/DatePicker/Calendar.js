@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import { traverseNodes } from '../../Utils';
+import { traverseNodes, traverseTable } from '../../Utils';
 
 const YearList = (props) => {
   const { currentYear, toYear, toggleYear } = props;
@@ -14,6 +14,7 @@ const YearList = (props) => {
     liRef.current.scrollIntoView({block: 'center'});
   }, [liRef])
 
+  // Accessibility: key downs to year, escape year picker
   const onYearKeyDown = (e, year) => {
     // keys: enter, space
     if (e.keyCode === 13 || e.keyCode === 32) {
@@ -21,7 +22,6 @@ const YearList = (props) => {
     }
     // key: escape
     else if (e.keyCode === 27) {
-      console.log('es')
       toggleYear();
     }
   }
@@ -38,7 +38,7 @@ const YearList = (props) => {
       }
       
       const row = <li ref={scrollRef} 
-                      tabIndex="0"
+                      tabIndex={currentYear === i ? 0 : "-1"}
                       className={isCurrent} 
                       onKeyDown={e => onYearKeyDown(e, i)}
                       onClick={e => toYear(e, i)} 
@@ -55,7 +55,7 @@ const YearList = (props) => {
     <ol className="year-container"
         ref={yearsRef}
         tabIndex="-1"
-        onKeyDown={e => traverseNodes(e, yearsRef, 'li', toggleYear)} >
+        onKeyDown={e => traverseNodes(e, yearsRef, 'li')} >
       {displayYears()}
     </ol>
   )
@@ -66,6 +66,8 @@ export const Calendar = (props) => {
 
   const [dateObj, setDateObj] = useState(selectedDate ? moment(selectedDate, format) : moment());
   const [showYears, setShowYears] = useState(false);
+
+  const monthRef = useRef(null);
 
   useEffect(() => {
     setShowYears(false);
@@ -97,6 +99,7 @@ export const Calendar = (props) => {
     setShowYears(!showYears);
   }
 
+  // Accessibility: key down handle selection
   const onMonthKeyDown = (e, date) => {
     // keys: enter, space
     if (e.keyCode === 13 || e.keyCode === 32) {
@@ -128,7 +131,7 @@ export const Calendar = (props) => {
       const highlightToday = newDate.isSame(currentDate, 'day') ? 'today' : '';
       const highlightSelect = newDate.isSame(selectedDate, 'day') ? 'selected' : '';
 
-      days.push(<td tabIndex="0" key={`tdd${j}`} 
+      days.push(<td tabIndex="-1" key={`tdd${j}`} 
                     onKeyDown={(e) => onMonthKeyDown(e, newDate.format(format))}
                     onClick={(e) => onClick(newDate.format(format))} 
                     className={`calendar-day ${highlightToday} ${highlightSelect}`}
@@ -192,7 +195,11 @@ export const Calendar = (props) => {
       {
         !showYears &&
         <React.Fragment>
-          <table className="month-table">
+          <table className="month-table"
+                 aria-label={`Month of ${moment(dateObj).format('MMMM')}`}
+                 ref={monthRef}
+                 tabIndex="0"
+                 onKeyDown={e => traverseTable(e, monthRef)}>
             <thead>
               <tr>{ displayHeader() }</tr>
             </thead>

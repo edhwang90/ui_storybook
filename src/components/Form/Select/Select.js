@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, memo } from 'react';
+import React, { useState, useRef, memo } from 'react';
 import PropTypes from 'prop-types';
 import { filterObjectArray, traverseNodes } from '../../Utils';
 
@@ -111,6 +111,7 @@ export const Select = memo((props) => {
     document.addEventListener('click', onOutsideClick);
   }
 
+  // Accessibility: toggle select
   const handleKeyToggle = (e) => {
     // keys: enter, space
     if (e.keyCode === 13 || e.keyCode === 32) {
@@ -119,6 +120,7 @@ export const Select = memo((props) => {
     }
   }
 
+  // Accessibility: handle selection and escape
   const handleKeyDown = (e, option) => {
     // key: enter
     if (e.keyCode === 13 || e.keyCode === 32) {

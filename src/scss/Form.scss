@@ -116,6 +116,8 @@
     box-shadow: 0 0 0 0.3rem rgba(220,53,69,.25) !important;
   }
 }
+
+// Toggle specific
 .checkbox,
 .switch {
   & + .form-error {
@@ -134,4 +136,16 @@
   & + .form-error:focus:before {
     box-shadow: 0 0 0 0.3rem rgba(220,53,69,.25) !important;
   }
+}
+
+// Select specific
+.select-btn.list-open.form-error {
+  border-color: $error-color !important;
+  box-shadow: 0 0 0 0.3rem rgba(220,53,69,.25) !important;
+} 
+
+// Datepicker specific
+.datepicker-container .form-error.calendar-open {
+  border-color: $error-color !important;
+  box-shadow: 0 0 0 0.3rem rgba(220,53,69,.25) !important;
 }

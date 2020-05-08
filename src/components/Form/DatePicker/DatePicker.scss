@@ -1,3 +1,5 @@
+@import '../../../scss/_Import.scss';
+
 .datepicker-container {
   position: relative;
 }
@@ -48,6 +50,10 @@
   button {
     padding: .2rem;
     cursor: pointer;
+
+    > svg {
+      fill: $font-color;
+    }
   }
 
   button:hover {
@@ -104,10 +110,15 @@
     padding: 1rem;
     cursor: pointer;
     transition: font-size ease-in-out .2s;
+    outline: none;
   }
 
   .this-year, li:hover {
     font-size: 1.5rem;
     border-radius: 4px;
+  }
+
+  li:hover, li:focus {
+    background-color: #f7f7f7;
   }
 }

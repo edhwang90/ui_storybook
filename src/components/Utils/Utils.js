@@ -18,12 +18,14 @@ export const traverseNodes = (evt, el, nodeType) => {
   // key: down
   if (evt.keyCode === 40) {
     evt.preventDefault();
+    evt.stopPropagation();
     const next = selected >= list.length - 1 ? 0 : selected + 1
     list[next].focus();
   }
   // key: up
   else if (evt.keyCode === 38) {
     evt.preventDefault();
+    evt.stopPropagation();
     const previous = selected <= 0 ? list.length - 1 : selected - 1
     list[previous].focus();
   }

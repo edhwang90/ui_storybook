@@ -71,8 +71,14 @@ export const DatePicker = memo((props) => {
   }
 
   const handleKeyDown = (e) => {
+    console.log('asdf');
+    // key: escape
     if (e.keyCode === 27) {
       closeCalendar();
+    }
+    // key: enter, space
+    else if (e.keyCode === 13 || e.keyCode === 32) {
+      toggleCalendar();
     }
   }
 
@@ -101,7 +107,8 @@ export const DatePicker = memo((props) => {
              value={selectedDate}
              readOnly
              disabled={disabled}
-             onFocus={toggle}>
+             onKeyDown={handleKeyDown}
+             onClick={toggle}>
       </input>
 
       { calendar() }

@@ -76,17 +76,15 @@
     border: 0;
     cursor: pointer;
     display: flex;
+  }
 
-    &:first-of-type {
-      padding-right: .5rem;
-      border-right: 1px solid #e6e6e6;
-    }
-
-    &:last-of-type {
-      padding-left: .5rem;
-      padding-right: 0px;
-      border-right: none;
-    }
+  span {
+    content: '';
+    height: 1rem;
+    width: 1px;
+    background-color: #e6e6e6;
+    margin-left: .5rem;
+    margin-right: .5rem;
   }
 }
 
@@ -105,8 +103,10 @@
     padding: $item-padding;
     border-bottom: 1px solid #e6e6e6;
     cursor: pointer;
+    outline: none;
 
-    &:hover {
+    &:hover, &:focus {
+      outline: none;
       background-color: #e6e6e6;
     }
   }
@@ -141,13 +141,17 @@
   .remove-selected {
     padding: $item-padding-tb/2 + 0rem $item-padding-lr/2 + 0rem;
     background-color: #e6e6e6;
+    outline: none;
     fill: $font-color;
     border: 0;
     cursor: pointer;
     display: flex;
     align-items: center;
   
-    &:hover, &:hover > svg {
+    &:hover, 
+    &:hover > svg,
+    &:focus,
+    &:focus > svg {
       fill: #fff;
       background-color: #dc3545;
     }

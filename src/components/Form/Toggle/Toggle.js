@@ -1,4 +1,4 @@
-import React, { useState, memo, useRef } from 'react';
+import React, { useState, memo } from 'react';
 import PropTypes from 'prop-types';
 
 import './Toggle.scss';
@@ -25,18 +25,8 @@ export const useToggle = (props) => {
 export const Toggle = memo((props) => {
   const { type, className, toggled, toggleFor, toggle, disabled } = useToggle(props);
 
-  const toggleRef = useRef(null);
-
   const handleToggle = () => {
-    toggleRef.current.focus();
     toggle();
-  }
-
-  const handleKeyDown = (e) => {
-    // key: space
-    if (e.keyCode === 32) {
-      toggle();
-    }
   }
 
   return (
@@ -48,10 +38,7 @@ export const Toggle = memo((props) => {
              onChange={handleToggle}
              disabled={disabled}/>
       <span className={className} 
-            ref={toggleRef}
-            role="button"
-            tabIndex="0"
-            onKeyDown={handleKeyDown}
+            tabIndex="-1"
             onClick={handleToggle}></span>
     </React.Fragment>
   )

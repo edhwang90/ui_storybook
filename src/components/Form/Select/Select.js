@@ -2,10 +2,10 @@ import React, { useState, useRef, memo } from 'react';
 import PropTypes from 'prop-types';
 import { filterObjectArray, traverseNodes } from '../../Utils';
 
-import './Dropdown.scss';
+import './Select.scss';
 
-export const useDropdown = (props) => {
-  const { className, label, value, options, attr, onClick, isMultiSelect, disabled } = props;
+export const useSelect = (props) => {
+  const { value, options, attr, onClick, isMultiSelect, disabled } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(isMultiSelect ? value ? value : [] : value);
 
@@ -62,8 +62,6 @@ export const useDropdown = (props) => {
   }
 
   return {
-    className,
-    label,
     disabled,
     isMultiSelect,
     isOpen,
@@ -78,10 +76,8 @@ export const useDropdown = (props) => {
   }
 }
 
-export const Dropdown = memo((props) => {
-  const { className,
-          label,
-          disabled,
+export const Select = memo((props) => {
+  const { disabled,
           isMultiSelect, 
           isOpen, 
           selected,
@@ -91,7 +87,9 @@ export const Dropdown = memo((props) => {
           filteredList,
           resetSelect,
           handleClick,
-          removeSelection  } = useDropdown(props);
+          removeSelection  } = useSelect(props);
+  
+  const { className, label, children } = props;
 
   const menuRef = useRef(null);
   const listRef = useRef(null); // for Accessible traversing
@@ -244,7 +242,7 @@ export const Dropdown = memo((props) => {
   )
 });
 
-Dropdown.propTypes = {
+Select.propTypes = {
   options: PropTypes.array.isRequired,
   onClick: PropTypes.func.isRequired,
   className: PropTypes.string,
@@ -260,7 +258,7 @@ Dropdown.propTypes = {
   disabled: PropTypes.bool
 }
 
-Dropdown.defaultProps = {
+Select.defaultProps = {
   label: 'Select...',
   isMultiSelect: false,
   required: false,

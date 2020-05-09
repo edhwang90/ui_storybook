@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
-import { Toggle, Dropdown, DatePicker, useValidate } from '../Form'
+import { Toggle, Select, DatePicker, useValidate } from '../Form'
 
 import './ExampleForm.scss';
 
@@ -135,12 +135,15 @@ export const ExampleForm = () => {
             </div>
             <div className="form-group">
               <label className="form-label">Industry Experience<span className="required">*</span></label>
-              <Dropdown options={industryArray}
+              <Select options={industryArray}
                       value={form.industry.value}
                       className={form.industry.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
                       isMultiSelect
-                      onClick={e => handleChange('industry', e)}></Dropdown>
+                      onClick={e => handleChange('industry', e)}>
+                      
+                      {/* <li><span>1</span></li> */}
+              </Select>
               { 
                 form.industry.errors &&
                 form.industry.errors.map((err, index) => (
@@ -151,12 +154,12 @@ export const ExampleForm = () => {
 
             <div className="form-group">
               <label className="form-label">Role<span className="required">*</span></label>
-              <Dropdown options={rolesArray}
+              <Select options={rolesArray}
                       value={form.role.value}
                       className={form.role.errors?.length > 0 ? 'form-error' : ''}
                       attr="name"
                       label="Select..."
-                      onClick={e => handleChange('role', e)}></Dropdown>
+                      onClick={e => handleChange('role', e)}></Select>
               { 
                 form.role.errors &&
                 form.role.errors.map((err, index) => (

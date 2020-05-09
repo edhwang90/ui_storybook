@@ -88,7 +88,7 @@ export const App = () => {
     initialForm,
     onSubmit,
     // validates on change or on submit
-    validateOnChange: true
+    validateOnChange: false
   })
 
   return (

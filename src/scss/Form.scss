@@ -25,7 +25,7 @@
 
   &:focus {
     border-color: #80bdff;
-    box-shadow: 0 0 0 0.3rem rgba(0,123,255,.25);
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
   }
 
   &:disabled {
@@ -113,7 +113,7 @@
   border-color: $error-color !important;
 
   &:focus {
-    box-shadow: 0 0 0 0.3rem rgba(220,53,69,.25) !important;
+    box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25) !important;
   }
 }
 
@@ -134,18 +134,18 @@
   }
   
   & + .form-error:focus:before {
-    box-shadow: 0 0 0 0.3rem rgba(220,53,69,.25) !important;
+    box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25) !important;
   }
 }
 
 // Select specific
 .select-btn.list-open.form-error {
   border-color: $error-color !important;
-  box-shadow: 0 0 0 0.3rem rgba(220,53,69,.25) !important;
+  box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25) !important;
 } 
 
 // Datepicker specific
 .datepicker-container .form-error.calendar-open {
   border-color: $error-color !important;
-  box-shadow: 0 0 0 0.3rem rgba(220,53,69,.25) !important;
+  box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25) !important;
 }

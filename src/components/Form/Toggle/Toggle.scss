@@ -16,7 +16,8 @@
     border: 1px solid #e6e6e6;
     background: #fff;
     align-self: normal;
-    transition: all ease-in .3s;
+    transform: translate3d(0, 0, 0);
+    transition: box-shadow ease-in-out .2s;
   }
 
   // Container hover
@@ -28,7 +29,7 @@
   &:focus + span:before {
     outline: none;
     border-color: #80bdff;
-    box-shadow: 0 0 0 0.3rem rgba(0,123,255,.25);
+    box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
   }
 
   & + span:after {

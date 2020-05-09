@@ -11,7 +11,7 @@
 
   .select-btn.list-open {
     border-color: #80bdff;
-    box-shadow: 0 0 0 0.3rem rgba(0,123,255,.25);
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
     
     .select-chevron > svg {
       transform: rotate(180deg);
@@ -39,7 +39,7 @@
 
 .select-btn:focus {
   border-color: #80bdff;
-  box-shadow: 0 0 0 0.3rem rgba(0,123,255,.25);
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
 }
 
 .select-btn, .select-list {

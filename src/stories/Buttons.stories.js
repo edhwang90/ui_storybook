@@ -57,6 +57,13 @@ export const Buttons = () => (
                 type="button">
                 Success
         </button>
+
+        <button className="btn is-success"
+                onClick={action('click')}
+                disabled
+                type="button">
+                Disabled
+        </button>
     </div>
 <CodeBlock language="html">
   {
@@ -101,6 +108,13 @@ export const Buttons = () => (
           onClick={fn}
           type="button">
     Success
+  </button>
+
+  <button className="btn is-success"
+    onClick={fn}
+    disabled
+    type="button">
+    Disabled
   </button>
   `
   }

@@ -34,6 +34,12 @@ ul, ol {
   }
 }
 
+.col-min {
+  flex-grow: 0;
+  flex-shrink: 0;
+  // flex-basis: (width) rem; for fixed
+}
+
 // Modifiers
 .to-row {
   display: flex !important;

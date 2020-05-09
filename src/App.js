@@ -2,12 +2,11 @@ import React, {useState, useEffect} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
-import { Checkbox, Toggle, Select, DatePicker, useValidate } from './components/Form'
-
+import { Toggle, Select, DatePicker, useValidate } from './components/Form'
 
 import './App.scss';
 
-function App() {
+export const App = () => {
 
   const industryArray = [
     'Accounting & Legal',
@@ -78,13 +77,17 @@ function App() {
   }
 
   const {
+    // output for use on form component
     form,
     handleChange,
+    // available for explicit call
     validate,
     handleSubmit
   } = useValidate({
+    // initial dependencies
     initialForm,
     onSubmit,
+    // validates on change or on submit
     validateOnChange: true
   })
 
@@ -224,5 +227,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

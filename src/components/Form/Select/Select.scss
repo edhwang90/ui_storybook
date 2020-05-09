@@ -21,6 +21,19 @@
   .select-btn.list-disabled {
     background-color: #f7f7f7;
     cursor: not-allowed;
+
+    .remove-selected {
+      cursor: not-allowed;
+
+      &:hover, &:focus {
+        background-color: #e6e6e6;
+
+        & > svg {
+          background-color: #e6e6e6;
+          fill: $font-color;
+        }
+      }
+    }
   }
 }
 

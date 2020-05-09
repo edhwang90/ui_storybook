@@ -45,6 +45,7 @@ export const useSelect = (props) => {
 
   const resetSelect = (e) => {
     e.stopPropagation();
+    if (disabled) return;
     const updated = isMultiSelect ? [] : '';
     setSelected(updated);
     onClick(updated);
@@ -52,6 +53,7 @@ export const useSelect = (props) => {
 
   const removeSelection = (e, toRemove) => {
     e.stopPropagation();
+    if (disabled) return;
     const removeIndex = selected.findIndex(item => getOptionDisplay(item) === getOptionDisplay(toRemove))
     const updated = [
       ...selected.slice(0, removeIndex),
@@ -143,7 +145,8 @@ export const Select = memo((props) => {
             selected.map((selection, k) => (
               <div key={k} tabIndex="-1" className="selected">
                 <span>{getOptionDisplay(selection)}</span>
-                <button className="remove-selected"
+                <button className="btn-danger remove-selected"
+                        disabled={disabled}
                         onClick={(e) => removeSelection(e, selection)}
                         type="button"
                         aria-label="Remove selection">
@@ -167,6 +170,7 @@ export const Select = memo((props) => {
         <button className="btn is-clear select-clear" 
                 onClick={resetSelect} 
                 type="button"
+                disabled={disabled}
                 aria-label="Clear all selections">
           <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"></path></svg>
         </button>
@@ -209,7 +213,6 @@ export const Select = memo((props) => {
     <div ref={menuRef}
          className={ isMultiSelect ? `multi-select-container ${selected.length > 0 ? 'show-selected' : ''}`: `select-container`}>
       <div className={`select-btn${ isOpen ? ' list-open' : '' }${ disabled ? ' list-disabled' : ''} ${className}`}
-           tabIndex="0"
            onKeyDown={handleKeyToggle}
            onClick={handleSelect}
            aria-label="Toggle select list">
@@ -222,6 +225,7 @@ export const Select = memo((props) => {
             clearUI()
           }
           <button onClick={handleSelect} 
+                  disabled={disabled}
                   className="btn is-clear select-chevron" 
                   type="button"
                   aria-label="Toggle select list">

@@ -8,11 +8,28 @@
     margin-bottom: 20px;
   }
 
+  .btn-group .btn {
+    margin-top: 1rem; // storybook purposes
+  }
+
   p {
     margin-bottom: 1rem;
 
     &:last-of-type {
       padding-top: 2rem;
+    }
+  }
+
+  .sample-grid {
+    .col {
+      padding: 1rem 2rem;
+      background-color: #e6e6e6;
+      text-align: center;
+      align-items: center;
+    }
+
+    .row {
+      margin-bottom: .5rem;
     }
   }
 }

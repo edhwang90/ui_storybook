@@ -77,7 +77,7 @@ export const DatePicker = memo((props) => {
       toggleCalendar();
     }
     // key: shift + tab || esc
-    else if (e.keyCode === 9 && e.shiftKey || e.keyCode === 27) {
+    else if ((e.keyCode === 9 && e.shiftKey) || e.keyCode === 27) {
       closeCalendar();
     }
   }

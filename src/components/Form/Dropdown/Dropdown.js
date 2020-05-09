@@ -2,9 +2,9 @@ import React, { useState, useRef, memo } from 'react';
 import PropTypes from 'prop-types';
 import { filterObjectArray, traverseNodes } from '../../Utils';
 
-import './Select.scss';
+import './Dropdown.scss';
 
-export const useSelect = (props) => {
+export const useDropdown = (props) => {
   const { className, label, value, options, attr, onClick, isMultiSelect, disabled } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(isMultiSelect ? value ? value : [] : value);
@@ -78,7 +78,7 @@ export const useSelect = (props) => {
   }
 }
 
-export const Select = memo((props) => {
+export const Dropdown = memo((props) => {
   const { className,
           label,
           disabled,
@@ -91,7 +91,7 @@ export const Select = memo((props) => {
           filteredList,
           resetSelect,
           handleClick,
-          removeSelection  } = useSelect(props);
+          removeSelection  } = useDropdown(props);
 
   const menuRef = useRef(null);
   const listRef = useRef(null); // for Accessible traversing
@@ -112,13 +112,12 @@ export const Select = memo((props) => {
   };
 
   const accessKeyDown = (e) => {
+    if (e.target.classList.contains('btn')) return;
+    
     if ((e.keyCode === 9 && e.shiftKey) || e.keyCode === 27 || (e.keyCode === 9 && !isOpen)) {
       closeAndBlur();
     }
-    else if (e.target.classList.contains('btn')) {
-      return;
-    }
-    else if (e.keyCode === 13 || e.keyCode == 32) {
+    else if (e.keyCode === 13 || e.keyCode === 32) {
       accessOpen(e);
     }
   }
@@ -245,7 +244,7 @@ export const Select = memo((props) => {
   )
 });
 
-Select.propTypes = {
+Dropdown.propTypes = {
   options: PropTypes.array.isRequired,
   onClick: PropTypes.func.isRequired,
   className: PropTypes.string,
@@ -261,7 +260,7 @@ Select.propTypes = {
   disabled: PropTypes.bool
 }
 
-Select.defaultProps = {
+Dropdown.defaultProps = {
   label: 'Select...',
   isMultiSelect: false,
   required: false,

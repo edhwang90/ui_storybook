@@ -85,13 +85,16 @@
   align-items: center;
   margin-left: $item-padding-lr + 0rem;
 
+  button, div {
+    display: flex;
+  }
+
   button {
     padding: 0;
     background-color: transparent;
     outline: none;
     border: 0;
     cursor: pointer;
-    display: flex;
   }
 
   span {
@@ -127,9 +130,9 @@
     }
 
     // for debugging accessibility
-    // &:focus {
-    //   outline: dotted;
-    // }
+    &:focus {
+      outline: dotted;
+    }
   }
 }
 
@@ -165,6 +168,10 @@
     outline: none;
     fill: $font-color;
     border: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
     cursor: pointer;
     display: flex;
     align-items: center;

@@ -20,18 +20,16 @@ export const useSelect = (props) => {
       return options.filter(option => !selections?.find(filter => option === filter));
     } 
   }
-
-  const toggleSelect = () => {
-    if (disabled) return;
-    setIsOpen(!isOpen);
-  }
   
   const closeSelect = () => {
     setIsOpen(false);
   }
 
+  const openSelect = () => {
+    setIsOpen(true);
+  }
+
   const handleClick = (option) => {
-    document.body.blur();
     if (isMultiSelect) {
       setSelected([...selected, option]);
       onClick([...selected, option]);
@@ -39,7 +37,7 @@ export const useSelect = (props) => {
     else {
       setSelected(option);
       onClick(option);
-      toggleSelect();
+      closeSelect();
     }
   }
 
@@ -71,8 +69,8 @@ export const useSelect = (props) => {
     isOpen,
     selected,
     getOptionDisplay,
-    toggleSelect,
     closeSelect,
+    openSelect,
     filteredList,
     resetSelect,
     handleClick,
@@ -88,8 +86,8 @@ export const Select = memo((props) => {
           isOpen, 
           selected,
           getOptionDisplay,
-          toggleSelect, 
           closeSelect,
+          openSelect,
           filteredList,
           resetSelect,
           handleClick,
@@ -98,28 +96,39 @@ export const Select = memo((props) => {
   const menuRef = useRef(null);
   const listRef = useRef(null); // for Accessible traversing
 
+  const closeAndBlur = () => {
+    closeSelect();
+    menuRef.current.querySelector('.select-btn').blur();
+  }
+
   const onOutsideClick = e => {
     if (menuRef.current.contains(e.target)) {
       return;
     }
-
-    closeSelect();
+    closeAndBlur();
+    
     // unbind
     document.removeEventListener('click', onOutsideClick);
   };
 
-  const handleSelect = (e) => {
-    toggleSelect();
-    document.addEventListener('click', onOutsideClick);
+  const accessKeyDown = (e) => {
+    if ((e.keyCode === 9 && e.shiftKey) || e.keyCode === 27 || (e.keyCode === 9 && !isOpen)) {
+      closeAndBlur();
+    }
+    else if (e.target.classList.contains('btn')) {
+      return;
+    }
+    else if (e.keyCode === 13 || e.keyCode == 32) {
+      accessOpen(e);
+    }
   }
 
-  // Accessibility: toggle select
-  const handleKeyToggle = (e) => {
-    // keys: enter, space
-    if (e.keyCode === 13 || e.keyCode === 32) {
-      e.preventDefault();
-      handleSelect();
+  const accessOpen = (evt) => {
+    if (!evt) {
+      return;
     }
+    openSelect();
+    document.addEventListener('click', onOutsideClick);
   }
 
   // Accessibility: handle selection and escape
@@ -132,7 +141,7 @@ export const Select = memo((props) => {
     // key: escape
     else if (e.keyCode === 27) {
       e.preventDefault();
-      closeSelect();
+      closeAndBlur();
     }
   }
 
@@ -145,7 +154,7 @@ export const Select = memo((props) => {
             selected.map((selection, k) => (
               <div key={k} tabIndex="-1" className="selected">
                 <span>{getOptionDisplay(selection)}</span>
-                <button className="btn-danger remove-selected"
+                <button className="btn remove-selected"
                         disabled={disabled}
                         onClick={(e) => removeSelection(e, selection)}
                         type="button"
@@ -190,7 +199,7 @@ export const Select = memo((props) => {
     <ul tabIndex="-1" 
         className="select-list" 
         ref={listRef} 
-        onKeyDown={e => traverseNodes(e, listRef, 'li', toggleSelect)}>
+        onKeyDown={e => traverseNodes(e, listRef, 'li', closeAndBlur)}>
     {
       filteredList().length > 0
       ? (
@@ -213,8 +222,9 @@ export const Select = memo((props) => {
     <div ref={menuRef}
          className={ isMultiSelect ? `multi-select-container ${selected.length > 0 ? 'show-selected' : ''}`: `select-container`}>
       <div className={`select-btn${ isOpen ? ' list-open' : '' }${ disabled ? ' list-disabled' : ''} ${className}`}
-           onKeyDown={handleKeyToggle}
-           onClick={handleSelect}
+           onKeyDown={accessKeyDown}
+           onClick={accessOpen}
+           tabIndex="0"
            aria-label="Toggle select list">
         <div tabIndex="-1" className="select-display">
           {labelUI()}
@@ -224,13 +234,9 @@ export const Select = memo((props) => {
           {
             clearUI()
           }
-          <button onClick={handleSelect} 
-                  disabled={disabled}
-                  className="btn is-clear select-chevron" 
-                  type="button"
-                  aria-label="Toggle select list">
+          <div className="select-chevron">
             <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path></svg>
-          </button>
+          </div>
         </div>
       </div>
 

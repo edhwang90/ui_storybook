@@ -19,7 +19,6 @@ export const traverseNodes = (evt, el, nodeType, endFn) => {
   if (evt.keyCode === 40) {
     evt.preventDefault();
     evt.stopPropagation();
- 
     const next = selected >= list.length - 1 ? 0 : selected + 1
     list[next].focus();
   }

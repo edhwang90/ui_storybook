@@ -72,22 +72,22 @@ export const DatePicker = memo((props) => {
 
   // Accessibility: key downs: escape (close), enter/space (open)
   const handleKeyDown = (e) => {
-    // key: escape
-    if (e.keyCode === 27) {
-      e.stopPropagation();
-      closeCalendar();
-    }
     // key: enter, space
-    else if (e.keyCode === 13 || e.keyCode === 32) {
-      e.stopPropagation();
+    if (e.keyCode === 13 || e.keyCode === 32) {
       toggleCalendar();
+    }
+    // key: shift + tab || esc
+    else if (e.keyCode === 9 && e.shiftKey || e.keyCode === 27) {
+      closeCalendar();
     }
   }
 
   // Accessibility close on blur
   const handleExitBlur = (e) => {
     if (e.keyCode === 9 && !e.shiftKey) {
-      closeCalendar();
+      e.preventDefault();
+      // loop focus back to calendar top actions
+      datepickerRef.current.querySelector('.prev-month').focus();
     }
   }
 

@@ -1,11 +1,11 @@
-import React, { useState, useRef, memo } from 'react';
+import React, { useState, useRef, memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { filterObjectArray, traverseNodes } from '../../Utils';
 
 import './Select.scss';
 
 export const useSelect = (props) => {
-  const { value, options, attr, onClick, isMultiSelect, disabled } = props;
+  const { options, value, attr, onClick, isMultiSelect, isGrouped, disabled } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(isMultiSelect ? value ? value : [] : value);
 
@@ -14,15 +14,29 @@ export const useSelect = (props) => {
   }
 
   const filteredList = () => {
+    return options;
     const selections = isMultiSelect ? selected : [selected];
     if (attr) return filterObjectArray(options, selections, attr);
     else {
       return options.filter(option => !selections?.find(filter => option === filter));
-    } 
+    }
   }
+
+  const filteredGroups = () => {
+    return options;
+  }
+
+  // const filterList = (value) => {
+  //   const selections = isMultiSelect ? selected : [selected];
+
+  //   if (attr) return !selections?.find(selected => value?.[attr] === selected[attr]);
+  //   else {
+  //     return !selections?.find(selected => value === selected);
+  //   } 
+  // }
   
   const closeSelect = () => {
-    setIsOpen(false);
+   setIsOpen(false);
   }
 
   const openSelect = () => {
@@ -30,15 +44,28 @@ export const useSelect = (props) => {
   }
 
   const handleClick = (option) => {
-    if (isMultiSelect) {
-      setSelected([...selected, option]);
-      onClick([...selected, option]);
+    if (!isGrouped) {
+      if (isMultiSelect) {
+        setSelected([...selected, option]);
+        onClick([...selected, option]);
+      }
+      else {
+        setSelected(option);
+        onClick(option);
+        closeSelect();
+      }
     }
     else {
-      setSelected(option);
-      onClick(option);
-      closeSelect();
+      console.log(option);
+      const updated;
+      if (isMultiSelect) {
+
+      }
+      else {
+
+      }
     }
+
   }
 
   const resetSelect = (e) => {
@@ -64,12 +91,13 @@ export const useSelect = (props) => {
   return {
     disabled,
     isMultiSelect,
+    isGrouped,
     isOpen,
     selected,
     getOptionDisplay,
+    filteredList,
     closeSelect,
     openSelect,
-    filteredList,
     resetSelect,
     handleClick,
     removeSelection
@@ -79,17 +107,18 @@ export const useSelect = (props) => {
 export const Select = memo((props) => {
   const { disabled,
           isMultiSelect, 
+          isGrouped,
           isOpen, 
           selected,
           getOptionDisplay,
+          filteredList,
           closeSelect,
           openSelect,
-          filteredList,
           resetSelect,
           handleClick,
           removeSelection  } = useSelect(props);
   
-  const { className, label, children } = props;
+  const { className, label, selectRow, groupedRow } = props;
 
   const menuRef = useRef(null);
   const listRef = useRef(null); // for Accessible traversing
@@ -100,9 +129,10 @@ export const Select = memo((props) => {
   }
 
   const onOutsideClick = e => {
-    if (menuRef.current.contains(e.target)) {
+    if (e.path.indexOf(menuRef.current) >= 0) {
       return;
     }
+
     closeAndBlur();
     
     // unbind
@@ -130,14 +160,13 @@ export const Select = memo((props) => {
 
   // Accessibility: handle selection and escape
   const handleKeyDown = (e, option) => {
-    // key: enter
+    // key: enter, space
     if (e.keyCode === 13 || e.keyCode === 32) {
-      e.preventDefault();
+      e.stopPropagation();
       handleClick(option);
     }
     // key: escape
     else if (e.keyCode === 27) {
-      e.preventDefault();
       closeAndBlur();
     }
   }
@@ -191,29 +220,89 @@ export const Select = memo((props) => {
     }
   }
 
-  const listUI = () => (
-    isOpen &&
-    <ul tabIndex="-1" 
-        className="select-list" 
-        ref={listRef} 
-        onKeyDown={e => traverseNodes(e, listRef, 'li', closeAndBlur)}>
-    {
-      filteredList().length > 0
-      ? (
-          filteredList().map((option, index) => (
-            <li key={index} 
-                tabIndex="0"
-                onKeyDown={e => handleKeyDown(e, option)} 
-                onClick={e => handleClick(option)}
-                aria-label={`Select option ${getOptionDisplay(option)}`}>
-              {getOptionDisplay(option)}
-            </li>
-          ))
-        )
-      : <li>No available options.</li>
-    }
-    </ul>
+  const emptySelect = () => (
+    <ul className="select-list"><li>No available options.</li></ul>
   )
+
+  const rowUI = (option, index) => {
+    if (selectRow) {
+      return React.cloneElement(selectRow(getOptionDisplay(option)), {
+        tabIndex: "0",
+        key: index,
+        onKeyDown: e => handleKeyDown(e, option),
+        onClick: e => handleClick(option),
+        'aria-label': `Select option ${getOptionDisplay(option)}`
+      })
+    }
+    else {
+      return (
+        <li key={index} 
+            tabIndex="0"
+            onKeyDown={e => handleKeyDown(e, option)} 
+            onClick={e => handleClick(option)}
+            aria-label={`Select option ${getOptionDisplay(option)}`}>
+          {getOptionDisplay(option)}
+        </li>
+      )
+    }
+  }
+
+  const groupRowUI = (group, index) => {
+    if (groupedRow) {
+      return React.cloneElement(groupedRow(group), {
+        key: index,
+        className: `group-label ${groupedRow(group).props.className}`,
+        'aria-label': `Options group`
+      })
+    }
+    else {
+      return <label className="group-label" key={index}>{getOptionDisplay(group)}</label>
+    }
+  }
+
+  const listUI = () => {
+    if (isOpen && filteredList().length <= 0) {
+      return emptySelect();
+    }
+    else if (isOpen && !isGrouped) {
+      return (
+        <ul tabIndex="-1" 
+            className="select-list" 
+            ref={listRef} 
+            onKeyDown={e => traverseNodes(e, listRef, 'li', closeAndBlur)}>
+          {
+            filteredList().map((option, index) => (
+              rowUI(option, index)
+            ))
+          }
+        </ul>
+      )
+    }
+    else if (isOpen && isGrouped) {
+      return (
+        <div tabIndex="-1" 
+            className="select-list" 
+            ref={listRef}>
+          {
+            filteredList().map((group, i) => (
+              <React.Fragment key={i}>
+                {groupRowUI(group)}
+                {
+                  <ul onKeyDown={e => traverseNodes(e, listRef, 'li', closeAndBlur)}>
+                    {
+                      group.options.map((option, j) => (
+                        rowUI({...option, group}, j)
+                      ))
+                    }
+                  </ul>
+                }
+              </React.Fragment>
+            ))
+          }
+        </div>
+      )
+    }
+  }
 
   return (
     <div ref={menuRef}
@@ -243,7 +332,7 @@ export const Select = memo((props) => {
 });
 
 Select.propTypes = {
-  options: PropTypes.array.isRequired,
+  //: PropTypes.array.isRequired,
   onClick: PropTypes.func.isRequired,
   className: PropTypes.string,
   label: PropTypes.string,

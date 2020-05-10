@@ -118,11 +118,20 @@
   overflow: auto;
   z-index: 2;
 
+  .group-label,
   li {
     padding: $item-padding;
     border-bottom: 1px solid #e6e6e6;
-    cursor: pointer;
     outline: none;
+    display: flex;
+  }
+
+  .group-label {
+    background-color: #e6e6e6;
+  }
+
+  li {
+    cursor: pointer;
 
     &:hover {
       outline: none;

@@ -34,6 +34,18 @@ export const ExampleForm = () => {
     { name: 'Other', id: 10 }
   ]
 
+  const nestedArray = [
+    { name: 'Section 1', options: ['1', '2', '3'] },
+    { name: 'Section 2', options: ['4', '5', '6'] },
+    { name: 'Section 3', options: ['7', '8', '9'] },
+  ]
+
+  const nestedObjArray = [
+    { name: 'Section 1', options: [{name: '1', id: 1 }, { name: '2', id: 2 }, { name: '3', id: 3 }]},
+    { name: 'Section 2', options: [{name: '4', id: 4 }, { name: '5', id: 5 }, { name: '6', id: 6 }]},
+    { name: 'Section 3', options: [{name: '7', id: 7 }, { name: '7', id: 2 }, { name: '7', id: 3 }]},
+  ]
+
   const initialForm = {
     email: { 
       value: '',
@@ -91,6 +103,14 @@ export const ExampleForm = () => {
     validateOnChange: false
   })
 
+  const selectRow = (data) => (
+    <li><span>a</span>{data}</li>
+  )
+
+  const groupedRow = (data) => (
+    <label className="different-group">{data.name} <span>{data.options.length}</span></label>
+  )
+
   return (
     <div className="sandbox">
       <form>
@@ -135,14 +155,16 @@ export const ExampleForm = () => {
             </div>
             <div className="form-group">
               <label className="form-label">Industry Experience<span className="required">*</span></label>
-              <Select options={industryArray}
+              <Select 
                       value={form.industry.value}
                       className={form.industry.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
+                      options={nestedObjArray}
                       isMultiSelect
+                      isGrouped
+                      selectRow={selectRow}
+                      attr="name"
                       onClick={e => handleChange('industry', e)}>
-                      
-                      {/* <li><span>1</span></li> */}
               </Select>
               { 
                 form.industry.errors &&
@@ -154,12 +176,33 @@ export const ExampleForm = () => {
 
             <div className="form-group">
               <label className="form-label">Role<span className="required">*</span></label>
-              <Select options={rolesArray}
+              <Select options={nestedObjArray}
                       value={form.role.value}
-                      className={form.role.errors?.length > 0 ? 'form-error' : ''}
                       attr="name"
+                      isGrouped
+                      groupedRow={groupedRow}
+                      selectRow={selectRow}
+                      className={form.role.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
-                      onClick={e => handleChange('role', e)}></Select>
+                      onClick={e => handleChange('role', e)}>
+                     {/* {
+                        nestedObjArray.map((section, i) => (
+                          <div>
+                            <label key={i} className="section-header">{section.name}</label>
+
+                            { section.options.map((option, j) => (
+                              <li key={j} value={option}>a{option.name}</li>
+                            )) }
+                          </div>
+                        ))
+                      } */}
+                      {/* {
+                        rolesArray.map((option, index) => (
+                          <li value={option}><span>{index}</span>{option.name}</li>
+                        ))
+                      } */}
+
+               </Select>
               { 
                 form.role.errors &&
                 form.role.errors.map((err, index) => (

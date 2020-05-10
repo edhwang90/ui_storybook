@@ -11,7 +11,7 @@ const _pipe = (fn, gn) => (...args) => gn(fn(...args));
 export const pipe = (...fns) => fns.reduce(_pipe);
 
 export const traverseNodes = (evt, el, nodeType, endFn) => {
-  const allOptions = el.current.children;
+  const allOptions = el.current.querySelectorAll(nodeType);
   const list = [].slice.call(allOptions)
   const selected = list.findIndex(x => x === evt.target);
 

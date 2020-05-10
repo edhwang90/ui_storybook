@@ -4,3 +4,21 @@
   max-width: 720px;
   margin: 0 auto;
 }
+
+.different-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  span {
+    background-color: $primary-color;
+    color: $primary-color-font;
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: .8rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

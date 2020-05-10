@@ -23,27 +23,27 @@ export const ExampleForm = () => {
   ]
 
   const rolesArray = [
-    { name: 'Business Analyst', id: 1 },
-    { name: 'Data Analyst', id: 2 },
-    { name: 'QA Analyst', id: 3 },
-    { name: 'Front-End Developer', id: 4 },
-    { name: 'Back-End Developer', id: 5 },
-    { name: 'Fullstack Developer', id: 6 },
-    { name: 'UX Designer', id: 7 },
-    { name: 'UI Designer', id: 8 },
-    { name: 'Other', id: 10 }
+    { label: 'Business Analyst', value: 1 },
+    { label: 'Data Analyst', value: 2 },
+    { label: 'QA Analyst', value: 3 },
+    { label: 'Front-End Developer', value: 4 },
+    { label: 'Back-End Developer', value: 5 },
+    { label: 'Fullstack Developer', value: 6 },
+    { label: 'UX Designer', value: 7 },
+    { label: 'UI Designer', value: 8 },
+    { label: 'Other', value: 10 }
   ]
 
-  // const nestedArray = [
-  //   { name: 'Section 1', options: ['1', '2', '3'] },
-  //   { name: 'Section 2', options: ['4', '5', '6'] },
-  //   { name: 'Section 3', options: ['7', '8', '9'] },
-  // ]
+  const nestedArray = [
+    { label: 'Section 1', id: 1, options: ['1', '2', '3'] },
+    { label: 'Section 2', id: 2, options: ['4', '5', '6'] },
+    { label: 'Section 3', id: 3, options: ['7', '8', '9'] },
+  ]
 
-  const locationsArr = [
-    { name: 'North America', options: [{name: 'New York', id: 1 }, { name: 'San Francisco', id: 2 }, { name: 'Austin', id: 3 }, { name: 'Chicago', id: 10 }]},
-    { name: 'Europe', options: [{name: 'Berlin', id: 4 }, { name: 'London', id: 5 }, { name: 'Madrid', id: 6 }]},
-    { name: 'Asia', options: [{name: 'Seoul', id: 7 }, { name: 'Hong Kong', id: 8 }, { name: 'Tokyo', id: 9 }]},
+  const locationsArray = [
+    { label: 'North America', options: [{label: 'New York', value: 1 }, { label: 'San Francisco', value: 2 }, { label: 'Austin', value: 3 }, { label: 'Chicago', value: 10 }]},
+    { label: 'Europe', options: [{label: 'Berlin', value: 4 }, { label: 'London', value: 5 }, { label: 'Madrid', value: 6 }]},
+    { label: 'Asia', options: [{label: 'Seoul', value: 7 }, { label: 'Hong Kong', value: 8 }, { label: 'Tokyo', value: 9 }]},
   ]
 
   const initialForm = {
@@ -112,7 +112,7 @@ export const ExampleForm = () => {
   )
 
   const groupedRow = (data) => (
-    <label className="different-group">{data.name} <span>{data.options.length}</span></label>
+    <label className="different-group">{data.label} <span>{data.options.length}</span></label>
   )
 
   return (
@@ -178,7 +178,8 @@ export const ExampleForm = () => {
               <label className="form-label">Role<span className="required">*</span></label>
               <Select options={rolesArray}
                       value={form.role.value}
-                      attr="name"
+                      attr="label"
+                      isMultiSelect
                       className={form.role.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
                       onClick={e => handleChange('role', e)}>
@@ -193,15 +194,16 @@ export const ExampleForm = () => {
 
             <div className="form-group">
               <label className="form-label">Interested Location(s)</label>
-              <Select options={locationsArr}
-                      value={form.role.value}
-                      attr="name"
+              <Select options={nestedArray}
+                      //options={locationsArray}
+                      //attr="label"
+                      value={form.locations.value}
                       isGrouped
                       isMultiSelect
                       groupedRow={groupedRow}
                       className={form.locations.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
-                      onClick={e => handleChange('role', e)}>
+                      onClick={e => handleChange('locations', e)}>
                </Select>
               { 
                 form.locations.errors &&

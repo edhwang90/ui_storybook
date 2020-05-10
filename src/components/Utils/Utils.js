@@ -1,5 +1,5 @@
 export const filterObjectArray = (arr, filterArr, attr) => (
-  arr.filter(elem => !filterArr.find(filter => elem?.[attr] === filter?.[attr]))
+  arr.filter(elem => !filterArr?.find(filter => elem?.[attr] === filter?.[attr]))
 );
 
 export const generateNumber = () => Math.floor(Math.random()*10000);
@@ -16,7 +16,7 @@ export const traverseNodes = (evt, el, nodeType, endFn) => {
   const selected = list.findIndex(x => x === evt.target);
 
   // key: down
-  if (evt.keyCode === 40) {
+  if (evt.keyCode === 40 || evt.keyCode === 32) {
     evt.preventDefault();
     evt.stopPropagation();
     const next = selected >= list.length - 1 ? 0 : selected + 1

@@ -14,7 +14,6 @@ export const useSelect = (props) => {
   }
 
   const filteredList = () => {
-    return options;
     const selections = isMultiSelect ? selected : [selected];
     if (attr) return filterObjectArray(options, selections, attr);
     else {
@@ -22,18 +21,9 @@ export const useSelect = (props) => {
     }
   }
 
-  const filteredGroups = () => {
+  const filteredGroupList = () => {
     return options;
   }
-
-  // const filterList = (value) => {
-  //   const selections = isMultiSelect ? selected : [selected];
-
-  //   if (attr) return !selections?.find(selected => value?.[attr] === selected[attr]);
-  //   else {
-  //     return !selections?.find(selected => value === selected);
-  //   } 
-  // }
   
   const closeSelect = () => {
    setIsOpen(false);
@@ -44,28 +34,15 @@ export const useSelect = (props) => {
   }
 
   const handleClick = (option) => {
-    if (!isGrouped) {
-      if (isMultiSelect) {
-        setSelected([...selected, option]);
-        onClick([...selected, option]);
-      }
-      else {
-        setSelected(option);
-        onClick(option);
-        closeSelect();
-      }
+    if (isMultiSelect) {
+      setSelected([...selected, option]);
+      onClick([...selected, option]);
     }
     else {
-      console.log(option);
-      const updated;
-      if (isMultiSelect) {
-
-      }
-      else {
-
-      }
+      setSelected(option);
+      onClick(option);
+      closeSelect();
     }
-
   }
 
   const resetSelect = (e) => {
@@ -89,13 +66,11 @@ export const useSelect = (props) => {
   }
 
   return {
-    disabled,
-    isMultiSelect,
-    isGrouped,
-    isOpen,
     selected,
+    isOpen,
     getOptionDisplay,
     filteredList,
+    filteredGroupList,
     closeSelect,
     openSelect,
     resetSelect,
@@ -105,20 +80,18 @@ export const useSelect = (props) => {
 }
 
 export const Select = memo((props) => {
-  const { disabled,
-          isMultiSelect, 
-          isGrouped,
-          isOpen, 
-          selected,
+  const { selected,
+          isOpen,
           getOptionDisplay,
           filteredList,
+          filteredGroupList,
           closeSelect,
           openSelect,
           resetSelect,
           handleClick,
           removeSelection  } = useSelect(props);
   
-  const { className, label, selectRow, groupedRow } = props;
+  const { disabled, isMultiSelect, isGrouped,className, label, selectRow, groupedRow } = props;
 
   const menuRef = useRef(null);
   const listRef = useRef(null); // for Accessible traversing
@@ -284,15 +257,17 @@ export const Select = memo((props) => {
             className="select-list" 
             ref={listRef}>
           {
-            filteredList().map((group, i) => (
+            filteredGroupList().map((group, i) => (
               <React.Fragment key={i}>
                 {groupRowUI(group)}
                 {
                   <ul onKeyDown={e => traverseNodes(e, listRef, 'li', closeAndBlur)}>
                     {
-                      group.options.map((option, j) => (
-                        rowUI({...option, group}, j)
-                      ))
+                      group.options.map((option, j) => {
+                        const groupDetails = Object.assign({}, group);
+                        delete groupDetails.options;
+                        return rowUI({...option, group: { ...groupDetails }}, j)
+                      })
                     }
                   </ul>
                 }
@@ -332,17 +307,26 @@ export const Select = memo((props) => {
 });
 
 Select.propTypes = {
-  //: PropTypes.array.isRequired,
+  options: (props, propName, componentName) => {
+    if (props['isGrouped']) {
+      if (!props['options']?.[0]['options']) {
+        return new Error(`Please structure the grouped list to have an array of 'options' to iterate over.`);
+      }
+    }
+  },
   onClick: PropTypes.func.isRequired,
   className: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.any,
   attr: (props, propName, componentName) => {
-          if (props['options'][0] instanceof Object && (props[propName] === undefined || typeof(props[propName]) !== 'string')) {
-            return new Error(`Please provide an ${propName} for display purposes.`)
-          }
-        },
+    if (props['options']?.[0] instanceof Object && (props[propName] === undefined || typeof(props[propName]) !== 'string')) {
+      return new Error(`Please provide an ${propName} for display purposes.`)
+    }
+  },
+  selectRow: PropTypes.func,
+  groupedRow: PropTypes.func,
   isMultiSelect: PropTypes.bool,
+  isGrouped: PropTypes.bool,
   required: PropTypes.bool,
   disabled: PropTypes.bool
 }
@@ -350,6 +334,7 @@ Select.propTypes = {
 Select.defaultProps = {
   label: 'Select...',
   isMultiSelect: false,
+  isGrouped: false,
   required: false,
   disabled: false
 }

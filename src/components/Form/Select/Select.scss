@@ -162,6 +162,10 @@
     display: flex;
     border-radius: 2px;
     overflow: hidden;
+    
+    &:focus {
+      outline: dotted;
+    }
   }
   
   .selected span {
@@ -169,6 +173,11 @@
     align-items: center;
     padding: $item-padding-tb/2 + 0rem $item-padding-lr/2 + 0rem;
     background-color: #e6e6e6;
+
+    &.fixed {
+      background-color: #4d4d4d;
+      color: #fff;
+    }
   }
   
   .remove-selected {

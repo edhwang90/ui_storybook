@@ -71,7 +71,9 @@ export const ExampleForm = () => {
       rules: [{ type: 'required' }] 
     },
     locations: {
-      value: '',
+      //value: '',
+     // value: {label: 'North America', options: [{label: 'New York', value: 1 }]},
+      value: [{label: 'North America', options: [{label: 'New York', value: 1, isFixed: true } ] }],
       rules: []
     },
     startDate: { 
@@ -107,6 +109,10 @@ export const ExampleForm = () => {
     validateOnChange: false
   })
 
+  const test = (x) => {
+console.log('asdf', form.industry.value)
+  }
+
   const selectRow = (data) => (
     <li><span>a</span>{data}</li>
   )
@@ -126,7 +132,7 @@ export const ExampleForm = () => {
                 <input onChange={e => handleChange('email', e.target.value)}
                        className={`form-input ${form.email.errors?.length > 0 ? 'form-error' : ''}`}
                        value={form.email.value}
-                       //onBlur={e => validate('email', e.target.value)}
+                       onBlur={e => validate('email', e.target.value)}
                        type="email" 
                        placeholder="Email">
                 </input>
@@ -145,6 +151,7 @@ export const ExampleForm = () => {
                 <span className="form-input-prepend"><FontAwesomeIcon icon={faCoffee} /></span>
                 <input className={`form-input ${form.password.errors?.length > 0 ? 'form-error' : ''}`}
                        value={form.password.value}
+                       onBlur={e => validate('password', e.target.value)}
                        onChange={e => handleChange('password', e.target.value)}
                        type="password" 
                        placeholder="Password">
@@ -164,6 +171,7 @@ export const ExampleForm = () => {
                       label="Select..."
                       options={industryArray}
                       isMultiSelect
+                      onBlur={e => validate('industry', e)}
                       onClick={e => handleChange('industry', e)}>
               </Select>
               { 
@@ -179,9 +187,9 @@ export const ExampleForm = () => {
               <Select options={rolesArray}
                       value={form.role.value}
                       attr="label"
-                      isMultiSelect
                       className={form.role.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
+                      onBlur={e => validate('role', e)}
                       onClick={e => handleChange('role', e)}>
                </Select>
               { 
@@ -194,15 +202,16 @@ export const ExampleForm = () => {
 
             <div className="form-group">
               <label className="form-label">Interested Location(s)</label>
-              <Select options={nestedArray}
-                      //options={locationsArray}
-                      //attr="label"
+              <Select //options={nestedArray}
+                      options={locationsArray}
+                      attr="label"
                       value={form.locations.value}
                       isGrouped
                       isMultiSelect
                       groupedRow={groupedRow}
                       className={form.locations.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
+                      onBlur={e => validate('location', e)}
                       onClick={e => handleChange('locations', e)}>
                </Select>
               { 

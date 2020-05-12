@@ -132,7 +132,6 @@ console.log('asdf', form.industry.value)
                 <input onChange={e => handleChange('email', e.target.value)}
                        className={`form-input ${form.email.errors?.length > 0 ? 'form-error' : ''}`}
                        value={form.email.value}
-                       onBlur={e => validate('email', e.target.value)}
                        type="email" 
                        placeholder="Email">
                 </input>
@@ -151,7 +150,6 @@ console.log('asdf', form.industry.value)
                 <span className="form-input-prepend"><FontAwesomeIcon icon={faCoffee} /></span>
                 <input className={`form-input ${form.password.errors?.length > 0 ? 'form-error' : ''}`}
                        value={form.password.value}
-                       onBlur={e => validate('password', e.target.value)}
                        onChange={e => handleChange('password', e.target.value)}
                        type="password" 
                        placeholder="Password">
@@ -171,7 +169,6 @@ console.log('asdf', form.industry.value)
                       label="Select..."
                       options={industryArray}
                       isMultiSelect
-                      onBlur={e => validate('industry', e)}
                       onClick={e => handleChange('industry', e)}>
               </Select>
               { 
@@ -189,7 +186,6 @@ console.log('asdf', form.industry.value)
                       attr="label"
                       className={form.role.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
-                      onBlur={e => validate('role', e)}
                       onClick={e => handleChange('role', e)}>
                </Select>
               { 
@@ -211,7 +207,6 @@ console.log('asdf', form.industry.value)
                       groupedRow={groupedRow}
                       className={form.locations.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
-                      onBlur={e => validate('location', e)}
                       onClick={e => handleChange('locations', e)}>
                </Select>
               { 

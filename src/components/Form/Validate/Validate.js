@@ -58,6 +58,7 @@ export const useValidate = (props) => {
   const { initialForm, onSubmit, validateOnChange } = props;
 
   const [form, setForm] = useState(initialForm || {});
+  const [validateActive, setValidateActive] = useState(validateOnChange);
 
   const getFieldObj = (field, value) => {
     let changeField = {};
@@ -114,7 +115,7 @@ export const useValidate = (props) => {
     const fieldObj = getFieldObj(field, value);
     let newForm;
 
-    if (validateOnChange) {
+    if (validateActive) {
       const validated = validateField(fieldObj);
       newForm = validated.errors?.length > 0 ? {...form, [field]: validated, error: true} : {...form, [field]: validated};
     }
@@ -137,6 +138,7 @@ export const useValidate = (props) => {
       const validated = validateField(form[field]);
       newForm = validated.errors?.length > 0 ? {...newForm, [field]: validated, error: true} : {...newForm, [field]: validated};
     }
+    setValidateActive(true);
     setForm(newForm);
     onSubmit(newForm);
   }

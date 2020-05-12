@@ -207,7 +207,7 @@ export const Select = memo((props) => {
     else if (e.keyCode === 13 || e.keyCode === 32) {
       accessOpen(e);
     }
-    else if (e.keyCode === 40) {
+    else if (e.keyCode === 40 && isOpen) {
       e.preventDefault();
       listRef.current.querySelector('li').focus();
     }
@@ -217,8 +217,12 @@ export const Select = memo((props) => {
     }
   }
 
+  const keydownToClear = () => {
+    const clear = selectedRef.current.querySelector('.select-clear');
+    if (clear) clear.focus();
+  }
+
   const accessOpen = (evt) => {
-    console.log('open')
     if (disabled) return;
     if (!evt) return;
     openSelect();
@@ -240,12 +244,13 @@ export const Select = memo((props) => {
   
   const selectedTagUI = (index, selection, group) => (
     <div key={index} 
-         onKeyDown= {e => traverseNodes(e, selectedRef, '.remove-selected', null, true)}
+        //  onKeyDown= {e => traverseNodes(e, selectedRef, '.remove-selected', keydownToClear, true)}
          className="selected">
       <span className={selection.isFixed ? 'fixed' : ''}>{getOptionDisplay(selection)}</span>
       {
         !selection.isFixed &&
         <button className="btn remove-selected"
+                id={index}
                 disabled={disabled}
                 onClick={(e) => removeSelection(e, selection, group)}
                 type="button"
@@ -408,11 +413,13 @@ export const Select = memo((props) => {
       <div className={`select-btn${ isOpen ? ' list-open' : '' }${ disabled ? ' list-disabled' : ''} ${className}`}
            onKeyDown={accessKeyDown}
            onClick={accessOpen}
-           onFocus={accessOpen}
+           //onFocus={accessOpen}
            tabIndex="0"
-           ref={selectedRef}
            aria-label="Toggle select list">
-        <div tabIndex="-1" className="select-display">
+        <div tabIndex="-1" 
+             className="select-display"
+             ref={selectedRef}
+             onKeyDown={e => traverseNodes(e, selectedRef, 'button', keydownToClear, true)}>
           {labelUI()}
         </div>
 

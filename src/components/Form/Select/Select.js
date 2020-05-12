@@ -5,7 +5,7 @@ import { traverseNodes } from '../../Utils';
 import './Select.scss';
 
 export const useSelect = (props) => {
-  const { options, value, attr, onClick, onBlur, isMultiSelect, isGrouped, disabled } = props;
+  const { options, value, attr, onClick, onBlur, isMultiSelect, disabled } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(isMultiSelect ? value ? value : [] : value);
 
@@ -36,8 +36,9 @@ export const useSelect = (props) => {
   const filteredGroupList = () => {
     const selections = isMultiSelect ? selected : [selected];
     
-    for (let option of options) {
-      option.options = option.options.filter(filter => !selections.find(find => (getOptionDisplay(filter) === getOptionDisplay(find)) && option.label === find.group?.label ))
+    const list = options;
+    for (let option of list) {
+      option.options = option.options.filter(filter => !selections.find(find => (getOptionDisplay(filter) === getOptionDisplay(find)) && option.label === find.group?.label));
     }
     
     return options;
@@ -45,10 +46,6 @@ export const useSelect = (props) => {
 
   const isResetAvailable = () => {
     return selected?.some(filter => !filter.isFixed);
-      // for (let option of selected) { 
-      //   return option.options?.some(filter => !filter.isFixed);
-      // }
-    
   }
 
   const closeSelect = () => {
@@ -254,7 +251,7 @@ export const Select = memo((props) => {
   }
 
   const emptySelect = () => (
-    <ul className="select-list"><li>No available options.</li></ul>
+    <li>No available options.</li>
   )
 
   const rowUI = (option, index) => {
@@ -294,9 +291,6 @@ export const Select = memo((props) => {
   }
 
   const listUI = () => {
-    if (isOpen && filteredList().length <= 0) {
-      return emptySelect();
-    }
     if (isOpen && !isGrouped) {
       return (
         <ul tabIndex="-1" 
@@ -304,38 +298,48 @@ export const Select = memo((props) => {
             ref={listRef} 
             onKeyDown={e => traverseNodes(e, listRef, 'li', closeAndBlur)}>
           {   
+            filteredList().length > 0 &&
             filteredList().map((option, index) => (
               rowUI(option, index)
             ))
+          }
+          {
+            filteredList().length <= 0 &&
+            emptySelect()
           }
         </ul>
       )
     }
     else if (isOpen && isGrouped) {
-        return (
-          <div tabIndex="-1" 
-              className="select-list" 
-              ref={listRef}>
-            {
-              filteredGroupList().map((group, i) => (
-                <React.Fragment key={i}>
-                  {groupRowUI(group)}
-                  {
-                    <ul onKeyDown={e => traverseNodes(e, listRef, 'li', closeAndBlur)}>
-                      {
-                        group.options.map((option, j) => {
-                          const groupDetails = Object.assign({}, group);
-                          delete groupDetails.options;
-                          return rowUI({...option, group: groupDetails}, j);
-                        })
-                      }
-                    </ul>
-                  }
-                </React.Fragment>
-              ))
-            }
-          </div>
-        )
+      return (
+        <div tabIndex="-1" 
+            className="select-list" 
+            ref={listRef}>
+          {
+            filteredGroupList().map((group, i) => (
+              <React.Fragment key={i}>
+                {groupRowUI(group)}
+                {
+                  <ul onKeyDown={e => traverseNodes(e, listRef, 'li', closeAndBlur)}>
+                    {
+                      group.options.length > 0 &&
+                      group.options.map((option, j) => {
+                        const groupDetails = Object.assign({}, group);
+                        delete groupDetails.options;
+                        return rowUI({...option, group: groupDetails}, j);
+                      })
+                    }
+                    {
+                      group.options.length <= 0 &&
+                      emptySelect()
+                    }
+                  </ul>
+                }
+              </React.Fragment>
+            ))
+          }
+        </div>
+      )
     }
   } 
 

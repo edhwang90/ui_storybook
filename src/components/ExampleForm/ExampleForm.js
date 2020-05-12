@@ -73,7 +73,7 @@ export const ExampleForm = () => {
     locations: {
       //value: '',
      // value: {label: 'North America', options: [{label: 'New York', value: 1 }]},
-      value: [{label: 'New York', value: 1, isFixed: true }],
+      value: [{label: 'New York', value: 1, isFixed: true, group: { label: 'North America'} }],
       rules: []
     },
     startDate: { 

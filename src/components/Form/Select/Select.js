@@ -1,6 +1,6 @@
 import React, { useState, useRef, memo, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { filterObjectArray, traverseNodes } from '../../Utils';
+import { traverseNodes } from '../../Utils';
 
 import './Select.scss';
 
@@ -30,10 +30,7 @@ export const useSelect = (props) => {
 
   const filteredList = () => {
     const selections = isMultiSelect ? selected : [selected];
-    if (attr) return filterObjectArray(options, selections, attr);
-    else {
-      return options.filter(option => !selections?.find(filter => option === filter));
-    }
+    return options.filter(option => !selections?.find(filter => getOptionDisplay(option) === getOptionDisplay(filter)));
   }
 
   const filteredGroupList = () => {
@@ -47,6 +44,18 @@ export const useSelect = (props) => {
       }
     }
     return options;
+  }
+
+  const isResetAvailable = () => {
+    if (!isGrouped) {
+      return selected.length > 0;
+    }
+    else {
+      for (let option of selected) { 
+        return option.options?.some(filter => !filter.isFixed);
+      }
+      return false; 
+    }
   }
 
   const closeSelect = () => {
@@ -173,6 +182,7 @@ export const useSelect = (props) => {
     getOptionDisplay,
     filteredList,
     filteredGroupList,
+    isResetAvailable,
     closeSelect,
     openSelect,
     resetSelect,
@@ -187,6 +197,7 @@ export const Select = memo((props) => {
           getOptionDisplay,
           filteredList,
           filteredGroupList,
+          isResetAvailable,
           closeSelect,
           openSelect,
           resetSelect,
@@ -331,7 +342,7 @@ export const Select = memo((props) => {
     if (!isMultiSelect && selected) {
       return clearAllBtn
     }
-    else if (isMultiSelect && selected.length > 0) {
+    else if (isMultiSelect && isResetAvailable()) {
       return clearAllBtn
     }
   }

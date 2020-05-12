@@ -71,7 +71,7 @@ export const ExampleForm = () => {
       rules: [{ type: 'required' }] 
     },
     locations: {
-      //value: '',
+      value: '',
      // value: {label: 'North America', options: [{label: 'New York', value: 1 }]},
       value: [{label: 'North America', options: [{label: 'New York', value: 1, isFixed: true } ] }],
       rules: []

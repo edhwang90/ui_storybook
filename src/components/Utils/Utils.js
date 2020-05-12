@@ -1,5 +1,6 @@
-export const filterObjectArray = (arr, filterArr, attr) => (
-  arr.filter(elem => !filterArr?.find(filter => elem?.[attr] === filter?.[attr]))
+// shallow / needs work
+export const filterObjectArray = (arr, filterArr) => (
+  arr.filter(elem => !filterArr?.find(filter => JSON.stringify(elem) === JSON.stringify(filter)))
 );
 
 export const generateNumber = () => Math.floor(Math.random()*10000);

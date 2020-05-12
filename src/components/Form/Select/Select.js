@@ -343,9 +343,9 @@ export const Select = memo((props) => {
     if (!isMultiSelect && selected) {
       return clearAllBtn
     }
-    else if (isMultiSelect && isResetAvailable()) {
-      return clearAllBtn
-    }
+    // else if (isMultiSelect && isResetAvailable()) {
+    //   return clearAllBtn
+    // }
   }
 
   const emptySelect = () => (
@@ -389,51 +389,58 @@ export const Select = memo((props) => {
   }
 
   const listUI = () => {
-    if (isOpen && filteredList().length <= 0) {
-      return emptySelect()
-    }
-    else if (isOpen && !isGrouped) {
-      
-      return (
-        <ul tabIndex="-1" 
-            className="select-list" 
-            ref={listRef} 
-            onKeyDown={e => traverseNodes(e, listRef, 'li', closeAndBlur)}>
-          {
-            filteredList().map((option, index) => (
-              rowUI(option, index)
-            ))
-          }
-        </ul>
-      )
+    if (isOpen && !isGrouped) {
+      if (filteredList().length > 0) {
+        return (
+          <ul tabIndex="-1" 
+              className="select-list" 
+              ref={listRef} 
+              onKeyDown={e => traverseNodes(e, listRef, 'li', closeAndBlur)}>
+            {   
+              filteredList().map((option, index) => (
+                rowUI(option, index)
+              ))
+            }
+          </ul>
+        )
+      }
+      else {
+        return emptySelect();
+      }
+
     }
     else if (isOpen && isGrouped) {
-      return (
-        <div tabIndex="-1" 
-            className="select-list" 
-            ref={listRef}>
-          {
-            filteredGroupList().map((group, i) => (
-              <React.Fragment key={i}>
-                {groupRowUI(group)}
-                {
-                  <ul onKeyDown={e => traverseNodes(e, listRef, 'li', closeAndBlur)}>
-                    {
-                      group.options.map((option, j) => {
-                        const groupDetails = Object.assign({}, group);
-                        delete groupDetails.options;
-                        return rowUI(option, j, groupDetails);
-                      })
-                    }
-                  </ul>
-                }
-              </React.Fragment>
-            ))
-          }
-        </div>
-      )
+      if (filteredGroupList().length > 0) {
+        return (
+          <div tabIndex="-1" 
+              className="select-list" 
+              ref={listRef}>
+            {
+              filteredGroupList().map((group, i) => (
+                <React.Fragment key={i}>
+                  {groupRowUI(group)}
+                  {
+                    <ul onKeyDown={e => traverseNodes(e, listRef, 'li', closeAndBlur)}>
+                      {
+                        group.options.map((option, j) => {
+                          const groupDetails = Object.assign({}, group);
+                          delete groupDetails.options;
+                          return rowUI(option, j, groupDetails);
+                        })
+                      }
+                    </ul>
+                  }
+                </React.Fragment>
+              ))
+            }
+          </div>
+        )
+      }
+      else {
+        return emptySelect();
+      }
     }
-  }
+  } 
 
   return (
     <div ref={menuRef}

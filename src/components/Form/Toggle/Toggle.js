@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './Toggle.scss';
 
 export const useToggle = (props) => {
-  const { type, className, toggleFor, value, handleToggle, disabled } = props;
+  const { value, handleToggle } = props;
   const [toggled, setToggled] = useState(value || false);
 
   const toggle = (e) => {
@@ -13,18 +13,16 @@ export const useToggle = (props) => {
   }
 
   return {
-    type,
-    className,
     toggled,
-    toggleFor,
     toggle,
-    disabled
   }
 }
 
 export const Toggle = memo((props) => {
-  const { type, className, toggled, toggleFor, toggle, disabled } = useToggle(props);
+  const { toggled, toggle } = useToggle(props);
 
+  const { type, className, toggleFor, disabled, onBlur } = props;
+  
   const handleToggle = () => {
     if (disabled) return;
     toggle();
@@ -36,6 +34,7 @@ export const Toggle = memo((props) => {
              checked={toggled} 
              value={toggled}
              id={toggleFor}
+             onBlur={onBlur}
              onChange={handleToggle}
              disabled={disabled}/>
       <span className={className} 

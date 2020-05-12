@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 const checkMinlength = (value, ruleValue) => {
@@ -125,12 +125,13 @@ export const useValidate = (props) => {
     setForm(newForm);
   }
 
-  const validate = (field, value) => {
-    const fieldObj = getFieldObj(field, value);
+  const validate = useCallback((field) => {
+    const fieldObj = form[field];
     const validated = validateField(fieldObj);
     const newForm = validated.errors?.length > 0 ? {...form, [field]: validated, error: true} : {...form, [field]: validated};
     setForm(newForm);
-  }
+    setValidateActive(true);
+  })
 
   const handleSubmit = () => {
     let newForm = form;

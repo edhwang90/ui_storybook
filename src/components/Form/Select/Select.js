@@ -5,9 +5,24 @@ import { filterObjectArray, traverseNodes } from '../../Utils';
 import './Select.scss';
 
 export const useSelect = (props) => {
-  const { options, value, attr, onClick, isMultiSelect, isGrouped, disabled } = props;
+  const { options, value, attr, onClick, onBlur, isMultiSelect, isGrouped, disabled } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(isMultiSelect ? value ? value : [] : value);
+
+  const initialMount = useRef(true);
+
+  const onBlurCallback = useCallback(() => {
+    if (onBlur) onBlur();
+  }, [isOpen])
+
+  useEffect(() => {
+    if (initialMount.current) {
+      initialMount.current = false;
+      return;
+    }
+    
+    if (!isOpen) onBlurCallback();
+  }, [isOpen, initialMount, onBlurCallback]);
 
   const getOptionDisplay = (selected) => {
     return attr ? selected[attr] : selected
@@ -106,6 +121,7 @@ export const useSelect = (props) => {
   const resetSelect = (e) => {
     e.stopPropagation();
     if (disabled) return;
+
     if (!isMultiSelect) {
       setSelected('');
       onClick('');
@@ -177,7 +193,7 @@ export const Select = memo((props) => {
           handleClick,
           removeSelection  } = useSelect(props);
   
-  const { disabled, isMultiSelect, isGrouped, 
+  const { disabled, isMultiSelect, isGrouped, onBlur,
           className, label, selectRow, groupedRow } = props;
 
   const menuRef = useRef(null);
@@ -413,7 +429,7 @@ export const Select = memo((props) => {
       <div className={`select-btn${ isOpen ? ' list-open' : '' }${ disabled ? ' list-disabled' : ''} ${className}`}
            onKeyDown={accessKeyDown}
            onClick={accessOpen}
-           //onFocus={accessOpen}
+           onBlur={onBlur}
            tabIndex="0"
            aria-label="Toggle select list">
         <div tabIndex="-1" 

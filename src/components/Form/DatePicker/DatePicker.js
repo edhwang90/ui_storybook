@@ -1,13 +1,28 @@
-import React, { useState, useRef, memo } from 'react';
+import React, { useState, useRef, memo, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Calendar } from './Calendar';
 
 import './DatePicker.scss';
 
 export const useDatePicker = (props) => {
-  const { className, format, value, placeholder, onClick, disabled } = props;
+  const { value, onClick, onBlur } = props;
   const [selectedDate, setSelectedDate] = useState(value ? value : '');
   const [isOpen, setIsOpen] = useState(false);
+
+  const initialMount = useRef(true);
+
+  const onBlurCallback = useCallback(() => {
+    if (onBlur) onBlur();
+  }, [isOpen])
+
+  useEffect(() => {
+    if (initialMount.current) {
+      initialMount.current = false;
+      return;
+    }
+    
+    if (!isOpen) onBlurCallback();
+  }, [isOpen, initialMount, onBlurCallback])
 
   const toggleCalendar = () => {
     setIsOpen(!isOpen);
@@ -29,10 +44,6 @@ export const useDatePicker = (props) => {
   }
 
   return {
-    className,
-    placeholder,
-    format,
-    disabled,
     selectedDate,
     isOpen,
     toggleCalendar,
@@ -43,16 +54,14 @@ export const useDatePicker = (props) => {
 }
 
 export const DatePicker = memo((props) => {
-  const { className,
-          placeholder, 
-          disabled,
-          format,
-          selectedDate, 
-          isOpen, 
+  const { selectedDate, 
+          isOpen,
           toggleCalendar,
           closeCalendar,
           clearDate,
           setDate } = useDatePicker(props);
+
+  const { className, placeholder, format, disabled,onBlur } = props;
 
   const datepickerRef = useRef(null);
 
@@ -122,6 +131,7 @@ export const DatePicker = memo((props) => {
              value={selectedDate}
              readOnly
              disabled={disabled}
+             onBlur={onBlur}
              onKeyDown={handleKeyDown}
              onClick={toggle}>
       </input>

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
@@ -100,7 +100,7 @@ export const ExampleForm = () => {
     handleChange,
     // available for explicit call
     validate,
-    handleSubmit
+    handleSubmit,
   } = useValidate({
     // initial dependencies
     initialForm,
@@ -109,9 +109,9 @@ export const ExampleForm = () => {
     validateOnChange: false
   })
 
-  const test = (x) => {
-console.log('asdf', form.industry.value)
-  }
+  const handleBlur = useCallback((field) => {
+    validate(field, form[field].value);
+  });
 
   const selectRow = (data) => (
     <li><span>a</span>{data}</li>
@@ -132,6 +132,7 @@ console.log('asdf', form.industry.value)
                 <input onChange={e => handleChange('email', e.target.value)}
                        className={`form-input ${form.email.errors?.length > 0 ? 'form-error' : ''}`}
                        value={form.email.value}
+                       onBlur={e => validate('email')}
                        type="email" 
                        placeholder="Email">
                 </input>
@@ -150,6 +151,7 @@ console.log('asdf', form.industry.value)
                 <span className="form-input-prepend"><FontAwesomeIcon icon={faCoffee} /></span>
                 <input className={`form-input ${form.password.errors?.length > 0 ? 'form-error' : ''}`}
                        value={form.password.value}
+                       onBlur={e => validate('password')}
                        onChange={e => handleChange('password', e.target.value)}
                        type="password" 
                        placeholder="Password">
@@ -169,6 +171,7 @@ console.log('asdf', form.industry.value)
                       label="Select..."
                       options={industryArray}
                       isMultiSelect
+                      onBlur={e => validate('industry')}
                       onClick={e => handleChange('industry', e)}>
               </Select>
               { 
@@ -186,6 +189,7 @@ console.log('asdf', form.industry.value)
                       attr="label"
                       className={form.role.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
+                      onBlur={e => validate('role')}
                       onClick={e => handleChange('role', e)}>
                </Select>
               { 
@@ -207,6 +211,7 @@ console.log('asdf', form.industry.value)
                       groupedRow={groupedRow}
                       className={form.locations.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
+                      onBlur={e => validate('locations')}
                       onClick={e => handleChange('locations', e)}>
                </Select>
               { 
@@ -220,6 +225,7 @@ console.log('asdf', form.industry.value)
             <div className="form-group">
               <label className="form-label">Select a date<span className="required">*</span></label>
               <DatePicker onClick={e => handleChange('startDate', e)} 
+                          onBlur={e => validate('startDate')}
                           className={form.startDate.errors?.length > 0 ? 'form-error' : ''}
                           format="MM/DD/YYYY" 
                           placeholder="MM/DD/YYYY"></DatePicker>
@@ -236,6 +242,7 @@ console.log('asdf', form.industry.value)
                 <Toggle type="switch"
                         toggleFor="flexibleDate"
                         className={form.flexible.errors?.length > 0 ? 'form-error' : ''}
+                        onBlur={e => validate('flexible')}
                         handleToggle={e => handleChange('flexible', e)}>
                 </Toggle>
                 <label className="toggle-label" htmlFor="flexibleDate">Flexible date<span className="required">*</span></label>
@@ -255,6 +262,7 @@ console.log('asdf', form.industry.value)
                 <Toggle type="checkbox"
                         toggleFor="agreeTerms"
                         className={form.terms.errors?.length > 0 ? 'form-error' : ''}
+                        onBlur={e => validate('terms')}
                         handleToggle={e => handleChange('terms', e)}>
                 </Toggle>
                 <label htmlFor="agreeTerms" className="toggle-label">Agree to terms<span className="required">*</span></label>

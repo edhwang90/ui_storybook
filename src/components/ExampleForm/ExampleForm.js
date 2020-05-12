@@ -71,9 +71,9 @@ export const ExampleForm = () => {
       rules: [{ type: 'required' }] 
     },
     locations: {
-      value: '',
+      //value: '',
      // value: {label: 'North America', options: [{label: 'New York', value: 1 }]},
-      //value: [{label: 'North America', options: [{label: 'New York', value: 1, isFixed: true } ] }],
+      value: [{label: 'New York', value: 1, isFixed: true }],
       rules: []
     },
     startDate: { 
@@ -207,7 +207,7 @@ export const ExampleForm = () => {
                       attr="label"
                       value={form.locations.value}
                       isGrouped
-                      //isMultiSelect
+                      isMultiSelect
                       groupedRow={groupedRow}
                       className={form.locations.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."

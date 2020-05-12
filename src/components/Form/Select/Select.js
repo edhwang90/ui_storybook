@@ -37,25 +37,18 @@ export const useSelect = (props) => {
     const selections = isMultiSelect ? selected : [selected];
     
     for (let option of options) {
-      for (let select of selections) {
-        if (option.label === select.label) {
-          option.options = option.options.filter(filter => !select.options.find(find => getOptionDisplay(filter) === getOptionDisplay(find) ))
-        }
-      }
+      option.options = option.options.filter(filter => !selections.find(find => (getOptionDisplay(filter) === getOptionDisplay(find)) && option.label === find.group?.label ))
     }
+    
     return options;
   }
 
   const isResetAvailable = () => {
-    if (!isGrouped) {
-      return selected.length > 0;
-    }
-    else {
-      for (let option of selected) { 
-        return option.options?.some(filter => !filter.isFixed);
-      }
-      return false; 
-    }
+    return selected?.some(filter => !filter.isFixed);
+      // for (let option of selected) { 
+      //   return option.options?.some(filter => !filter.isFixed);
+      // }
+    
   }
 
   const closeSelect = () => {
@@ -66,64 +59,15 @@ export const useSelect = (props) => {
     setIsOpen(true);
   }
 
-  const updateGroup = (index, groupToUpdate) => {
-    if (groupToUpdate.options.length > 0 ) {
-      setSelected([
-        ...selected.slice(0, index), 
-        groupToUpdate,
-        ...selected.slice(index+1)
-      ]);
-      onClick([
-        ...selected.slice(0, index), 
-        groupToUpdate,
-        ...selected.slice(index+1)
-      ]);
+  const handleClick = (option) => {
+    if (isMultiSelect) {
+      setSelected([...selected, option]);
+      onClick([...selected, option]);
     }
     else {
-      setSelected([
-        ...selected.slice(0, index),
-        ...selected.slice(index+1)
-      ]);
-      onClick([
-        ...selected.slice(0, index),
-        ...selected.slice(index+1)
-      ]);
-    }
-  }
-
-  const handleClick = (option, group) => {
-    if (!group) {
-      if (isMultiSelect) {
-        setSelected([...selected, option]);
-        onClick([...selected, option]);
-      }
-      else {
-        setSelected(option);
-        onClick(option);
-        closeSelect();
-      }
-    }
-    else {
-      if (isMultiSelect) {
-        const indexOfUpdate = selected.findIndex(find => find.label === group.label);
-        if (indexOfUpdate >= 0) {
-          const groupToUpdate = selected[indexOfUpdate];
-          groupToUpdate.options = [...groupToUpdate.options, option] 
-          updateGroup(indexOfUpdate, groupToUpdate);
-        }
-        else {
-          const selection = { ...group, options: [option]};
-          setSelected([...selected, selection]);
-          onClick([...selected, selection]);
-        }
-
-      }
-      else {
-        const selection = { ...group, options: [option]};
-        setSelected(selection);
-        onClick(selection);
-        closeSelect();
-      }
+      setSelected(option);
+      onClick(option);
+      closeSelect();
     }
   }
 
@@ -136,44 +80,23 @@ export const useSelect = (props) => {
       onClick('');
       return;
     }
-
-    let updated = selected;
-    if (!isGrouped) {
+    else {
+      let updated = selected;
       updated = updated.filter(find => find.isFixed);
       setSelected(updated);
       onClick(updated);
     }
-    else {
-      let indexOfUpdate;
-      for (let option of selected) {
-        for (let groupedOption of option.options) {
-          if (!groupedOption.isFixed) {
-            indexOfUpdate = updated.findIndex(find => find.label === option.label);
-            updated[indexOfUpdate].options = updated[indexOfUpdate].options.filter(find => getOptionDisplay(find) !== getOptionDisplay(groupedOption));
-          }
-        } 
-      }
-      updateGroup(indexOfUpdate, updated[indexOfUpdate]);
-    }
   }
 
-  const removeSelection = (e, toRemove, group) => {
+  const removeSelection = (e, toRemove) => {
     e.stopPropagation();
     if (disabled) return;
-    
-    if (!group) {
-      const updated = selected.filter(find => getOptionDisplay(find) !== getOptionDisplay(toRemove));
-
-      setSelected(updated);
-      onClick(updated);
-    }
-    else {
-      const indexOfUpdate = selected.findIndex(find => find.label === group.label);
-      const groupToUpdate = selected[indexOfUpdate];
-      groupToUpdate.options = groupToUpdate.options.filter(find => getOptionDisplay(find) !== getOptionDisplay(toRemove));
   
-      updateGroup(indexOfUpdate, groupToUpdate);
-    }
+    const updated = selected.filter(find => getOptionDisplay(find) !== getOptionDisplay(toRemove));
+
+    setSelected(updated);
+    onClick(updated);
+    
   }
 
   return {
@@ -270,9 +193,8 @@ export const Select = memo((props) => {
     }
   }
   
-  const selectedTagUI = (index, selection, group) => (
-    <div key={index} 
-        //  onKeyDown= {e => traverseNodes(e, selectedRef, '.remove-selected', keydownToClear, true)}
+  const selectedTagUI = (index, selection) => (
+    <div key={index}
          className="selected">
       <span className={selection.isFixed ? 'fixed' : ''}>{getOptionDisplay(selection)}</span>
       {
@@ -280,7 +202,7 @@ export const Select = memo((props) => {
         <button className="btn remove-selected"
                 id={index}
                 disabled={disabled}
-                onClick={(e) => removeSelection(e, selection, group)}
+                onClick={(e) => removeSelection(e, selection)}
                 type="button"
                 aria-label="Remove selection">
           <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"></path></svg>
@@ -291,7 +213,7 @@ export const Select = memo((props) => {
 
   // Display purposes: Multiselect vs Select
   const labelUI = () => {
-    if (!isGrouped) {
+   
       if (!isMultiSelect) {
         return selected 
           ? getOptionDisplay(selected)
@@ -307,24 +229,7 @@ export const Select = memo((props) => {
           )
         : <span className="not-selected">{label}</span>
       }
-    }
-    else {
-      if (!isMultiSelect) {
-        return selected ? getOptionDisplay(selected.options[0]) : label;
-      }
-      else {
-        return selected.length > 0
-          ? 
-            (
-              selected.map((group, k) => (
-                group.options.map((selection, l) => (
-                  selectedTagUI(l, selection, group)
-                ))
-              ))
-            )
-          : <span className="not-selected">{label}</span>
-      }
-    }
+    
   }
 
   const clearUI = () => {
@@ -343,22 +248,22 @@ export const Select = memo((props) => {
     if (!isMultiSelect && selected) {
       return clearAllBtn
     }
-    // else if (isMultiSelect && isResetAvailable()) {
-    //   return clearAllBtn
-    // }
+    else if (isMultiSelect && isResetAvailable()) {
+      return clearAllBtn
+    }
   }
 
   const emptySelect = () => (
     <ul className="select-list"><li>No available options.</li></ul>
   )
 
-  const rowUI = (option, index, group) => {
+  const rowUI = (option, index) => {
     if (!selectRow) {
       return (
         <li key={index} 
             tabIndex="0"
-            onKeyDown={e => handleKeyDown(e, option, group)} 
-            onClick={e => handleClick(option, group)}
+            onKeyDown={e => handleKeyDown(e, option)} 
+            onClick={e => handleClick(option)}
             aria-label={`Select option ${getOptionDisplay(option)}`}>
           {getOptionDisplay(option)}
         </li>
@@ -368,8 +273,8 @@ export const Select = memo((props) => {
       return React.cloneElement(selectRow(getOptionDisplay(option)), {
         tabIndex: "0",
         key: index,
-        onKeyDown: e => handleKeyDown(e, option, group),
-        onClick: e => handleClick(option, group),
+        onKeyDown: e => handleKeyDown(e, option),
+        onClick: e => handleClick(option),
         'aria-label': `Select option ${getOptionDisplay(option)}`
       })
     }
@@ -389,28 +294,24 @@ export const Select = memo((props) => {
   }
 
   const listUI = () => {
+    if (isOpen && filteredList().length <= 0) {
+      return emptySelect();
+    }
     if (isOpen && !isGrouped) {
-      if (filteredList().length > 0) {
-        return (
-          <ul tabIndex="-1" 
-              className="select-list" 
-              ref={listRef} 
-              onKeyDown={e => traverseNodes(e, listRef, 'li', closeAndBlur)}>
-            {   
-              filteredList().map((option, index) => (
-                rowUI(option, index)
-              ))
-            }
-          </ul>
-        )
-      }
-      else {
-        return emptySelect();
-      }
-
+      return (
+        <ul tabIndex="-1" 
+            className="select-list" 
+            ref={listRef} 
+            onKeyDown={e => traverseNodes(e, listRef, 'li', closeAndBlur)}>
+          {   
+            filteredList().map((option, index) => (
+              rowUI(option, index)
+            ))
+          }
+        </ul>
+      )
     }
     else if (isOpen && isGrouped) {
-      if (filteredGroupList().length > 0) {
         return (
           <div tabIndex="-1" 
               className="select-list" 
@@ -425,7 +326,7 @@ export const Select = memo((props) => {
                         group.options.map((option, j) => {
                           const groupDetails = Object.assign({}, group);
                           delete groupDetails.options;
-                          return rowUI(option, j, groupDetails);
+                          return rowUI({...option, group: groupDetails}, j);
                         })
                       }
                     </ul>
@@ -435,10 +336,6 @@ export const Select = memo((props) => {
             }
           </div>
         )
-      }
-      else {
-        return emptySelect();
-      }
     }
   } 
 

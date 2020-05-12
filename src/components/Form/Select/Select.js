@@ -131,9 +131,22 @@ export const Select = memo((props) => {
   const listRef = useRef(null); // for Accessible traversing
   const selectedRef = useRef(null); // for Accessible traversing
 
+  // for Accessible traversion: auto focus to list after open
+  // useEffect(() => {
+  //   if (listRef.current) listRef.current.focus();
+  // }, [isOpen, listRef])
+
   const closeAndBlur = () => {
     closeSelect();
     menuRef.current.querySelector('.select-btn').blur();
+  }
+
+  const openAndFocus = (evt) => {
+    if (disabled) return;
+    if (!evt) return;
+    openSelect();
+
+    document.addEventListener('click', onOutsideClick);
   }
 
   const onOutsideClick = e => {
@@ -153,7 +166,7 @@ export const Select = memo((props) => {
       closeAndBlur();
     }
     else if (e.keyCode === 13 || e.keyCode === 32) {
-      accessOpen(e);
+      openAndFocus(e);
     }
     else if (e.keyCode === 40 && isOpen) {
       e.preventDefault();
@@ -166,15 +179,8 @@ export const Select = memo((props) => {
   }
 
   const keydownToClear = () => {
-    const clear = selectedRef.current.querySelector('.select-clear');
+    const clear = menuRef.current.querySelector('.select-clear');
     if (clear) clear.focus();
-  }
-
-  const accessOpen = (evt) => {
-    if (disabled) return;
-    if (!evt) return;
-    openSelect();
-    document.addEventListener('click', onOutsideClick);
   }
 
   // Accessibility: handle selection and escape
@@ -188,6 +194,13 @@ export const Select = memo((props) => {
     else if (e.keyCode === 27) {
       closeAndBlur();
     }
+  }
+
+  // Accessibility: handle traversal and list, toggle between
+  //                list and selected
+  const traverseSelect = (e) => {
+    traverseNodes(e, selectedRef, 'button', keydownToClear, true); 
+    traverseNodes(e, listRef, 'li', closeAndBlur)
   }
   
   const selectedTagUI = (index, selection) => (
@@ -296,7 +309,7 @@ export const Select = memo((props) => {
         <ul tabIndex="-1" 
             className="select-list" 
             ref={listRef} 
-            onKeyDown={e => traverseNodes(e, listRef, 'li', closeAndBlur)}>
+            onKeyDown={e => traverseSelect(e)}>
           {   
             filteredList().length > 0 &&
             filteredList().map((option, index) => (
@@ -320,7 +333,7 @@ export const Select = memo((props) => {
               <React.Fragment key={i}>
                 {groupRowUI(group)}
                 {
-                  <ul onKeyDown={e => traverseNodes(e, listRef, 'li', closeAndBlur)}>
+                  <ul onKeyDown={e => traverseSelect(e)}>
                     {
                       group.options.length > 0 &&
                       group.options.map((option, j) => {
@@ -348,7 +361,8 @@ export const Select = memo((props) => {
          className={ isMultiSelect ? `multi-select-container ${selected.length > 0 ? 'show-selected' : ''}`: `select-container`}>
       <div className={`select-btn${ isOpen ? ' list-open' : '' }${ disabled ? ' list-disabled' : ''} ${className}`}
            onKeyDown={accessKeyDown}
-           onClick={accessOpen}
+           onFocus={openAndFocus}
+           onClick={openAndFocus}
            tabIndex="0"
            aria-label="Toggle select list">
         <div tabIndex="-1" 

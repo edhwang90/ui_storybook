@@ -35,24 +35,19 @@ export const traverseNodes = (evt, el, nodeType, endFn, isHorizontal) => {
     evt.preventDefault();
     evt.stopPropagation();
     const next = selected >= list.length - 1 ? 0 : selected + 1
-    list[next].focus();
+    if (next >= 0) list[next].focus();
   }
   // to previous
   else if (backward) {
     evt.preventDefault();
     evt.stopPropagation();
     const previous = selected <= 0 ? list.length - 1 : selected - 1
-    list[previous].focus();
+    if (previous >= 0) list[previous].focus();
   }
-
-  // if tab out
-  if (endFn) {
-    evt.target.addEventListener('blur', e => {
-      if (e.relatedTarget?.nodeName !== nodeType.toUpperCase()) {
-        e.preventDefault();
-        endFn();
-      }
-    });
+  else if (evt.keyCode === 9 && !evt.shiftKey) {
+    evt.preventDefault();
+    evt.stopPropagation();
+    if (endFn) endFn();
   }
 }
 

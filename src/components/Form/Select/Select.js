@@ -229,6 +229,7 @@ export const Select = memo((props) => {
 
   const accessKeyDown = (e) => {
     if ((e.keyCode === 9 && e.shiftKey) || e.keyCode === 27 || (e.keyCode === 9 && !isOpen)) {
+      onBlur();
       closeAndBlur();
     }
     else if (e.keyCode === 13 || e.keyCode === 32) {
@@ -440,7 +441,6 @@ export const Select = memo((props) => {
       <div className={`select-btn${ isOpen ? ' list-open' : '' }${ disabled ? ' list-disabled' : ''} ${className}`}
            onKeyDown={accessKeyDown}
            onClick={accessOpen}
-           onBlur={onBlur}
            tabIndex="0"
            aria-label="Toggle select list">
         <div tabIndex="-1" 

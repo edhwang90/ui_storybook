@@ -157,7 +157,8 @@ export const Select = memo((props) => {
   }
 
   const onOutsideClick = e => {
-    if (e.path.indexOf(menuRef.current) >= 0) {
+    const path = e.path || e.composedPath();
+    if (path.indexOf(menuRef.current) >= 0) {
       return;
     }
 

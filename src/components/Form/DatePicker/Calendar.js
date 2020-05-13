@@ -74,10 +74,6 @@ export const Calendar = (props) => {
     setShowYears(false);
   }, [dateObj])
 
-  useEffect(() => {
-    if (monthRef.current) monthRef.current.querySelector('.today').focus();
-  }, [monthRef])
-
   const firstDay = () => {
     return moment(dateObj, format).startOf('month').format('d');
   }

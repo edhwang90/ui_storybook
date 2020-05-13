@@ -139,6 +139,13 @@
       background-color: #e6e6e6;
     }
   }
+
+  .empty {
+    cursor: initial;
+    &:hover, &:focus {
+      background-color: initial;
+    }
+  }
 }
 
 .multi-select-container {

@@ -43,6 +43,7 @@ export const traverseNodes = (evt, el, nodeType, endFn, isHorizontal) => {
     if (previous >= 0) list[previous].focus();
   }
   else if (evt.keyCode === 9 && !evt.shiftKey) {
+    evt.preventDefault();
     if (endFn) endFn();
   }
 }

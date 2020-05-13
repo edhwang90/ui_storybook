@@ -164,7 +164,7 @@ export const Select = memo((props) => {
   };
 
   const accessKeyDown = (e) => {
-    if ((e.keyCode === 9 && e.shiftKey) || e.keyCode === 27 || (e.keyCode === 9 && !isOpen)) {
+    if ((e.keyCode === 9 && e.shiftKey) || e.keyCode === 27 || (e.keyCode === 9)) {
       onBlur();
       closeAndBlur();
     }
@@ -219,7 +219,7 @@ export const Select = memo((props) => {
       
     //   removeSelection(e, selected[selected.length-1]);
     // }
-    if (selectedRef.current) traverseNodes(e, selectedRef, '.remove-selected', null, true); 
+    if (selectedRef.current) traverseNodes(e, selectedRef, '.remove-selected', keydownToClear, true); 
     if (listRef.current) traverseNodes(e, listRef, '.select-option', closeAndBlur)
   }
   
@@ -289,7 +289,7 @@ export const Select = memo((props) => {
   }
 
   const emptySelect = () => (
-    <li>No available options.</li>
+    <li tabIndex="0" className="select-option empty">No available options.</li>
   )
 
   const rowUI = (option, index) => {

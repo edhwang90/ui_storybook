@@ -28,6 +28,10 @@ export const useDatePicker = (props) => {
     setIsOpen(!isOpen);
   }
 
+  const openCalendar = () => {
+    setIsOpen(true);
+  }
+
   const closeCalendar = () => {
     setIsOpen(false);
   }
@@ -47,6 +51,7 @@ export const useDatePicker = (props) => {
     selectedDate,
     isOpen,
     toggleCalendar,
+    openCalendar,
     closeCalendar,
     clearDate,
     setDate
@@ -57,6 +62,7 @@ export const DatePicker = memo((props) => {
   const { selectedDate, 
           isOpen,
           toggleCalendar,
+          openCalendar,
           closeCalendar,
           clearDate,
           setDate } = useDatePicker(props);
@@ -83,7 +89,12 @@ export const DatePicker = memo((props) => {
   const handleKeyDown = (e) => {
     // key: enter, space
     if (e.keyCode === 13 || e.keyCode === 32) {
-      toggleCalendar();
+      toggle();
+    }
+    else if (e.keyCode === 40) {
+      openCalendar();
+      document.addEventListener('click', onOutsideClick);
+
     }
     // key: shift + tab || esc
     else if ((e.keyCode === 9 && e.shiftKey) || e.keyCode === 27) {

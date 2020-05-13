@@ -11,7 +11,8 @@ const YearList = (props) => {
   const yearsRef = useRef(null);
 
   useEffect(() => {
-    liRef.current.scrollIntoView({block: 'center'});
+    if (liRef.current) liRef.current.scrollIntoView({block: 'center'});
+    if (liRef.current) liRef.current.focus();
   }, [liRef])
 
   // Accessibility: key downs to year, escape year picker
@@ -73,6 +74,10 @@ export const Calendar = (props) => {
     setShowYears(false);
   }, [dateObj])
 
+  useEffect(() => {
+    if (monthRef.current) monthRef.current.querySelector('.today').focus();
+  }, [monthRef])
+
   const firstDay = () => {
     return moment(dateObj, format).startOf('month').format('d');
   }
@@ -107,6 +112,11 @@ export const Calendar = (props) => {
     }
   }
 
+  // Accessibility: reset focus
+  const resetFocus = (e) => {
+    e.target.focus();
+  }
+
   const displayHeader = () => (
     moment.weekdaysShort().map((day, index) => (
       <th key={`wks${index}`}>{day}</th>
@@ -132,6 +142,7 @@ export const Calendar = (props) => {
       const highlightSelect = newDate.isSame(selectedDate, 'day') ? 'selected' : '';
 
       days.push(<td tabIndex="-1" key={`tdd${j}`} 
+                    onMouseEnter={e => resetFocus(e) }
                     onKeyDown={(e) => onMonthKeyDown(e, newDate.format(format))}
                     onClick={(e) => onClick(newDate.format(format))} 
                     className={`calendar-day ${highlightToday} ${highlightSelect}`}

@@ -85,13 +85,13 @@
 .month-table {
   width: 100%;
 
-  &:focus {
-    outline: dotted;
-  }
-
   th {
     font-weight: normal;
     color: #cdcdcd;
+  }
+
+  &:focus {
+    outline: dotted;
   }
 
   td {
@@ -101,16 +101,15 @@
     border-radius: 4px;
     cursor: pointer;
 
-    &:hover, &.selected {
+    &:hover, 
+    &.selected,
+    &:focus {
       background-color: #e6e6e6;
+      outline: none;
     }
 
     &.today {
       border: 2px solid #e6e6e6;
-    }
-
-    &:focus {
-      outline: dotted;
     }
   }
 }
@@ -132,11 +131,9 @@
     border-radius: 4px;
   }
 
-  li:hover {
-    background-color: #f7f7f7;
-  }
-
+  li:hover,
   li:focus {
-    outline: dotted;
+    background-color: #e6e6e6;
+    outline: none;
   }
 }

@@ -205,7 +205,12 @@ export const Select = memo((props) => {
 
       // hack: to fix tabbing/focus error for choosing last item of group and/or list
       if (isMultiSelect) {
-        menuRef.current.querySelector('.select-btn').focus();
+        if (e.target.previousSibling) {
+          e.target.previousSibling.focus();
+        }
+        else {
+          menuRef.current.querySelector('.select-btn').focus();
+        }
       }
     }
     // key: escape
@@ -347,7 +352,7 @@ export const Select = memo((props) => {
   const listUI = () => {
     if (isOpen && !isGrouped) {
       return (
-        <ul tabIndex="-1" 
+        <ul tabIndex="0" 
             className="select-list" 
             ref={listRef} 
             onKeyDown={e => traverseSelect(e)}>
@@ -373,7 +378,7 @@ export const Select = memo((props) => {
               <React.Fragment key={i}>
                 {groupRowUI(group)}
                 {
-                  <ul onKeyDown={e => traverseSelect(e)}>
+                  <ul tabIndex="0" onKeyDown={e => traverseSelect(e)}>
                     {
                       group.options.length > 0 &&
                       group.options.map((option, j) => {

@@ -114,7 +114,7 @@ export const ExampleForm = () => {
   });
 
   const selectRow = (data) => (
-    <li><span>a</span>{data}</li>
+    <li className="test"><span>a</span>{data}</li>
   )
 
   const groupedRow = (data) => (
@@ -208,7 +208,8 @@ export const ExampleForm = () => {
                       value={form.locations.value}
                       isGrouped
                       isMultiSelect
-                      groupedRow={groupedRow}
+                      selectRow={selectRow}
+                      //groupedRow={groupedRow}
                       className={form.locations.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
                       onBlur={e => validate('locations')}

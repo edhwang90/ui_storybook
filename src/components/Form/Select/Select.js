@@ -132,21 +132,25 @@ export const Select = memo((props) => {
   const selectedRef = useRef(null); // for Accessible traversing
 
   // for Accessible traversion: auto focus to list after open
-  // useEffect(() => {
-  //   if (listRef.current) listRef.current.focus();
-  // }, [isOpen, listRef])
+  useEffect(() => {
+    if (listRef.current) listRef.current.querySelector('.select-option').focus();
+  }, [isOpen, listRef])
 
   const closeAndBlur = () => {
     closeSelect();
     menuRef.current.querySelector('.select-btn').blur();
   }
 
-  const openAndFocus = (evt) => {
+  const openAndFocus = (e) => {
     if (disabled) return;
-    if (!evt) return;
+    if (!e) return;
     openSelect();
 
     document.addEventListener('click', onOutsideClick);
+  }
+
+  const resetFocus = (e) => {
+    e.target.focus();
   }
 
   const onOutsideClick = e => {
@@ -165,12 +169,9 @@ export const Select = memo((props) => {
       onBlur();
       closeAndBlur();
     }
-    else if (e.keyCode === 13 || e.keyCode === 32) {
-      openAndFocus(e);
-    }
-    else if (e.keyCode === 40 && isOpen) {
+    else if (e.keyCode === 13 || e.keyCode === 32 || e.keyCode === 40) {
       e.preventDefault();
-      listRef.current.querySelector('li').focus();
+      openAndFocus(e);
     }
     else if (e.keyCode === 39) {
       const displayedOptions = selectedRef.current.querySelector('.remove-selected');
@@ -199,8 +200,8 @@ export const Select = memo((props) => {
   // Accessibility: handle traversal and list, toggle between
   //                list and selected
   const traverseSelect = (e) => {
-    traverseNodes(e, selectedRef, 'button', keydownToClear, true); 
-    traverseNodes(e, listRef, 'li', closeAndBlur)
+    if (selectedRef.current) traverseNodes(e, selectedRef, '.select-clear', keydownToClear, true); 
+    if (listRef.current) traverseNodes(e, listRef, '.select-option', closeAndBlur)
   }
   
   const selectedTagUI = (index, selection) => (
@@ -233,9 +234,14 @@ export const Select = memo((props) => {
         return selected.length > 0
         ? 
           (
-            selected.map((selection, k) => (
-              selectedTagUI(k, selection)
-            ))
+            <div className="select-display" ref={selectedRef}
+                 onKeyDown={e => traverseSelect(e, selectedRef, 'button', keydownToClear, true)}>
+              { 
+                selected.map((selection, k) => (
+                  selectedTagUI(k, selection)
+                ))
+              }
+            </div>
           )
         : <span className="not-selected">{label}</span>
       }
@@ -272,6 +278,8 @@ export const Select = memo((props) => {
       return (
         <li key={index} 
             tabIndex="0"
+            className="select-option"
+            onMouseEnter={e => resetFocus(e)}
             onKeyDown={e => handleKeyDown(e, option)} 
             onClick={e => handleClick(option)}
             aria-label={`Select option ${getOptionDisplay(option)}`}>
@@ -280,11 +288,14 @@ export const Select = memo((props) => {
       )
     }
     else {
-      return React.cloneElement(selectRow(getOptionDisplay(option)), {
+      const customRow = selectRow(getOptionDisplay(option));
+      return React.cloneElement(customRow, {
         tabIndex: "0",
         key: index,
+        className: `select-option ${customRow.props.className}`,
         onKeyDown: e => handleKeyDown(e, option),
         onClick: e => handleClick(option),
+        onMouseEnter: e => resetFocus(e),
         'aria-label': `Select option ${getOptionDisplay(option)}`
       })
     }
@@ -361,14 +372,10 @@ export const Select = memo((props) => {
          className={ isMultiSelect ? `multi-select-container ${selected.length > 0 ? 'show-selected' : ''}`: `select-container`}>
       <div className={`select-btn${ isOpen ? ' list-open' : '' }${ disabled ? ' list-disabled' : ''} ${className}`}
            onKeyDown={accessKeyDown}
-           onFocus={openAndFocus}
            onClick={openAndFocus}
            tabIndex="0"
            aria-label="Toggle select list">
-        <div tabIndex="-1" 
-             className="select-display"
-             ref={selectedRef}
-             onKeyDown={e => traverseNodes(e, selectedRef, 'button', keydownToClear, true)}>
+        <div>
           {labelUI()}
         </div>
 

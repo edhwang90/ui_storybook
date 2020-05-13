@@ -127,20 +127,16 @@
   }
 
   .group-label {
-    background-color: #e6e6e6;
+    font-weight: bold;
+    background-color: #f7f7f7;
   }
 
   li {
     cursor: pointer;
 
-    &:hover {
+    &:hover, &:focus {
       outline: none;
       background-color: #e6e6e6;
-    }
-
-    // for debugging accessibility
-    &:focus {
-      outline: dotted;
     }
   }
 }

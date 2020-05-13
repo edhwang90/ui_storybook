@@ -15,8 +15,6 @@ export const traverseNodes = (evt, el, nodeType, endFn, isHorizontal) => {
   const allOptions = el.current.querySelectorAll(nodeType);
   const list = [].slice.call(allOptions)
 
-  //if (list.length <= 0) return;
-
   const selected = list.findIndex(x => x === evt.target);
   let forward;
   let backward;

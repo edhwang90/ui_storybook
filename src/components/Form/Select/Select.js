@@ -145,7 +145,7 @@ export const Select = memo((props) => {
     if (disabled) return;
     if (!e) return;
     openSelect();
-
+    if (listRef.current) listRef.current.querySelector('.select-option').focus();
     document.addEventListener('click', onOutsideClick);
   }
 
@@ -169,7 +169,8 @@ export const Select = memo((props) => {
       onBlur();
       closeAndBlur();
     }
-    else if (e.keyCode === 13 || e.keyCode === 32 || e.keyCode === 40) {
+    // arrow down: open and focus on list
+    else if (e.keyCode === 40) {
       e.preventDefault();
       openAndFocus(e);
     }
@@ -197,10 +198,20 @@ export const Select = memo((props) => {
     }
   }
 
+  const handleRemove = (e, selection, index) => {
+    removeSelection(e, selection);
+    if (listRef.current) listRef.current.querySelector('.select-option').focus();
+  }
+
   // Accessibility: handle traversal and list, toggle between
   //                list and selected
   const traverseSelect = (e) => {
-    if (selectedRef.current) traverseNodes(e, selectedRef, '.select-clear', keydownToClear, true); 
+    // delete: delete selected
+    // if ((e.keyCode === 46 || e.keyCode === 8) && (isMultiSelect && selected.length > 0)) {
+      
+    //   removeSelection(e, selected[selected.length-1]);
+    // }
+    if (selectedRef.current) traverseNodes(e, selectedRef, '.remove-selected', null, true); 
     if (listRef.current) traverseNodes(e, listRef, '.select-option', closeAndBlur)
   }
   
@@ -213,7 +224,7 @@ export const Select = memo((props) => {
         <button className="btn remove-selected"
                 id={index}
                 disabled={disabled}
-                onClick={(e) => removeSelection(e, selection)}
+                onClick={(e) => handleRemove(e, selection, index)}
                 type="button"
                 aria-label="Remove selection">
           <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"></path></svg>

@@ -27,13 +27,13 @@ const hookWrapper = shallow(<SelectHook></SelectHook>);
 describe('Select', () => {
 
   it('opens select', () => {
-    hookWrapper.props().toggleSelect();
+    hookWrapper.props().openSelect();
     expect(hookWrapper.prop('isOpen')).toEqual(true);
   });
 
   it('sets the selection', () => { 
     const selection = 'Option 1';
-    hookWrapper.props().handleClick(selection);
+    hookWrapper.props().clickSelect(selection);
     expect(hookWrapper.prop('selected')).toEqual(selection);
   });
 
@@ -54,13 +54,13 @@ const multiHookWrapper = shallow(<MultiSelectHook></MultiSelectHook>);
 describe('MultiSelect', () => {
 
   it('opens select', () => {
-    multiHookWrapper.props().toggleSelect();
+    multiHookWrapper.props().openSelect();
     expect(multiHookWrapper.prop('isOpen')).toEqual(true);
   });
 
   it('sets the selection', () => { 
     const selection = 'Option 1';
-    multiHookWrapper.props().handleClick(selection);
+    multiHookWrapper.props().clickSelect(selection);
     expect(multiHookWrapper.prop('selected')).toEqual([selection]);
   });
 

@@ -144,7 +144,11 @@ export const Select = memo((props) => {
     if (disabled) return;
     if (!e) return;
     openSelect();
+
+    // auto focus for traversing list
     if (listRef.current) listRef.current.querySelector('.select-option').focus();
+    
+    // bind outside click event
     document.addEventListener('click', onOutsideClick);
   }
 
@@ -173,12 +177,20 @@ export const Select = memo((props) => {
       e.preventDefault();
       openAndFocus(e);
     }
+    // arrow right: to selected
     else if (e.keyCode === 39) {
       const displayedOptions = selectedRef.current.querySelector('.remove-selected');
       if (displayedOptions) displayedOptions.focus();
     }
+    // arrow left: to most recent selected
+    else if (e.keyCode === 37) {
+      const displayedOptions = Array.from(selectedRef.current.querySelectorAll('.remove-selected'));
+      const toIndex = displayedOptions.length - 1 < 0 ? 0 : displayedOptions.length -1;
+      if (displayedOptions) displayedOptions[toIndex].focus();
+    }
   }
 
+  // tab: to clear all
   const keydownToClear = () => {
     const clear = menuRef.current.querySelector('.select-clear');
     if (clear) clear.focus();
@@ -190,7 +202,11 @@ export const Select = memo((props) => {
     if (e.keyCode === 13 || e.keyCode === 32) {
       e.preventDefault();
       handleClick(option, group);
-      if (isMultiSelect) listRef.current.querySelector('.select-option').focus();
+
+      // hack: to fix tabbing/focus error for choosing last item of group and/or list
+      if (isMultiSelect) {
+        menuRef.current.querySelector('.select-btn').focus();
+      }
     }
     // key: escape
     else if (e.keyCode === 27) {
@@ -214,11 +230,6 @@ export const Select = memo((props) => {
   // Accessibility: handle traversal and list, toggle between
   //                list and selected
   const traverseSelect = (e) => {
-    // delete: delete selected
-    // if ((e.keyCode === 46 || e.keyCode === 8) && (isMultiSelect && selected.length > 0)) {
-      
-    //   removeSelection(e, selected[selected.length-1]);
-    // }
     if (selectedRef.current) traverseNodes(e, selectedRef, '.remove-selected', keydownToClear, true); 
     if (listRef.current) traverseNodes(e, listRef, '.select-option', closeAndBlur)
   }
@@ -297,7 +308,7 @@ export const Select = memo((props) => {
       return (
         <li key={index} 
             tabIndex="0"
-            className="select-option"
+            className="select-option available"
             onMouseEnter={e => resetFocus(e)}
             onKeyDown={e => handleKeyDown(e, option)} 
             onClick={e => handleClick(option)}
@@ -311,7 +322,7 @@ export const Select = memo((props) => {
       return React.cloneElement(customRow, {
         tabIndex: "0",
         key: index,
-        className: `select-option ${customRow.props.className}`,
+        className: `select-option available ${customRow.props.className}`,
         onKeyDown: e => handleKeyDown(e, option),
         onClick: e => handleClick(option),
         onMouseEnter: e => resetFocus(e),
@@ -322,7 +333,7 @@ export const Select = memo((props) => {
 
   const groupRowUI = (group, index) => {
     if (!groupedRow) {
-      return <label className="group-label" key={index}>{group.label}</label>
+      return <label tabIndex="0" className="group-label" key={index}>{group.label}</label>
     }
     else {
       return React.cloneElement(groupedRow(group), {

@@ -11,7 +11,7 @@ export const useToggle = (props) => {
     setToggled(!toggled);
     handleToggle(!toggled);
   }
-
+  
   return {
     toggled,
     toggle,

@@ -7,6 +7,7 @@ import { Toggle, Select, DatePicker, useValidate } from '../Form'
 import './ExampleForm.scss';
 
 export const ExampleForm = () => {
+  const [loading, setLoading] = useState(false);
 
   const industryArray = [
     'Accounting & Legal',
@@ -99,25 +100,30 @@ export const ExampleForm = () => {
     }
   };
 
-  const onSubmit = (form) => {
-    console.log('new submit', form);
-  }
-
   const {
     // output for use on form component
     form,
     handleChange,
     // available for explicit call
     validate,
-    handleSubmit,
+    submit,
   } = useValidate({
     // initial dependencies
     initialForm,
-    onSubmit,
-    customValidate,
     // validates on change or on submit
     validateOnChange: false
   })
+
+  const handleSubmit = () => {
+    setLoading(true);
+    submit().then(res => {
+      console.log('1', res);
+      setTimeout(() => {
+        setLoading(false);
+      }, 5000)
+     
+    })
+  }
 
   const selectRow = (data) => (
     <li className="test"><span>a</span>{data}</li>
@@ -137,7 +143,6 @@ export const ExampleForm = () => {
               <div className="input-container">
                 <input onChange={e => handleChange('email', e.target.value)}
                        className={`form-input ${form.email.errors?.length > 0 ? 'form-error' : ''}`}
-                       value={form.email.value}
                        onBlur={e => validate('email', e.target.value)}
                        type="email" 
                        placeholder="Email">
@@ -156,7 +161,6 @@ export const ExampleForm = () => {
               <div className="input-container">
                 <span className="form-input-prepend"><FontAwesomeIcon icon={faCoffee} /></span>
                 <input className={`form-input ${form.password.errors?.length > 0 ? 'form-error' : ''}`}
-                       value={form.password.value}
                        onBlur={e => validate('password')}
                        onChange={e => handleChange('password', e.target.value)}
                        type="password" 
@@ -287,7 +291,9 @@ export const ExampleForm = () => {
         </div>
         <div className="row">
           <div className="col">
-            <button onClick={handleSubmit} type="button" className="btn is-primary">Submit</button>
+            <button onClick={handleSubmit} 
+                    type="button" 
+                    className={`btn is-primary ${loading ? 'loader' : ''}`}>Submit</button>
           </div>
         </div>
       </form>

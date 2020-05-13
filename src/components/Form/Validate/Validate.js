@@ -160,7 +160,7 @@ export const useValidate = (props) => {
     return validated;
   };
 
-  const handleSubmit = async () => {
+  const submit = async () => {
     let newForm = form;
 
     let i = 0;
@@ -171,7 +171,7 @@ export const useValidate = (props) => {
       i++;
     }
     setForm(newForm);
-    onSubmit(newForm);
+    return newForm;
   }
 
   return {
@@ -179,7 +179,7 @@ export const useValidate = (props) => {
     handleChange,
     validate,
     setCustomError,
-    handleSubmit
+    submit
   }
 }
 

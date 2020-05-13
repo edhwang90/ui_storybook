@@ -46,13 +46,22 @@ export const ExampleForm = () => {
     { label: 'Asia', options: [{label: 'Seoul', value: 7 }, { label: 'Hong Kong', value: 8 }, { label: 'Tokyo', value: 9 }]},
   ]
 
+  const customValidate = (formField) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('A custom error.');
+      }, 2000)
+   })
+  }
+
   const initialForm = {
     email: { 
       value: '',
       rules: [
         { type: 'required' },
         { type: 'type', value: 'email'}
-      ] 
+      ],
+      customValidation: customValidate
     },
     password: { 
       value: '',
@@ -105,13 +114,10 @@ export const ExampleForm = () => {
     // initial dependencies
     initialForm,
     onSubmit,
+    customValidate,
     // validates on change or on submit
     validateOnChange: false
   })
-
-  const handleBlur = useCallback((field) => {
-    validate(field, form[field].value);
-  });
 
   const selectRow = (data) => (
     <li className="test"><span>a</span>{data}</li>
@@ -132,7 +138,7 @@ export const ExampleForm = () => {
                 <input onChange={e => handleChange('email', e.target.value)}
                        className={`form-input ${form.email.errors?.length > 0 ? 'form-error' : ''}`}
                        value={form.email.value}
-                       onBlur={e => validate('email')}
+                       onBlur={e => validate('email', e.target.value)}
                        type="email" 
                        placeholder="Email">
                 </input>

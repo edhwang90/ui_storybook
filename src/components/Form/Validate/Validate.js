@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const checkMinlength = (value, ruleValue) => {
@@ -66,69 +66,98 @@ export const useValidate = (props) => {
   }
 
   const validateField = (fieldObj) => {
-    let validateObj = fieldObj;
-    let errorsArr = [];
- 
-    for (let i = 0; i<validateObj.rules?.length; i++) {
-      const rule = validateObj.rules[i];
-
-      switch (rule.type) {
-        case 'required':
-          if (!validateObj.value || validateObj.value.length <= 0) {
-            errorsArr.push('This field is required.');
-          }
-          break;
-        case 'type': 
-          const checkedType = checkType(validateObj.value, rule.value);
-
-          if (checkedType.error) {
-            errorsArr.push(checkedType.message);
-          }
-          break;
-        case 'minlength':
-          if (checkMinlength(validateObj.value, rule.value)) {
-            errorsArr.push(`Please lengthen this text to ${rule.value} characters or more. You are currently using ${validateObj.value.length} character(s).`);
-          }
-          break;
-        case 'maxlength':
-          if (checkMaxlength(validateObj.value, rule.value)) {
-            errorsArr.push(`Please lengthen this text to ${rule.value} characters or less. You are currently using ${validateObj.value.length} character(s).`);
-          }
-          break;
-        case 'contains':
-          if (!checkContains(validateObj.value, rule.value)) {
-            errorsArr.push(`Please include atleast 1 instance of the ${rule.value} character(s).`);
-          }
-          break;
-        default:
-          break;
+    return new Promise((resolve, reject) => {
+      let validateObj = fieldObj;
+      let errorsArr = [];
+   
+      for (let i = 0; i<validateObj.rules?.length; i++) {
+        const rule = validateObj.rules[i];
+        let message;
+        switch (rule.type) {
+          case 'required':
+            if (!validateObj.value || validateObj.value.length <= 0) {
+              errorsArr.push('This field is required');
+            }
+            break;
+          case 'type': 
+            const checkedType = checkType(validateObj.value, rule.value);
+  
+            if (checkedType.error) {
+              errorsArr.push(checkedType.message)
+              message = checkedType.message;
+            }
+            break;
+          case 'minlength':
+            if (checkMinlength(validateObj.value, rule.value)) {
+              errorsArr.push(`Please lengthen this text to ${rule.value} characters or more. You are currently using ${validateObj.value.length} character(s).`);
+            }
+            break;
+          case 'maxlength':
+            if (checkMaxlength(validateObj.value, rule.value)) {
+              errorsArr.push(`Please lengthen this text to ${rule.value} characters or less. You are currently using ${validateObj.value.length} character(s).`);
+            }
+            break;
+          case 'contains':
+            if (!checkContains(validateObj.value, rule.value)) {
+              errorsArr.push(`Please include atleast 1 instance of the ${rule.value} character(s).`);
+            }
+            break;
+          default:
+            break;
+        }
       }
-    }
-
-    validateObj = { ...validateObj, errors: errorsArr, validateOnChange: true };
-
-    return validateObj;
+  
+      validateObj = { ...validateObj, errors: errorsArr };
+  
+      resolve(validateObj);
+    }).then(res => {
+      if (!res.customValidation) {
+        return res;
+      }
+      else if (res.errors.length <= 0) {
+        return fieldObj.customValidation(res).then(customRes => {
+          return setCustomError(res, customRes);
+        })
+      }
+      else {
+        return res;
+      }
+    })
   }
 
   const handleChange = (field, value) => {
     const fieldObj = getFieldObj(field, value);
     let newForm;
+    let validated;
 
     if (fieldObj.validateOnChange || validateOnChange) {
-      const validated = validateField(fieldObj);
-      newForm = validated.errors?.length > 0 ? {...form, [field]: validated, error: true} : {...form, [field]: validated};
+      validateField(fieldObj).then(res => {
+        validated = res;
+        newForm = validated.errors?.length > 0 ? {...form, [field]: validated, error: true} : {...form, [field]: validated};
+        setForm(newForm);
+      });
     }
     else {
       newForm = {...form, [field]: fieldObj}
+      setForm(newForm);
     }
-    setForm(newForm);
   }
 
   const validate = useCallback((field) => {
     const fieldObj = form[field];
-    const validated = validateField(fieldObj);
-    const newForm = validated.errors?.length > 0 ? {...form, [field]: validated, error: true} : {...form, [field]: validated};
-    setForm(newForm);
+    let validated;
+
+    validateField(fieldObj).then(res => {
+      validated = res;
+      const newForm = validated.errors?.length > 0 ? {...form, [field]: validated, error: true} : {...form, [field]: validated};
+      setForm(newForm);
+    });
+  })
+
+  const setCustomError = useCallback((fieldObj, error) => {
+    const fieldErrors = fieldObj.errors ? fieldObj.errors : [];
+    const validated = {...fieldObj, errors: [...fieldErrors, error]};
+    return validated;
   })
 
   const handleSubmit = () => {
@@ -145,6 +174,7 @@ export const useValidate = (props) => {
     form,
     handleChange,
     validate,
+    setCustomError,
     handleSubmit
   }
 }

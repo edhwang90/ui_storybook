@@ -138,7 +138,7 @@ export const ExampleForm = () => {
                 <input onChange={e => handleChange('email', e.target.value)}
                        className={`form-input ${form.email.errors?.length > 0 ? 'form-error' : ''}`}
                        value={form.email.value}
-                       onBlur={e => validate('email', e.target.value)}
+                      // onBlur={e => validate('email', e.target.value)}
                        type="email" 
                        placeholder="Email">
                 </input>

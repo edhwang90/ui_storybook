@@ -162,12 +162,20 @@ export const useValidate = (props) => {
 
   const handleSubmit = () => {
     let newForm = form;
+    let validated;
     for (const field in newForm) {
-      const validated = validateField(form[field]);
-      newForm = validated.errors?.length > 0 ? {...newForm, [field]: validated, error: true} : {...newForm, [field]: validated};
+      validateField(form[field]).then(res => {
+        validated = res;
+        newForm = validated.errors?.length > 0 ? {...newForm, [field]: validated, error: true} : {...newForm, [field]: validated};
+        setForm(newForm);
+        onSubmit(newForm);
+      });
+      
+      // const validated = validateField(form[field]);
+      // newForm = validated.errors?.length > 0 ? {...newForm, [field]: validated, error: true} : {...newForm, [field]: validated};
     }
-    setForm(newForm);
-    onSubmit(newForm);
+    // setForm(newForm);
+    // onSubmit(newForm);
   }
 
   return {

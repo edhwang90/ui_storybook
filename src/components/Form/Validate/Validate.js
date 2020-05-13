@@ -154,28 +154,24 @@ export const useValidate = (props) => {
     });
   })
 
-  const setCustomError = useCallback((fieldObj, error) => {
+  const setCustomError = (fieldObj, error) => {
     const fieldErrors = fieldObj.errors ? fieldObj.errors : [];
     const validated = {...fieldObj, errors: [...fieldErrors, error]};
     return validated;
-  })
+  };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     let newForm = form;
-    let validated;
-    for (const field in newForm) {
-      validateField(form[field]).then(res => {
-        validated = res;
-        newForm = validated.errors?.length > 0 ? {...newForm, [field]: validated, error: true} : {...newForm, [field]: validated};
-        setForm(newForm);
-        onSubmit(newForm);
-      });
-      
-      // const validated = validateField(form[field]);
-      // newForm = validated.errors?.length > 0 ? {...newForm, [field]: validated, error: true} : {...newForm, [field]: validated};
+
+    let i = 0;
+    let fields = Object.keys(form);
+    while (i < fields.length) {
+      const validated = await validateField(newForm[fields[i]]);
+      newForm = validated.errors?.length > 0 ? {...newForm, [fields[i]]: validated, error: true} : {...newForm, [fields[i]]: validated};
+      i++;
     }
-    // setForm(newForm);
-    // onSubmit(newForm);
+    setForm(newForm);
+    onSubmit(newForm);
   }
 
   return {

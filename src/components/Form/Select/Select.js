@@ -56,7 +56,7 @@ export const useSelect = (props) => {
     setIsOpen(true);
   }
 
-  const handleClick = (option) => {
+  const clickSelect = (option) => {
     if (isMultiSelect) {
       setSelected([...selected, option]);
       onClick([...selected, option]);
@@ -64,7 +64,6 @@ export const useSelect = (props) => {
     else {
       setSelected(option);
       onClick(option);
-      closeSelect();
     }
   }
 
@@ -106,7 +105,7 @@ export const useSelect = (props) => {
     closeSelect,
     openSelect,
     resetSelect,
-    handleClick,
+    clickSelect,
     removeSelection
   }
 }
@@ -121,7 +120,7 @@ export const Select = memo((props) => {
           closeSelect,
           openSelect,
           resetSelect,
-          handleClick,
+          clickSelect,
           removeSelection  } = useSelect(props);
   
   const { disabled, isMultiSelect, isGrouped, onBlur,
@@ -191,6 +190,7 @@ export const Select = memo((props) => {
     if (e.keyCode === 13 || e.keyCode === 32) {
       e.preventDefault();
       handleClick(option, group);
+      if (isMultiSelect) listRef.current.querySelector('.select-option').focus();
     }
     // key: escape
     else if (e.keyCode === 27) {
@@ -198,7 +198,15 @@ export const Select = memo((props) => {
     }
   }
 
-  const handleRemove = (e, selection, index) => {
+  const handleClick = (option) => {
+    clickSelect(option);
+    if (!isMultiSelect) {
+      closeSelect();
+      menuRef.current.querySelector('.select-btn').focus();
+    }
+  }
+
+  const handleRemove = (e, selection) => {
     removeSelection(e, selection);
     if (listRef.current) listRef.current.querySelector('.select-option').focus();
   }
@@ -347,9 +355,8 @@ export const Select = memo((props) => {
     }
     else if (isOpen && isGrouped) {
       return (
-        <div tabIndex="-1" 
-            className="select-list" 
-            ref={listRef}>
+        <div className="select-list" 
+             ref={listRef}>
           {
             filteredGroupList().map((group, i) => (
               <React.Fragment key={i}>

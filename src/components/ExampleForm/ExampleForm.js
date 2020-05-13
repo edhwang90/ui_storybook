@@ -208,7 +208,7 @@ export const ExampleForm = () => {
                       value={form.locations.value}
                       isGrouped
                       isMultiSelect
-                      selectRow={selectRow}
+                      //selectRow={selectRow}
                       //groupedRow={groupedRow}
                       className={form.locations.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."

@@ -2,13 +2,17 @@ import React, { useState, useRef, memo, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { traverseNodes } from '../../Utils';
 
+import { useSearch } from '../../Search';
+
 import './Select.scss';
 
 export const useSelect = (props) => {
   const { options, value, attr, onClick, onBlur, isMultiSelect, disabled } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(isMultiSelect ? value ? value : [] : value);
+  const [filter, setFilter] = useState('');
 
+  const { search } = useSearch();
   const initialMount = useRef(true);
 
   const onBlurCallback = useCallback(() => {
@@ -30,15 +34,18 @@ export const useSelect = (props) => {
 
   const filteredList = () => {
     const selections = isMultiSelect ? selected : [selected];
-    return options.filter(option => !selections?.find(filter => getOptionDisplay(option) === getOptionDisplay(filter)));
+    const toFilter = filter ? filter.toLowerCase() : '';
+
+    return search(options, toFilter)
+            .filter(option => !selections?.find(filter => getOptionDisplay(option) === getOptionDisplay(filter)))
   }
 
   const filteredGroupList = () => {
     const selections = isMultiSelect ? selected : [selected];
-    
+    const toFilter = filter ? filter.toLowerCase() : '';
     const list = options;
     for (let option of list) {
-      option.options = option.options.filter(filter => !selections.find(find => (getOptionDisplay(filter) === getOptionDisplay(find)) && option.label === find.group?.label));
+      option.options = search(option.options, toFilter).filter(filter => !selections.find(find => (getOptionDisplay(filter) === getOptionDisplay(find)) && option.label === find.group?.label));
     }
     
     return options;
@@ -106,6 +113,7 @@ export const useSelect = (props) => {
     openSelect,
     resetSelect,
     clickSelect,
+    setFilter,
     removeSelection
   }
 }
@@ -121,6 +129,7 @@ export const Select = memo((props) => {
           openSelect,
           resetSelect,
           clickSelect,
+          setFilter,
           removeSelection  } = useSelect(props);
   
   const { disabled, isMultiSelect, isGrouped, onBlur,
@@ -156,6 +165,16 @@ export const Select = memo((props) => {
     e.target.focus();
   }
 
+  const onSearch = (e) => {
+    e.stopPropagation();
+    console.log('search');
+    // key: alpha numeric filter
+   // if (e.keyCode >= 48 && e.keyCode <= 90) {
+      e.stopPropagation();
+      setFilter(e.target.value);
+   // }
+  }
+
   const onOutsideClick = e => {
     const path = e.path || e.composedPath();
     if (path.indexOf(menuRef.current) >= 0) {
@@ -169,7 +188,7 @@ export const Select = memo((props) => {
   };
 
   const accessKeyDown = (e) => {
-    if ((e.keyCode === 9 && e.shiftKey) || e.keyCode === 27 || (e.keyCode === 9)) {
+    if ((e.keyCode === 9 && e.shiftKey) || e.keyCode === 27) {
       onBlur();
       closeAndBlur();
     }
@@ -177,6 +196,7 @@ export const Select = memo((props) => {
     else if (e.keyCode === 40) {
       e.preventDefault();
       openAndFocus(e);
+      if (listRef.current) listRef.current.querySelector('.select-option').focus();
     }
     // arrow right: to selected
     else if (e.keyCode === 39) {
@@ -199,7 +219,6 @@ export const Select = memo((props) => {
 
   // Accessibility: handle selection and escape
   const handleKeyDown = (e, option, group) => {
-    // key: enter, space
     if (e.keyCode === 13 || e.keyCode === 32) {
       e.preventDefault();
       handleClick(option, group);
@@ -209,9 +228,10 @@ export const Select = memo((props) => {
         if (e.target.previousSibling) {
           e.target.previousSibling.focus();
         }
-        else {
+        else if (!e.target.nextSibling) {
           menuRef.current.querySelector('.select-btn').focus();
         }
+        
       }
     }
     // key: escape
@@ -248,6 +268,7 @@ export const Select = memo((props) => {
         !selection.isFixed &&
         <button className="btn remove-selected"
                 id={index}
+                tabIndex="-1"
                 disabled={disabled}
                 onClick={(e) => handleRemove(e, selection, index)}
                 type="button"
@@ -339,7 +360,7 @@ export const Select = memo((props) => {
 
   const groupRowUI = (group, index) => {
     if (!groupedRow) {
-      return <label tabIndex="0" className="group-label" key={index}>{group.label}</label>
+      return <label className="group-label" key={index}>{group.label}</label>
     }
     else {
       return React.cloneElement(groupedRow(group), {
@@ -353,8 +374,7 @@ export const Select = memo((props) => {
   const listUI = () => {
     if (isOpen && !isGrouped) {
       return (
-        <ul tabIndex="0" 
-            className="select-list" 
+        <ul className="select-list" 
             ref={listRef} 
             onKeyDown={e => traverseSelect(e)}>
           {   
@@ -379,7 +399,7 @@ export const Select = memo((props) => {
               <React.Fragment key={i}>
                 {groupRowUI(group)}
                 {
-                  <ul tabIndex="0" onKeyDown={e => traverseSelect(e)}>
+                  <ul onKeyDown={e => traverseSelect(e)}>
                     {
                       group.options.length > 0 &&
                       group.options.map((option, j) => {
@@ -412,6 +432,7 @@ export const Select = memo((props) => {
            aria-label="Toggle select list">
         <div>
           {labelUI()}
+          {/* <input className="select-search" onKeyDown={accessKeyDown} onChange={onSearch} type="text" placeholder="Select..."></input> */}
         </div>
 
         <div className="select-actions">

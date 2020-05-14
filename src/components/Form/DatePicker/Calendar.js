@@ -222,7 +222,7 @@ export const Calendar = (props) => {
 
 Calendar.propTypes = {
   onClick: PropTypes.func.isRequired,
-  selectedDate: PropTypes.object,
+  selectedDate: PropTypes.any,
   format: PropTypes.string
 }
 

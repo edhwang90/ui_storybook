@@ -24,15 +24,15 @@ export const ExampleForm = () => {
   ]
 
   const rolesArray = [
-    { label: 'Business Analyst', value: 1 },
-    { label: 'Data Analyst', value: 2 },
-    { label: 'QA Analyst', value: 3 },
-    { label: 'Front-End Developer', value: 4 },
-    { label: 'Back-End Developer', value: 5 },
-    { label: 'Fullstack Developer', value: 6 },
-    { label: 'UX Designer', value: 7 },
-    { label: 'UI Designer', value: 8 },
-    { label: 'Other', value: 10 }
+    { label: 'Business Analyst', acr: 'BA', value: 1 },
+    { label: 'Data Analyst', acr: 'DA', value: 2 },
+    { label: 'QA Analyst', acr: 'QA', value: 3 },
+    { label: 'Front-End Developer', acr: 'FED', value: 4 },
+    { label: 'Back-End Developer', acr: 'BED', value: 5 },
+    { label: 'Fullstack Developer', acr: 'FD', value: 6 },
+    { label: 'UX Designer', acr: 'UXD', value: 7 },
+    { label: 'UI Designer', acr:'UID', value: 8 },
+    { label: 'Other', acr: 'O', value: 10 }
   ]
 
   const nestedArray = [
@@ -239,6 +239,7 @@ export const ExampleForm = () => {
                           onBlur={e => validate('startDate')}
                           className={form.startDate.errors?.length > 0 ? 'form-error' : ''}
                           format="MM/DD/YYYY" 
+                          
                           placeholder="MM/DD/YYYY"></DatePicker>
               { 
                 form.startDate.errors &&
@@ -294,45 +295,6 @@ export const ExampleForm = () => {
             <button onClick={handleSubmit} 
                     type="button" 
                     className={`btn is-primary ${loading ? 'loader' : ''}`}>Submit</button>
-          </div>
-        </div>
-
-        {/* testing */}
-        <div className="row">
-          <div className="col">
-            <div className="form-group">
-              <label className="form-label">Select a date<span className="required">*</span></label>
-              <DatePicker onClick={e => handleChange('startDate', e)} 
-                          onBlur={e => validate('startDate')}
-                          className={form.startDate.errors?.length > 0 ? 'form-error' : ''}
-                          format="MM/YYYY" 
-                          placeholder="MM/YYYY"></DatePicker>
-              { 
-                form.startDate.errors &&
-                form.startDate.errors.map((err, index) => (
-                  <span key={index} className="error-message">{err}</span>
-                ))
-              }
-            </div>
-          </div>
-          <div className="col">
-            <div className="form-group">
-              <label className="form-label">Role<span className="required">*</span></label>
-              <Select options={rolesArray}
-                      value={form.role.value}
-                      attr="label"
-                      className={form.role.errors?.length > 0 ? 'form-error' : ''}
-                      label="Select..."
-                      onBlur={e => validate('role')}
-                      onClick={e => handleChange('role', e)}>
-               </Select>
-              { 
-                form.role.errors &&
-                form.role.errors.map((err, index) => (
-                  <span key={index} className="error-message">{err}</span>
-                ))
-              }
-            </div> 
           </div>
         </div>
       </form>

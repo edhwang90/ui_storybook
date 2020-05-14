@@ -1,12 +1,14 @@
 import React, { useState, useRef, memo, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Calendar } from './Calendar';
+import moment from 'moment';
 
 import './DatePicker.scss';
 
 export const useDatePicker = (props) => {
-  const { value, onClick, onBlur } = props;
-  const [selectedDate, setSelectedDate] = useState(value ? value : '');
+  const { value, onClick, onBlur, format } = props;
+  const [selectedDate, setSelectedDate] = useState(value ? moment(value, format) : '');
+  const [displayDate, setDisplayDate] = useState(value ? moment(value, format).format(format) : '');
   const [isOpen, setIsOpen] = useState(false);
 
   const initialMount = useRef(true);
@@ -36,10 +38,22 @@ export const useDatePicker = (props) => {
     setIsOpen(false);
   }
 
+  const isDate = (value) => {
+    return moment(value, format, true).isValid();
+  }
+
   const setDate = (date) => {
-    setSelectedDate(date);
+    setSelectedDate(moment(date, format));
+    setDisplayDate(moment(date, format).format(format));
     setIsOpen(false);
     onClick(date);
+  }
+
+  const setDisplay = (value) => {
+    setDisplayDate(value);
+    if (isDate(value)) {
+      setDate(value);
+    }
   }
 
   const clearDate = () => {
@@ -49,23 +63,27 @@ export const useDatePicker = (props) => {
 
   return {
     selectedDate,
+    displayDate,
     isOpen,
     toggleCalendar,
     openCalendar,
     closeCalendar,
     clearDate,
-    setDate
+    setDate,
+    setDisplay
   }
 }
 
 export const DatePicker = memo((props) => {
   const { selectedDate, 
+          displayDate,
           isOpen,
           toggleCalendar,
           openCalendar,
           closeCalendar,
           clearDate,
-          setDate } = useDatePicker(props);
+          setDate,
+          setDisplay } = useDatePicker(props);
 
   const { className, placeholder, format, disabled,onBlur } = props;
 
@@ -88,17 +106,19 @@ export const DatePicker = memo((props) => {
   // Accessibility: key downs: escape (close), enter/space (open)
   const handleKeyDown = (e) => {
     // key: enter, space
-    if (e.keyCode === 13 || e.keyCode === 32) {
+    if (e.keyCode === 13) {
       toggle();
     }
     else if (e.keyCode === 40) {
       openCalendar();
       document.addEventListener('click', onOutsideClick);
-
     }
     // key: shift + tab || esc
     else if ((e.keyCode === 9 && e.shiftKey) || e.keyCode === 27) {
       closeCalendar();
+    }
+    else {
+      setDisplay(e.target.value);
     }
   }
 
@@ -137,16 +157,17 @@ export const DatePicker = memo((props) => {
   return (
     <div className="datepicker-container" 
          ref={datepickerRef}>
-      <input className={`form-input ${className} ${isOpen ? 'calendar-open' : ''}`}
-             placeholder={placeholder} 
-             value={selectedDate}
-             readOnly
-             disabled={disabled}
-             onBlur={onBlur}
-             onKeyDown={handleKeyDown}
-             onClick={toggle}>
-      </input>
-
+      <div className="input-container">
+        <input className={`form-input ${className} ${isOpen ? 'calendar-open' : ''}`}
+              placeholder={placeholder} 
+              value={displayDate}
+              onChange={handleKeyDown}
+              onKeyDown={handleKeyDown}>
+        </input>
+        <button onClick={toggle} type="button" className="btn is-alternate form-input-append select-chevron">
+          <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path></svg>
+        </button>
+      </div>
       { calendar() }
     </div>
   )

@@ -296,6 +296,45 @@ export const ExampleForm = () => {
                     className={`btn is-primary ${loading ? 'loader' : ''}`}>Submit</button>
           </div>
         </div>
+
+        {/* testing */}
+        <div className="row">
+          <div className="col">
+            <div className="form-group">
+              <label className="form-label">Select a date<span className="required">*</span></label>
+              <DatePicker onClick={e => handleChange('startDate', e)} 
+                          onBlur={e => validate('startDate')}
+                          className={form.startDate.errors?.length > 0 ? 'form-error' : ''}
+                          format="MM/YYYY" 
+                          placeholder="MM/YYYY"></DatePicker>
+              { 
+                form.startDate.errors &&
+                form.startDate.errors.map((err, index) => (
+                  <span key={index} className="error-message">{err}</span>
+                ))
+              }
+            </div>
+          </div>
+          <div className="col">
+            <div className="form-group">
+              <label className="form-label">Role<span className="required">*</span></label>
+              <Select options={rolesArray}
+                      value={form.role.value}
+                      attr="label"
+                      className={form.role.errors?.length > 0 ? 'form-error' : ''}
+                      label="Select..."
+                      onBlur={e => validate('role')}
+                      onClick={e => handleChange('role', e)}>
+               </Select>
+              { 
+                form.role.errors &&
+                form.role.errors.map((err, index) => (
+                  <span key={index} className="error-message">{err}</span>
+                ))
+              }
+            </div> 
+          </div>
+        </div>
       </form>
     </div>
   );

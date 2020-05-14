@@ -3,9 +3,24 @@
 .datepicker-container {
   position: relative;
 
+  svg {
+    fill: $font-color;
+    width: 1rem;
+    height: 1rem;
+  }
+
   .form-input.calendar-open {
     border-color: #80bdff;
     box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    z-index: 3;
+
+    & + .select-chevron > svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  .date-input {
+    position: relative;
   }
 }
 

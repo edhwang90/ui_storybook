@@ -41,6 +41,11 @@ ul, ol {
   // flex-basis: (width) rem; for fixed
 }
 
+.col-reverse {
+  flex-direction: column-reverse;
+  align-items: flex-end;
+}
+
 // Modifiers
 .to-row {
   display: flex !important;

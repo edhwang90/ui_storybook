@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { faCoffee, faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 import { Toggle, Select, DatePicker, useValidate } from '../Form'
 
@@ -104,6 +104,7 @@ export const ExampleForm = () => {
     // output for use on form component
     form,
     handleChange,
+    isLoading,
     // available for explicit call
     validate,
     submit,
@@ -114,6 +115,8 @@ export const ExampleForm = () => {
     validateOnChange: false
   })
 
+  const [test, setTest] = useState(form);
+
   const handleSubmit = () => {
     setLoading(true);
     submit().then(res => {
@@ -122,6 +125,17 @@ export const ExampleForm = () => {
         setLoading(false);
       }, 5000)
      
+    })
+  }
+
+  const handleBlur = (e) => {
+    console.log(form, e)
+  }
+
+  const isValid = (e) => {
+    console.log(e);
+    validate(e).then(res => {
+      setTest({...test, [e]: res})
     })
   }
 
@@ -143,11 +157,13 @@ export const ExampleForm = () => {
               <div className="input-container">
                 <input onChange={e => handleChange('email', e.target.value)}
                        className={`form-input ${form.email.errors?.length > 0 ? 'form-error' : ''}`}
-                       onBlur={e => validate('email', e.target.value)}
+                       onBlur={e => validate('email')}
                        type="email" 
                        placeholder="Email">
                 </input>
-                <span className="form-input-append"><FontAwesomeIcon icon={faCoffee} /></span>
+                <div className="form-input-append">
+                  <FontAwesomeIcon className={form.email.isLoading ? 'fa-pulse' : ''} icon={faSpinner} />
+                </div>
               </div>
               { 
                 form.email.errors &&

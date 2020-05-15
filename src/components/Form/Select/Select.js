@@ -17,14 +17,14 @@ export const useSelect = (props) => {
 
   const onBlurCallback = useCallback(() => {
     if (onBlur) onBlur();
-  }, [isOpen])
+  }, [isOpen, selected])
 
   useEffect(() => {
     if (initialMount.current) {
       initialMount.current = false;
       return;
     }
-    
+
     if (!isOpen) onBlurCallback();
   }, [isOpen, initialMount, onBlurCallback]);
 
@@ -270,6 +270,7 @@ export const Select = memo((props) => {
 
   const handleClick = (option) => {
     clickSelect(option);
+    
     if (!isMultiSelect) {
       closeSelect();
       menuRef.current.querySelector('.select-btn').focus();

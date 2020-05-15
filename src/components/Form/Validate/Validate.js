@@ -1,13 +1,13 @@
-import { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const checkMinlength = (value, ruleValue) => {
-  const valueLength = value.length
+  const valueLength = value.length;
   return valueLength < ruleValue;
 }
 
 const checkMaxlength = (value, ruleValue) => {
-  const valueLength = value.length
+  const valueLength = value.length;
   return valueLength > ruleValue;
 }
 
@@ -55,7 +55,7 @@ const checkType = (value, ruleValue) => {
 }
 
 export const useValidate = (props) => {
-  const { initialForm, onSubmit, validateOnChange } = props;
+  const { initialForm, validateOnChange } = props;
 
   const [form, setForm] = useState(initialForm || {});
 
@@ -67,6 +67,7 @@ export const useValidate = (props) => {
 
   const validateField = (fieldObj) => {
     return new Promise((resolve, reject) => {
+  
       let validateObj = fieldObj;
       let errorsArr = [];
    
@@ -115,7 +116,12 @@ export const useValidate = (props) => {
         return res;
       }
       else if (res.errors.length <= 0) {
+        // temporary hack for concurrency
+        const lockDom = (e) => e.preventDefault();
+        window.addEventListener('keydown', lockDom);
+
         return fieldObj.customValidation(res).then(customRes => {
+          window.removeEventListener('keydown', lockDom);
           return setCustomError(res, customRes);
         })
       }
@@ -147,12 +153,14 @@ export const useValidate = (props) => {
     const fieldObj = form[field];
     let validated;
 
+    setForm({...form, [field]: {...fieldObj, isLoading: true}});
+    
     validateField(fieldObj).then(res => {
       validated = res;
-      const newForm = validated.errors?.length > 0 ? {...form, [field]: validated, error: true} : {...form, [field]: validated};
+      const newForm = validated.errors?.length > 0 ? {...form, [field]: {...validated, isLoading: false}, error: true} : {...form, [field]: {...validated, isLoading: false}};
       setForm(newForm);
     });
-  }, [validateField, setForm])
+  }, [validateField, form, setForm])
 
   const setCustomError = (fieldObj, error) => {
     const fieldErrors = fieldObj.errors ? fieldObj.errors : [];

@@ -199,7 +199,7 @@ export const ExampleForm = () => {
                       attr="label"
                       className={form.role.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
-                      onBlur={e => validate('role')}
+                      //onBlur={e => validate('role')}
                       onClick={e => handleChange('role', e)}>
                </Select>
               { 
@@ -222,7 +222,7 @@ export const ExampleForm = () => {
                       //groupedRow={groupedRow}
                       className={form.locations.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
-                      onBlur={e => validate('locations')}
+                      //onBlur={e => validate('locations')}
                       onClick={e => handleChange('locations', e)}>
                </Select>
               { 

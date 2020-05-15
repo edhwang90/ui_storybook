@@ -147,9 +147,9 @@ export const Select = memo((props) => {
     else if (menuRef.current) menuRef.current.querySelector('.select-btn').focus();
   }, [isOpen, listRef])
 
-  const closeAndBlur = () => {
+  const closeAndFocus = () => {
     closeSelect();
-    menuRef.current.querySelector('.select-btn').blur();
+    menuRef.current.querySelector('.select-btn').focus();
   }
 
   const openAndFocus = (e) => {
@@ -213,7 +213,7 @@ export const Select = memo((props) => {
       return;
     }
 
-    closeAndBlur();
+    closeAndFocus();
     
     // unbind
     document.removeEventListener('click', onOutsideClick);
@@ -229,8 +229,8 @@ export const Select = memo((props) => {
   const handleKeyDown = (e, option) => {
     // tab/escape: close and blur
     if ((e.keyCode === 9) || e.keyCode === 27) {
-      onBlur();
-      closeAndBlur();
+      if (onBlur) onBlur();
+      menuRef.current.querySelector('.select-btn').blur();
     }
     // arrow down: open and focus on list
     else if (e.keyCode === 40) {
@@ -287,7 +287,7 @@ export const Select = memo((props) => {
   //                list and selected
   const traverseSelect = (e) => {
     if (selectedRef.current) traverseNodes(e, selectedRef, '.remove-selected', keydownToClear, true); 
-    if (listRef.current) traverseNodes(e, listRef, '.select-option', closeAndBlur)
+    if (listRef.current) traverseNodes(e, listRef, '.select-option', closeAndFocus)
   }
   
   // Display purposes: Multiselect actionable selected tags

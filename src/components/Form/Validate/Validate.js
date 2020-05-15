@@ -152,7 +152,7 @@ export const useValidate = (props) => {
       const newForm = validated.errors?.length > 0 ? {...form, [field]: validated, error: true} : {...form, [field]: validated};
       setForm(newForm);
     });
-  })
+  }, [validateField, setForm])
 
   const setCustomError = (fieldObj, error) => {
     const fieldErrors = fieldObj.errors ? fieldObj.errors : [];

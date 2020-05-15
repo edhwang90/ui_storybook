@@ -10,7 +10,7 @@ export const useSelect = (props) => {
   const { options, value, attr, onClick, onBlur, isMultiSelect, disabled } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(isMultiSelect ? value ? value : [] : value);
-  const [filter, setFilter] = useState('');
+  const [searchParam, setSearchParam] = useState('');
 
   const { search } = useSearch();
   const initialMount = useRef(true);
@@ -34,18 +34,19 @@ export const useSelect = (props) => {
 
   const filteredList = () => {
     const selections = isMultiSelect ? selected : [selected];
-    const toFilter = filter ? filter.toLowerCase() : '';
+    const toSearch = searchParam ? searchParam.toLowerCase() : '';
 
-    return search(options, toFilter)
+    return search(options, toSearch)
             .filter(option => !selections?.find(filter => getOptionDisplay(option) === getOptionDisplay(filter)))
   }
 
   const filteredGroupList = () => {
     const selections = isMultiSelect ? selected : [selected];
-    const toFilter = filter ? filter.toLowerCase() : '';
+    const toSearch = searchParam ? searchParam.toLowerCase() : '';
+
     const list = options;
     for (let option of list) {
-      option.options = search(option.options, toFilter).filter(filter => !selections.find(find => (getOptionDisplay(filter) === getOptionDisplay(find)) && option.label === find.group?.label));
+      option.options = search(option.options, toSearch).filter(filter => !selections.find(find => (getOptionDisplay(filter) === getOptionDisplay(find)) && option.label === find.group?.label));
     }
     
     return options;
@@ -113,7 +114,7 @@ export const useSelect = (props) => {
     openSelect,
     resetSelect,
     clickSelect,
-    setFilter,
+    setSearchParam,
     removeSelection
   }
 }
@@ -129,12 +130,13 @@ export const Select = memo((props) => {
           openSelect,
           resetSelect,
           clickSelect,
-          setFilter,
+          setSearchParam,
           removeSelection  } = useSelect(props);
   
   const { disabled, isMultiSelect, isGrouped, onBlur,
           className, label, selectRow, groupedRow } = props;
 
+  const [indexOfLast, setIndexOfLast] = useState(null);
   const menuRef = useRef(null);
   const listRef = useRef(null); // for Accessible traversing
   const selectedRef = useRef(null); // for Accessible traversing
@@ -167,8 +169,38 @@ export const Select = memo((props) => {
 
   const onSearch = (e) => {
     e.stopPropagation();
-    setFilter(e.key);
-    if (listRef.current) listRef.current.querySelector('.select-option').focus();
+    setSearchParam(e.key);
+    menuRef.current.querySelector('.select-btn').focus();
+  }
+
+  // single key short cut to option
+  const skipTo = (e) => {
+    let indexOfOption;
+    let allOptions = [];
+
+    if (!isGrouped) {
+      allOptions = [...filteredList()];
+    }
+    else {
+      const groupedOptions = filteredGroupList();
+      for (let i = 0; i<groupedOptions.length; i++) {
+        allOptions = [...allOptions, ...groupedOptions[i].options]
+
+      }
+    }
+
+    indexOfOption = allOptions.findIndex(find => getOptionDisplay(find).toLowerCase().startsWith(e.key.toLowerCase()));
+    
+    if (indexOfOption === indexOfLast) {
+      indexOfOption = allOptions.findIndex((find, i) => {
+        if (i !== indexOfOption && (getOptionDisplay(find).toLowerCase().startsWith(e.key.toLowerCase()))) {
+          return find
+        }
+      })
+    }
+
+    setIndexOfLast(indexOfOption);
+    if (indexOfOption >= 0) listRef.current.querySelectorAll('.select-option')[indexOfOption].focus();
   }
 
   const onOutsideClick = e => {
@@ -230,7 +262,7 @@ export const Select = memo((props) => {
     }
     // alpha numeric: filter
     else if (e.keyCode >= 48 && e.keyCode <= 90) {
-      onSearch(e);
+      skipTo(e);
     }
   }
 
@@ -319,7 +351,7 @@ export const Select = memo((props) => {
   }
 
   const emptySelect = () => (
-    <li tabIndex="0" className="select-option empty">No available options.</li>
+    <li tabIndex="0" onKeyDown={handleKeyDown} className="select-option empty">No available options.</li>
   )
 
   const rowUI = (option, index) => {

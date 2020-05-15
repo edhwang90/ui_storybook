@@ -15,6 +15,8 @@ export const useSelect = (props) => {
   const { search } = useSearch();
   const initialMount = useRef(true);
 
+  // Caution: ignores lint rules for adding onBlur dependency
+  //          doing so creates infinite loop.
   const onBlurCallback = useCallback(() => {
     if (onBlur) onBlur();
   }, [isOpen, selected])

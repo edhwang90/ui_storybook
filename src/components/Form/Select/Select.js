@@ -182,15 +182,17 @@ export const Select = memo((props) => {
       allOptions = [...filteredList()];
     }
     else {
+      // all grouped options to single array
       const groupedOptions = filteredGroupList();
       for (let i = 0; i<groupedOptions.length; i++) {
         allOptions = [...allOptions, ...groupedOptions[i].options]
-
       }
     }
 
+    // get index of first occurrence of match
     indexOfOption = allOptions.findIndex(find => getOptionDisplay(find).toLowerCase().startsWith(e.key.toLowerCase()));
     
+    // check for additional options and loop to next
     if (indexOfOption === indexOfLast) {
       indexOfOption = allOptions.findIndex((find, i) => {
         if (i !== indexOfOption && (getOptionDisplay(find).toLowerCase().startsWith(e.key.toLowerCase()))) {
@@ -199,6 +201,7 @@ export const Select = memo((props) => {
       })
     }
 
+    // update
     setIndexOfLast(indexOfOption);
     if (indexOfOption >= 0) listRef.current.querySelectorAll('.select-option')[indexOfOption].focus();
   }
@@ -286,6 +289,7 @@ export const Select = memo((props) => {
     if (listRef.current) traverseNodes(e, listRef, '.select-option', closeAndBlur)
   }
   
+  // Display purposes: Multiselect actionable selected tags
   const selectedTagUI = (index, selection) => (
     <div key={index}
          className="selected">
@@ -329,6 +333,7 @@ export const Select = memo((props) => {
     }
   }
 
+  // Display purposes: clear all button
   const clearUI = () => {
     const clearAllBtn = (
       <React.Fragment>
@@ -350,7 +355,8 @@ export const Select = memo((props) => {
     }
   }
 
-  const emptySelect = () => (
+  // Display purposes: empty row
+  const emptySelectUI = () => (
     <li tabIndex="0" onKeyDown={handleKeyDown} className="select-option empty">No available options.</li>
   )
 
@@ -409,7 +415,7 @@ export const Select = memo((props) => {
           }
           {
             filteredList().length <= 0 &&
-            emptySelect()
+            emptySelectUI()
           }
         </ul>
       )
@@ -434,7 +440,7 @@ export const Select = memo((props) => {
                     }
                     {
                       group.options.length <= 0 &&
-                      emptySelect()
+                      emptySelectUI()
                     }
                   </ul>
                 }
@@ -487,9 +493,9 @@ Select.propTypes = {
   label: PropTypes.string,
   value: PropTypes.any,
   attr: (props, propName, componentName) => {
-    // if (props['options']?.[0] instanceof Object && (props[propName] === undefined || typeof(props[propName]) !== 'string')) {
-    //   return new Error(`Please provide an ${propName} for display purposes.`)
-    // }
+    if (props['options']?.[0] instanceof Object && (props[propName] === undefined || typeof(props[propName]) !== 'string')) {
+      return new Error(`Please provide an ${propName} for display purposes.`)
+    }
   },
   selectRow: PropTypes.func,
   groupedRow: PropTypes.func,

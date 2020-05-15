@@ -82,7 +82,6 @@ export const useSelect = (props) => {
     if (!isMultiSelect) {
       setSelected('');
       onClick('');
-      return;
     }
     else {
       let updated = selected;
@@ -144,7 +143,6 @@ export const Select = memo((props) => {
   // for Accessible traversion: auto focus to list after open
   useEffect(() => {
     if (listRef.current) listRef.current.querySelector('.select-option').focus();
-    else if (menuRef.current) menuRef.current.querySelector('.select-btn').focus();
   }, [isOpen, listRef])
 
   const closeAndFocus = () => {

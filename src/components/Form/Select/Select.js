@@ -167,12 +167,8 @@ export const Select = memo((props) => {
 
   const onSearch = (e) => {
     e.stopPropagation();
-    console.log('search');
-    // key: alpha numeric filter
-   // if (e.keyCode >= 48 && e.keyCode <= 90) {
-      e.stopPropagation();
-      setFilter(e.target.value);
-   // }
+    setFilter(e.key);
+    if (listRef.current) listRef.current.querySelector('.select-option').focus();
   }
 
   const onOutsideClick = e => {
@@ -187,8 +183,16 @@ export const Select = memo((props) => {
     document.removeEventListener('click', onOutsideClick);
   };
 
-  const accessKeyDown = (e) => {
-    if ((e.keyCode === 9 && e.shiftKey) || e.keyCode === 27) {
+  // tab: to clear all
+  const keydownToClear = () => {
+    const clear = menuRef.current.querySelector('.select-clear');
+    if (clear) clear.focus();
+  }
+
+  // Accessibility: handle selection and escape
+  const handleKeyDown = (e, option) => {
+    // tab/escape: close and blur
+    if ((e.keyCode === 9) || e.keyCode === 27) {
       onBlur();
       closeAndBlur();
     }
@@ -200,28 +204,19 @@ export const Select = memo((props) => {
     }
     // arrow right: to selected
     else if (e.keyCode === 39) {
-      const displayedOptions = selectedRef.current.querySelector('.remove-selected');
+      const displayedOptions = selectedRef.current?.querySelector('.remove-selected');
       if (displayedOptions) displayedOptions.focus();
     }
     // arrow left: to most recent selected
     else if (e.keyCode === 37) {
-      const displayedOptions = Array.from(selectedRef.current.querySelectorAll('.remove-selected'));
+      const displayedOptions = Array.from(selectedRef.current?.querySelectorAll('.remove-selected') || []);
       const toIndex = displayedOptions.length - 1 < 0 ? 0 : displayedOptions.length -1;
-      if (displayedOptions) displayedOptions[toIndex].focus();
+      if (displayedOptions.length > 0) displayedOptions[toIndex].focus();
     }
-  }
-
-  // tab: to clear all
-  const keydownToClear = () => {
-    const clear = menuRef.current.querySelector('.select-clear');
-    if (clear) clear.focus();
-  }
-
-  // Accessibility: handle selection and escape
-  const handleKeyDown = (e, option, group) => {
-    if (e.keyCode === 13 || e.keyCode === 32) {
+    // hand click
+    else if ((e.keyCode === 13 || e.keyCode === 32) && option) {
       e.preventDefault();
-      handleClick(option, group);
+      handleClick(option);
 
       // hack: to fix tabbing/focus error for choosing last item of group and/or list
       if (isMultiSelect) {
@@ -231,12 +226,11 @@ export const Select = memo((props) => {
         else if (!e.target.nextSibling) {
           menuRef.current.querySelector('.select-btn').focus();
         }
-        
       }
     }
-    // key: escape
-    else if (e.keyCode === 27) {
-      closeAndBlur();
+    // alpha numeric: filter
+    else if (e.keyCode >= 48 && e.keyCode <= 90) {
+      onSearch(e);
     }
   }
 
@@ -281,28 +275,26 @@ export const Select = memo((props) => {
 
   // Display purposes: Multiselect vs Select
   const labelUI = () => {
-   
-      if (!isMultiSelect) {
-        return selected 
-          ? getOptionDisplay(selected)
-          : label
-      }
-      else {
-        return selected.length > 0
-        ? 
-          (
-            <div className="select-display" ref={selectedRef}
-                 onKeyDown={e => traverseSelect(e, selectedRef, 'button', keydownToClear, true)}>
-              { 
-                selected.map((selection, k) => (
-                  selectedTagUI(k, selection)
-                ))
-              }
-            </div>
-          )
-        : <span className="not-selected">{label}</span>
-      }
-    
+    if (!isMultiSelect) {
+      return selected 
+        ? getOptionDisplay(selected)
+        : label
+    }
+    else {
+      return selected.length > 0
+      ? 
+        (
+          <div className="select-display" ref={selectedRef}
+                onKeyDown={e => traverseSelect(e, selectedRef, 'button', keydownToClear, true)}>
+            { 
+              selected.map((selection, k) => (
+                selectedTagUI(k, selection)
+              ))
+            }
+          </div>
+        )
+      : <span className="not-selected">{label}</span>
+    }
   }
 
   const clearUI = () => {
@@ -426,7 +418,7 @@ export const Select = memo((props) => {
     <div ref={menuRef}
          className={ isMultiSelect ? `multi-select-container ${selected.length > 0 ? 'show-selected' : ''}`: `select-container`}>
       <div className={`select-btn${ isOpen ? ' list-open' : '' }${ disabled ? ' list-disabled' : ''} ${className}`}
-           onKeyDown={accessKeyDown}
+           onKeyDown={handleKeyDown}
            onClick={openAndFocus}
            tabIndex="0"
            aria-label="Toggle select list">

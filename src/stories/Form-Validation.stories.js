@@ -25,6 +25,15 @@ export const FormValidation = () => (
 <CodeBlock language="js">
   {
     `
+    // custom validation method example
+    const customValidate = (formField) => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve('Email is already registered.');
+        }, 2000)
+     })
+    }
+
     const initialForm = {
       email: { 
         value: '',
@@ -33,8 +42,10 @@ export const FormValidation = () => (
         rules: [
           { type: 'required' },
           // Available types: 'email', 'url', 'number'
-          { type: 'type', value: 'email'}
+          { type: 'type', value: 'email'},
         ],
+        // Custom validation must be supplied a promise
+        customValidation: customValidate,
         // String array of error messages, optional initial inclusion
         errors: []
       },
@@ -47,6 +58,11 @@ export const FormValidation = () => (
           { type: 'maxlength', value: 10 }
         ],
         errors: []
+      },
+      locations: {
+        // Preset value, with fixed option
+        value: [{label: 'New York', value: 1, isFixed: true, group: { label: 'North America'} }],
+        rules: []
       }
     };
 

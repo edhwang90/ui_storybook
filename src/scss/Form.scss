@@ -101,12 +101,19 @@
   color: $error-color;
 }
 
-.error-message {
-  display: block;
-  font-size: .75rem;
-  color: $error-color;
+.error-message, .loading-message {
   padding-right: $item-padding-lr + 0rem;
   padding-top: $item-padding-tb + 0rem;
+  display: block;
+  font-size: .75rem;
+}
+
+.loading-message {
+  color: $success-color;
+}
+
+.error-message {
+  color: $error-color;
 }
 
 .form-error {

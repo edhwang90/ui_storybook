@@ -9,7 +9,8 @@ import './Select.scss';
 export const useSelect = (props) => {
   const { options, value, attr, onClick, onBlur, isMultiSelect, disabled } = props;
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState(isMultiSelect ? value ? value : [] : value);
+  const [selected, setSelected] = useState(isMultiSelect ? value ? value : [] 
+                                                         : value ? value : '');
   const [searchParam, setSearchParam] = useState('');
 
   const { search } = useSearch();
@@ -297,7 +298,7 @@ export const Select = memo((props) => {
          className="selected">
       <span className={selection.isFixed ? 'fixed' : ''}>{getOptionDisplay(selection)}</span>
       {
-        !selection.isFixed &&
+        !selection.isFixed && !disabled &&
         <button className="btn remove-selected"
                 id={index}
                 tabIndex="-1"
@@ -377,7 +378,7 @@ export const Select = memo((props) => {
       )
     }
     else {
-      const customRow = selectRow(getOptionDisplay(option));
+      const customRow = selectRow(option);
       return React.cloneElement(customRow, {
         tabIndex: "0",
         key: index,

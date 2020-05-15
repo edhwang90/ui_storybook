@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faCoffee, faSpinner, faCheck } from '@fortawesome/free-solid-svg-icons'
 
 import { Toggle, Select, DatePicker, useValidate } from '../Form'
 
@@ -24,15 +24,15 @@ export const ExampleForm = () => {
   ]
 
   const rolesArray = [
-    { label: 'Business Analyst', acr: 'BA', value: 1 },
-    { label: 'Data Analyst', acr: 'DA', value: 2 },
-    { label: 'QA Analyst', acr: 'QA', value: 3 },
-    { label: 'Front-End Developer', acr: 'FED', value: 4 },
-    { label: 'Back-End Developer', acr: 'BED', value: 5 },
-    { label: 'Fullstack Developer', acr: 'FD', value: 6 },
-    { label: 'UX Designer', acr: 'UXD', value: 7 },
-    { label: 'UI Designer', acr:'UID', value: 8 },
-    { label: 'Other', acr: 'O', value: 10 }
+    { name: 'Business Analyst', color: '#ff4444', acr: 'BA', value: 1 },
+    { name: 'Data Analyst', color: '#ff4444', acr: 'DA', value: 2 },
+    { name: 'QA Analyst', color: '#ffbb33', acr: 'QA', value: 3 },
+    { name: 'Front-End Developer', color: '#ffbb33', acr: 'FED', value: 4 },
+    { name: 'Back-End Developer', color: '#ffbb33', acr: 'BED', value: 5 },
+    { name: 'Fullstack Developer', color: '#ffbb33', acr: 'FD', value: 6 },
+    { name: 'UX Designer', color: '#00C851', acr: 'UXD', value: 7 },
+    { name: 'UI Designer', color: '#00C851', acr:'UID', value: 8 },
+    { name: 'Other', color: '#33b5e5', acr: 'O', value: 10 }
   ]
 
   const nestedArray = [
@@ -50,7 +50,7 @@ export const ExampleForm = () => {
   const customValidate = (formField) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve('A custom error.');
+        resolve('Email is already registered.');
       }, 2000)
    })
   }
@@ -140,7 +140,7 @@ export const ExampleForm = () => {
   }
 
   const selectRow = (data) => (
-    <li className="test"><span>a</span>{data}</li>
+    <li><span className="tag" style={{backgroundColor: data.color}}></span>{data.name}</li>
   )
 
   const groupedRow = (data) => (
@@ -157,15 +157,20 @@ export const ExampleForm = () => {
               <div className="input-container">
                 <input onChange={e => handleChange('email', e.target.value)}
                        className={`form-input ${form.email.errors?.length > 0 ? 'form-error' : ''}`}
-                       onBlur={e => validate('email')}
+                       //onBlur={e => validate('email')}
                        type="email" 
                        placeholder="Email">
                 </input>
                 <div className="form-input-append">
-                  <FontAwesomeIcon className={form.email.isLoading ? 'fa-pulse' : ''} icon={faSpinner} />
+                  <FontAwesomeIcon icon={faCoffee} />
                 </div>
               </div>
-              { 
+             
+              { form.email.isLoading &&
+                <span className="loading-message">Checking for existing username<span>.</span><span>.</span><span>.</span></span>
+              }
+
+              { !form.email.isLoading &&
                 form.email.errors &&
                 form.email.errors.map((err, index) => (
                   <span key={index} className="error-message">{err}</span>
@@ -177,7 +182,7 @@ export const ExampleForm = () => {
               <div className="input-container">
                 <span className="form-input-prepend"><FontAwesomeIcon icon={faCoffee} /></span>
                 <input className={`form-input ${form.password.errors?.length > 0 ? 'form-error' : ''}`}
-                       onBlur={e => validate('password')}
+                       //onBlur={e => validate('password')}
                        onChange={e => handleChange('password', e.target.value)}
                        type="password" 
                        placeholder="Password">
@@ -197,7 +202,7 @@ export const ExampleForm = () => {
                       label="Select..."
                       options={industryArray}
                       isMultiSelect
-                      onBlur={e => validate('industry')}
+                      //onBlur={e => validate('industry')}
                       onClick={e => handleChange('industry', e)}>
               </Select>
               { 
@@ -211,10 +216,11 @@ export const ExampleForm = () => {
             <div className="form-group">
               <label className="form-label">Role<span className="required">*</span></label>
               <Select options={rolesArray}
-                      value={form.role.value}
-                      attr="label"
+                      //value={form.role.value}
+                      attr="name"
                       className={form.role.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
+                      selectRow={selectRow}
                       //onBlur={e => validate('role')}
                       onClick={e => handleChange('role', e)}>
                </Select>
@@ -252,7 +258,7 @@ export const ExampleForm = () => {
             <div className="form-group">
               <label className="form-label">Select a date<span className="required">*</span></label>
               <DatePicker onClick={e => handleChange('startDate', e)} 
-                          onBlur={e => validate('startDate')}
+                          //onBlur={e => validate('startDate')}
                           className={form.startDate.errors?.length > 0 ? 'form-error' : ''}
                           format="MM/DD/YYYY" 
                           
@@ -270,7 +276,7 @@ export const ExampleForm = () => {
                 <Toggle type="switch"
                         toggleFor="flexibleDate"
                         className={form.flexible.errors?.length > 0 ? 'form-error' : ''}
-                        onBlur={e => validate('flexible')}
+                        //onBlur={e => validate('flexible')}
                         handleToggle={e => handleChange('flexible', e)}>
                 </Toggle>
                 <label className="toggle-label" htmlFor="flexibleDate">Flexible date<span className="required">*</span></label>
@@ -290,7 +296,7 @@ export const ExampleForm = () => {
                 <Toggle type="checkbox"
                         toggleFor="agreeTerms"
                         className={form.terms.errors?.length > 0 ? 'form-error' : ''}
-                        onBlur={e => validate('terms')}
+                        //onBlur={e => validate('terms')}
                         handleToggle={e => handleChange('terms', e)}>
                 </Toggle>
                 <label htmlFor="agreeTerms" className="toggle-label">Agree to terms<span className="required">*</span></label>

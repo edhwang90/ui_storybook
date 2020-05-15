@@ -22,3 +22,14 @@
     justify-content: center;
   }
 }
+
+.select-list {
+  .tag {
+    margin-right: 1rem;
+    border: 2px solid #f7f7f7;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    content: '';
+  }
+}

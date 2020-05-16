@@ -13,7 +13,7 @@ export const CodeBlockUI = (props) => {
   return (
     <pre>
       <code className={`language-${language}`}>
-        { children }
+        { children.trim() }
       </code>
     </pre>
   )

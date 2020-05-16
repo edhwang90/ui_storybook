@@ -200,6 +200,7 @@ export const Select = memo((props) => {
         if (i !== indexOfOption && (getOptionDisplay(find).toLowerCase().startsWith(e.key.toLowerCase()))) {
           return find
         }
+        return null;
       })
     }
 

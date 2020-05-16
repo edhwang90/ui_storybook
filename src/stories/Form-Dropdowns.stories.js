@@ -3,6 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { withInfo } from '@storybook/addon-info';
 
 import { Select } from '../components/Form';
+import { Expandable } from '../components/Expandable';
 import { CodeBlock } from '../components/CodeBlock';
 
 import './stories.scss';
@@ -45,24 +46,14 @@ const groupedRow = (data) => (
 
 export const Selects = () => (
   <div>
-    <div className="row">
+    {/* <div className="row">
       <div className="col">
-        <div className="form-group">
-          <label className="form-label">Select Obj</label>
-          <Select options={options2}
-                  attr="name"
-                  label="Select..."
-                  onClick={action('select')}></Select>
-        </div>
-        <div className="form-group">
-          <label className="form-label">Disabled Select</label>
-          <Select options={options2}
-                  attr="name"
-                  disabled
-                  label="Select..."
-                  onClick={action('select')}></Select>
-        </div>
+        <p>Standard select with the options to customise:</p>
+
       </div>
+
+    </div> */}
+    <div className="row">
       <div className="col">
         <div className="form-group">
           <label className="form-label">Select String</label>
@@ -72,6 +63,103 @@ export const Selects = () => (
         </div> 
 
         <div className="form-group">
+          <Expandable>
+            <span className="label-container form-label">
+              <span>View code</span>
+              <span className="expandable-icon"></span>
+            </span>
+{/* White space bug */}
+<CodeBlock language="html">
+{`
+<Select options={options}
+        label="Select..."
+        onClick={fn}></Select>
+`}
+</CodeBlock>
+          </Expandable>
+        </div>
+        <div className="form-group">
+          <label className="form-label">Select Obj</label>
+          <Select options={options2}
+                  attr="name"
+                  label="Select..."
+                  onClick={action('select')}></Select>
+        </div>
+        <div className="form-group">
+          <Expandable>
+            <span className="label-container form-label">
+              View code
+              <span className="expandable-icon"></span>
+            </span>
+{/* White space bug */}
+<CodeBlock language="html">
+{`
+<Select options={optionsObjArr}
+        attr="name"
+        label="Select..."
+        onClick={fn}></Select>
+`}
+</CodeBlock>
+          </Expandable>
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">Disabled Select</label>
+          <Select options={options2}
+                  attr="name"
+                  disabled
+                  label="Select..."
+                  onClick={action('select')}></Select>
+        </div>
+
+        <div className="form-group">
+          <Expandable>
+            <span className="label-container form-label">
+              <span>View code</span>
+              <span className="expandable-icon"></span>
+            </span>
+{/* White space bug */}
+<CodeBlock language="html">
+{`
+<Select options={options2}
+        attr="name"
+        disabled
+        label="Select..."
+        onClick={fn}></Select>
+`}
+</CodeBlock>
+          </Expandable>
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">Grouped Select</label>
+          <Select options={options3}
+                  attr="label"
+                  isGrouped
+                  label="Select..."
+                  onClick={action('select')}></Select>
+        </div> 
+
+        <div className="form-group">
+          <Expandable>
+            <span className="label-container form-label">
+              <span>View code</span>
+              <span className="expandable-icon"></span>
+            </span>
+{/* White space bug */}
+<CodeBlock language="html">
+{`
+<Select options={options3}
+        attr="label"
+        isGrouped
+        label="Select..."
+        onClick={fn}></Select>
+`}
+</CodeBlock>
+          </Expandable>
+        </div>
+
+        <div className="form-group">
           <label className="form-label">Custom Select Row</label>
           <Select options={options2}
                   attr="name"
@@ -79,24 +167,39 @@ export const Selects = () => (
                   label="Select..."
                   onClick={action('select')}></Select>
         </div> 
-      </div>
-    </div>
-    <div className="row">
-      <div className="col">
+
+        <div className="form-group">
+          <Expandable>
+            <span className="label-container form-label">
+              <span>View code</span>
+              <span className="expandable-icon"></span>
+            </span>
+            <div>
+{/* White space bug */}
+<CodeBlock language="js">
+{
+`
+const selectRow = (data) => (
+  <li><span className="tag" style={{backgroundColor: data.color}}></span>{data.name}</li>
+)
+`
+}
+</CodeBlock>
+<CodeBlock language="html">
+{`
+<Select options={options2}
+        attr="name"
+        selectRow={selectRow}
+        label="Select..."
+        onClick={fn}></Select>
+`}
+</CodeBlock>
+            </div>
+          </Expandable>
+        </div>
+
         <div className="form-group">
           <label className="form-label">Custom Grouped Select</label>
-          <Select options={options3}
-                  attr="label"
-                  isGrouped
-                  label="Select..."
-                  onClick={action('select')}></Select>
-        </div> 
-      </div>
-    </div>
-    <div className="row">
-      <div className="col">
-        <div className="form-group">
-          <label className="form-label">Grouped Select</label>
           <Select options={options3}
                   attr="label"
                   isGrouped
@@ -104,74 +207,39 @@ export const Selects = () => (
                   label="Select..."
                   onClick={action('select')}></Select>
         </div> 
+
+        <div className="form-group">
+          <Expandable>
+            <span className="label-container form-label">
+              <span>View code</span>
+              <span className="expandable-icon"></span>
+            </span>
+            <div>
+{/* White space bug */}
+<CodeBlock language="js">
+{
+`
+const groupedRow = (data) => (
+  <label className="different-group">{data.label}<span>{data.options.length}</span></label>
+)
+`
+}
+</CodeBlock>
+<CodeBlock language="html">
+{`
+<Select options={options3}
+        attr="label"
+        isGrouped
+        groupedRow={groupedRow}
+        label="Select..."
+        onClick={fn}></Select>
+`}
+</CodeBlock>
+            </div>
+          </Expandable>
+        </div>
       </div>
     </div>
-
-<CodeBlock language="html">
-  {
-   `
-  <div className="form-group">
-    <label className="form-label">Select Obj</label>
-    <Select options={optionsObjArr}
-            attr="name"
-            label="Select..."
-            onClick={fn}></Select>
-  </div>
-  <div className="form-group">
-    <label className="form-label">Disabled Select</label>
-    <Select options={options2}
-            attr="name"
-            disabled
-            label="Select..."
-            onClick={fn}></Select>
-  </div>
-  <div className="form-group">
-    <label className="form-label">Select String</label>
-    <Select options={optionsArr}
-            label="Select..."
-            onClick={fn}></Select>
-  </div> 
-  <div className="form-group">
-    <label className="form-label">Custom Select Row</label>
-    <Select options={options2}
-            attr="name"
-            selectRow={selectRow}
-            label="Select..."
-            onClick={fn}></Select>
-  </div> 
-  <div className="form-group">
-    <label className="form-label">Grouped Select</label>
-    <Select options={options3}
-            attr="label"
-            isGrouped
-            label="Select..."
-            onClick={fn}></Select>
-  </div> 
-  <div className="form-group">
-    <label className="form-label">Custom Grouped Select</label>
-    <Select options={options3}
-            attr="label"
-            isGrouped
-            groupedRow={groupedRow}
-            label="Select..."
-            onClick={fn}></Select>
-  </div> 
-   ` 
-  }
-</CodeBlock>
-<h3>Custom Rows</h3>
-<CodeBlock language="js">
-  {
-  `
-  const selectRow = (data) => (
-    <li><span className="tag" style={{backgroundColor: data.color}}></span>{data.name}</li>
-  )
-  const groupedRow = (data) => (
-    <label className="different-group">{data.label} <span>{data.options.length}</span></label>
-  )
-  `
-  }
-</CodeBlock>
   </div>
 )
 

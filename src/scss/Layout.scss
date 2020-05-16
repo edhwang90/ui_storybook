@@ -9,7 +9,7 @@ html {
   font-size: 16px;
 }
 
-body, h1, h2, h3, h4, div, label, p, ul, ol, button, input {
+body, h1, h2, h3, h4, div, label, p, ul, ol, button, input, pre {
   margin: 0;
   padding: 0;
   font-family: 'Lato', 'Open sans', sans-serif;
@@ -48,6 +48,17 @@ ul, ol {
 .col-reverse {
   flex-direction: column-reverse;
   align-items: flex-end;
+}
+
+@media (max-width: 520px) {
+  .row {
+    display: block;
+  }
+
+  .col {
+    margin-right: 0rem;
+    margin-bottom: 1.25rem;
+  }
 }
 
 // Modifiers
@@ -91,13 +102,31 @@ ul, ol {
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
-@media (max-width: 520px) {
-  .row {
-    display: block;
+// Lists
+.ul-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+
+  li {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: .5rem;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
   }
 
-  .col {
-    margin-right: 0rem;
-    margin-bottom: 1.25rem;
+  li:before {
+    content: '';
+    display: flex;
+    flex-shrink: 0;
+    width: 1rem;
+    height: 1rem;
+    background-color: #4d4d4d;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    margin-right: 1rem;
   }
 }

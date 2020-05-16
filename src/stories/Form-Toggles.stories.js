@@ -16,7 +16,7 @@ export default {
 };
 
 export const Checkboxes = () => (
-  <div>
+  <section className="sample-checkboxes">
     <div className="form-group">
       <div className="row flex-center">
         <Toggle type="checkbox"
@@ -52,39 +52,39 @@ export const Checkboxes = () => (
 <CodeBlock language="html">
   {
   `
-  <div className="row flex-center">
-    <Toggle type="checkbox"
-            toggleFor="Default"
-            handleToggle={fn}>
-    </Toggle>
-    <label htmlFor="Default" className="toggle-label">Default</label>
-  </div>
+<div className="row flex-center">
+  <Toggle type="checkbox"
+          toggleFor="Default"
+          handleToggle={fn}>
+  </Toggle>
+  <label htmlFor="Default" className="toggle-label">Default</label>
+</div>
 
-  <div className="row flex-center">
-    <Toggle type="checkbox"
-            toggleFor="Prefilled"
-            value={true}
-            handleToggle={fn}>
-    </Toggle>
-    <label htmlFor="Prefilled" className="toggle-label">Prefilled</label>
-  </div>
+<div className="row flex-center">
+  <Toggle type="checkbox"
+          toggleFor="Prefilled"
+          value={true}
+          handleToggle={fn}>
+  </Toggle>
+  <label htmlFor="Prefilled" className="toggle-label">Prefilled</label>
+</div>
 
-  <div className="row flex-center">
-    <Toggle type="checkbox"
-            toggleFor="Disabled"
-            disabled
-            handleToggle={fn}>
-    </Toggle>
-    <label htmlFor="Disabled" className="toggle-label">Disabled</label>
-  </div>
+<div className="row flex-center">
+  <Toggle type="checkbox"
+          toggleFor="Disabled"
+          disabled
+          handleToggle={fn}>
+  </Toggle>
+  <label htmlFor="Disabled" className="toggle-label">Disabled</label>
+</div>
   `
   }
 </CodeBlock>
-  </div>
+  </section>
 )
 
 export const Switches = () => (
-  <div>
+  <section className="sample-switches">
     <div className="form-group">
       <div className="row flex-center">
         <Toggle type="switch"
@@ -120,34 +120,34 @@ export const Switches = () => (
 <CodeBlock language="html">
   {
   `
-  <div className="row flex-center">
-    <Toggle type="switch"
-            toggleFor="Default"
-            handleToggle={fn}>
-    </Toggle>
-    <label htmlFor="Default" className="toggle-label">Default</label>
-  </div>
+<div className="row flex-center">
+  <Toggle type="switch"
+          toggleFor="Default"
+          handleToggle={fn}>
+  </Toggle>
+  <label htmlFor="Default" className="toggle-label">Default</label>
+</div>
 
-  <div className="row flex-center">
-    <Toggle type="switch"
-            toggleFor="Prefilled"
-            value={true}
-            handleToggle={fn}>
-    </Toggle>
-    <label htmlFor="Prefilled" className="toggle-label">Prefilled</label>
-  </div>
+<div className="row flex-center">
+  <Toggle type="switch"
+          toggleFor="Prefilled"
+          value={true}
+          handleToggle={fn}>
+  </Toggle>
+  <label htmlFor="Prefilled" className="toggle-label">Prefilled</label>
+</div>
 
-  <div className="row flex-center">
-    <Toggle type="switch"
-            toggleFor="Disabled"
-            disabled
-            handleToggle={fn}>
-    </Toggle>
-    <label htmlFor="Disabled" className="toggle-label">Disabled</label>
-  </div>
+<div className="row flex-center">
+  <Toggle type="switch"
+          toggleFor="Disabled"
+          disabled
+          handleToggle={fn}>
+  </Toggle>
+  <label htmlFor="Disabled" className="toggle-label">Disabled</label>
+</div>
   `
   }
 </CodeBlock>
-  </div>
+  </section>
 )
 

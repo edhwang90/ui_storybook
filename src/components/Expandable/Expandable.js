@@ -5,11 +5,11 @@ import { generateNumber } from '../Utils';
 import './Expandable.scss'
 
 export const Expandable = (props) => {
-  const { children } = props;
+  const { children, className } = props;
   const [identifier] = useState(generateNumber());
 
   return (
-    <div className="expandable-container">
+    <div className={`expandable-container ${className}`}>
       <input id={"Section" + identifier}
           className="expandable-toggle"
           type="checkbox"/>

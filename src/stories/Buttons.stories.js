@@ -14,7 +14,7 @@ export default {
 };
 
 export const Buttons = () => (
-  <div>
+  <section className="sample-buttons">
     <div className="btn-group">
         <button className="btn" 
                 onClick={action('click')} 
@@ -68,62 +68,62 @@ export const Buttons = () => (
 <CodeBlock language="html">
   {
   `
-  <button className="btn" 
-          onClick={fn} 
-          type="button">
-    Button
-  </button>
+<button className="btn" 
+        onClick={fn} 
+        type="button">
+  Button
+</button>
 
-  <button className="btn is-primary"
-          onClick={fn}
-          type="button">
-    Primary
-  </button>
+<button className="btn is-primary"
+        onClick={fn}
+        type="button">
+  Primary
+</button>
 
-  <button className="btn is-clear"
-          onClick={fn}
-          type="button">
-    Clear
-  </button>
+<button className="btn is-clear"
+        onClick={fn}
+        type="button">
+  Clear
+</button>
 
-  <button className="btn is-alternate"
-          onClick={fn}
-          type="button">
-    Alternate
-  </button>
+<button className="btn is-alternate"
+        onClick={fn}
+        type="button">
+  Alternate
+</button>
 
-  <button className="btn is-danger"
-          onClick={fn}
-          type="button">
-    Danger
-  </button>
+<button className="btn is-danger"
+        onClick={fn}
+        type="button">
+  Danger
+</button>
 
-  <button className="btn is-warning"
-          onClick={fn}
-          type="button">
-    Warning
-  </button>
+<button className="btn is-warning"
+        onClick={fn}
+        type="button">
+  Warning
+</button>
 
-  <button className="btn is-success"
-          onClick={fn}
-          type="button">
-    Success
-  </button>
+<button className="btn is-success"
+        onClick={fn}
+        type="button">
+  Success
+</button>
 
-  <button className="btn is-success"
-    onClick={fn}
-    disabled
-    type="button">
-    Disabled
-  </button>
+<button className="btn is-success"
+  onClick={fn}
+  disabled
+  type="button">
+  Disabled
+</button>
   `
   }
 </CodeBlock>
-  </div>
+  </section>
 )
 
 export const Links = () => (
-  <div>
+  <section className="sample-links">
     <a className="link"
        href="http://google.com" 
        title="to link">
@@ -139,20 +139,20 @@ export const Links = () => (
 <CodeBlock language="html">
   {
   `
-  <a className="link"
-     href="http://google.com" 
-     title="to link">
-     Default link
-  </a>
-  <a className="link"
-     href="http://google.com" 
-     rel='noopener noreferrer'
-     target='_blank'
-     title="to new tab">
-     Link to new tab
-  </a>
+<a className="link"
+   href="http://google.com" 
+   title="to link">
+  Default link
+</a>
+<a className="link"
+   href="http://google.com" 
+   rel='noopener noreferrer'
+   target='_blank'
+   title="to new tab">
+  Link to new tab
+</a>
   `
   }
 </CodeBlock>
-  </div>
+  </section>
 )

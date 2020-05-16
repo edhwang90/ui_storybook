@@ -1,3 +1,4 @@
+@import '../scss/_Import.scss';
 @import '../scss/Layout.scss';
 @import '../scss/Button.scss';
 @import '../scss/Form.scss';
@@ -30,8 +31,6 @@
     margin-bottom: 1rem;
   }
 
-
-
   .sample-grid {
     .col {
       padding: 1rem 2rem;
@@ -45,9 +44,24 @@
     }
   }
 
-  .expandable-lbl-toggle {
-    .label-container {
-      justify-content: flex-end;
+  .sample-expand-collapse {
+    .expandable-container {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .view-code {
+    .expandable-lbl-toggle {
+      color: $link-color;
+  
+      .label-container{
+        justify-content: flex-end;
+      }
+  
+      .expandable-icon:before,
+      .expandable-icon:after {
+        background-color: $link-color;
+      }
     }
   }
 }

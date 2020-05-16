@@ -16,7 +16,7 @@ export default {
 };
 
 export const DatePickers = () => (
-  <div>
+  <section className="sample-datepickers">
     <div className="row">
       <div className="col">
         <div className="form-group">
@@ -45,23 +45,29 @@ export const DatePickers = () => (
       </div>
     </div>
 <CodeBlock language="html">
-  {
-  `
-  <div className="form-group">
-    <label className="form-label">Select a date</label>
-    <DatePicker onClick={fn} 
-                value="12/01/2020" 
-                format="MM/DD/YYYY" 
-                placeholder="MM/DD/YYYY"></DatePicker>
-  </div>
-  <div className="form-group">
-    <label className="form-label">Select a date</label>
-    <DatePicker onClick={fn} 
-                format="DD/MM/YYYY" 
-                placeholder="DD/MM/YYYY"></DatePicker>
-  </div>
-  `
-  }
+{
+`
+<div className="form-group">
+  <label className="form-label">Select a date</label>
+  <DatePicker onClick={fn} 
+              value="12/01/2020" 
+              format="MM/DD/YYYY" 
+              placeholder="MM/DD/YYYY"></DatePicker>
+</div>
+<div className="form-group">
+  <label className="form-label">Select a date</label>
+  <DatePicker onClick={fn} 
+              format="DD/MM/YYYY" 
+              placeholder="DD/MM/YYYY"></DatePicker>
+</div>
+<div className="form-group">
+  <label className="form-label">Disabled date</label>
+  <DatePicker onClick={action('select')} 
+              format="DD/MM/YYYY" 
+              placeholder="DD/MM/YYYY"></DatePicker>
+</div>
+`
+}
 </CodeBlock>
-  </div>
+  </section>
 )

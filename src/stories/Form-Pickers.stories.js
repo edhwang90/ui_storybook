@@ -62,7 +62,7 @@ export const DatePickers = () => (
 </div>
 <div className="form-group">
   <label className="form-label">Disabled date</label>
-  <DatePicker onClick={action('select')} 
+  <DatePicker onClick={fn} 
               format="DD/MM/YYYY" 
               placeholder="DD/MM/YYYY"></DatePicker>
 </div>

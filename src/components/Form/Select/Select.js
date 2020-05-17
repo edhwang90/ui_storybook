@@ -43,16 +43,11 @@ export const useSelect = (props) => {
             .filter(option => !selections?.find(filter => getOptionDisplay(option) === getOptionDisplay(filter)))
   }
 
-  const filteredGroupList = () => {
+  const filteredGroupList = (group) => {
     const selections = isMultiSelect ? selected : [selected];
     const toSearch = searchParam ? searchParam.toLowerCase() : '';
 
-    const list = options;
-    for (let option of list) {
-      option.options = search(option.options, toSearch).filter(filter => !selections.find(find => (getOptionDisplay(filter) === getOptionDisplay(find)) && option.label === find.group?.label));
-    }
-    
-    return options;
+    return search(group.options, toSearch).filter(filter => !selections.find(find => (getOptionDisplay(filter) === getOptionDisplay(find)) && group.label === find.group?.label))
   }
 
   const isResetAvailable = () => {
@@ -429,21 +424,22 @@ export const Select = memo((props) => {
         <div className="select-list" 
              ref={listRef}>
           {
-            filteredGroupList().map((group, i) => (
+            filteredList().map((group, i) => (
               <React.Fragment key={i}>
                 {groupRowUI(group)}
                 {
                   <ul onKeyDown={e => traverseSelect(e)}>
                     {
-                      group.options.length > 0 &&
-                      group.options.map((option, j) => {
-                        const groupDetails = Object.assign({}, group);
-                        delete groupDetails.options;
-                        return rowUI({...option, group: groupDetails}, j);
-                      })
+                      filteredGroupList(group).length > 0 &&
+                      filteredGroupList(group)
+                        .map((option, j) => {
+                          const groupDetails = Object.assign({}, group);
+                          delete groupDetails.options;
+                          return rowUI({...option, group: groupDetails}, j);
+                        })
                     }
                     {
-                      group.options.length <= 0 &&
+                     filteredGroupList(group).length <= 0 &&
                       emptySelectUI()
                     }
                   </ul>

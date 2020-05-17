@@ -38,7 +38,7 @@ export const Expandable = (props) => {
     else if (!isOpen && contentRef.current) {
       contentRef.current.style.maxHeight = '0px';
     }
-  }, [isOpen])
+  }, [isOpen, maxHeight, contentRef])
 
   return (
     <div className={`expandable-container ${className}`}>

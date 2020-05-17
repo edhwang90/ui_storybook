@@ -3,7 +3,6 @@ import { action } from '@storybook/addon-actions';
 import { withInfo } from '@storybook/addon-info';
 
 import { CodeBlock } from '../components/CodeBlock';
-import { Expandable } from '../components/Expandable';
 
 import './stories.scss';
 

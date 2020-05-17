@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 const checkMinlength = (value, ruleValue) => {
@@ -65,7 +65,7 @@ export const useValidate = (props) => {
     return changeField[field];
   }
 
-  const validateField = (fieldObj) => {
+  const validateField = useCallback((fieldObj) => {
     return new Promise((resolve, reject) => {
   
       let validateObj = fieldObj;
@@ -73,7 +73,7 @@ export const useValidate = (props) => {
    
       for (let i = 0; i<validateObj.rules?.length; i++) {
         const rule = validateObj.rules[i];
-        let message;
+
         switch (rule.type) {
           case 'required':
             if (!validateObj.value || validateObj.value.length <= 0) {
@@ -82,7 +82,7 @@ export const useValidate = (props) => {
             break;
           case 'type': 
             const checkedType = checkType(validateObj.value, rule.value);
-  
+            let message;
             if (checkedType.error) {
               errorsArr.push(checkedType.message)
               message = checkedType.message;
@@ -129,7 +129,7 @@ export const useValidate = (props) => {
         return res;
       }
     })
-  }
+  }, []);
 
   const handleChange = (field, value) => {
     const fieldObj = getFieldObj(field, value);
@@ -149,7 +149,7 @@ export const useValidate = (props) => {
     }
   }
 
-  const validate = useCallback((field) => {
+  const validate = (field) => {
     const fieldObj = form[field];
     let validated;
 
@@ -160,7 +160,7 @@ export const useValidate = (props) => {
       const newForm = validated.errors?.length > 0 ? {...form, [field]: {...validated, isLoading: false}, error: true} : {...form, [field]: {...validated, isLoading: false}};
       setForm(newForm);
     });
-  }, [validateField, form, setForm])
+  }
 
   const setCustomError = (fieldObj, error) => {
     const fieldErrors = fieldObj.errors ? fieldObj.errors : [];

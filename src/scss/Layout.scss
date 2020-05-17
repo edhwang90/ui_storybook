@@ -106,7 +106,7 @@ ul, ol {
 .ul-list {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
 
   li {
     display: flex;

@@ -53,15 +53,22 @@
   .view-code {
     .expandable-lbl-toggle {
       color: $link-color;
-  
-      .label-container{
-        justify-content: flex-end;
-      }
+      justify-content: flex-end;
   
       .expandable-icon:before,
       .expandable-icon:after {
         background-color: $link-color;
       }
+    }
+
+    .expandable-lbl-toggle:hover {
+      text-decoration: underline;
+    }
+
+    .expandable-lbl-toggle.expanded,
+    .expandable-lbl-toggle:focus,
+    .expandable-lbl-toggle:hover {
+      background-color: #fff;
     }
   }
 }

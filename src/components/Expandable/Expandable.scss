@@ -1,17 +1,41 @@
 @import '../../scss/_Import.scss';
 
-input[type='checkbox'] {
-  display: none;
+.expandable-container {
+  input[type='checkbox'] {
+    opacity: 0;
+    position: absolute;
+  }
 }
-
 .expandable-lbl-toggle {
   cursor: pointer;
   background-color: #fff;
+  outline: none;
+  border: 0;
+  width: 100%;
   font-weight: bold;
+  display: flex;
+  padding: $item-padding;
 
   .label-container {
     display: flex;
     align-items: center;
+  }
+
+  &:hover, &:focus {
+    background-color: #e6e6e6;
+  }
+}
+
+.expandable-lbl-toggle.expanded {
+  background-color: #e6e6e6;
+
+  span.expandable-icon{
+    &:after {
+      transform: rotate(180deg);
+    }
+    &:before {
+      transform: rotate(180deg);
+    }
   }
 }
 
@@ -40,36 +64,39 @@ input[type='checkbox'] {
 }
 
 .expandable-icon:first-child {
-  margin-right: 1rem;
+  margin-right: $item-padding-lr + 0rem;
 }
 
 .expandable-icon:last-child {
-  margin-left: 1rem;
+  margin-left: $item-padding-lr + 0rem;
 }
 
 .expandable-content {
-  max-height: 0;
-  transition: max-height .5s ease-in-out;
+  transition: max-height .3s ease-in-out;
   overflow: hidden;
-
+  padding: 0;
+  padding-left: $item-padding-lr + 0rem;
+  padding-right: $item-padding-lr + 0rem;
   background-color: #fff;
-}
 
-.expandable-toggle:checked + .expandable-lbl-toggle + .expandable-content{
-  max-height: 1337px;
-}
-
-.expandable-toggle:checked + .expandable-lbl-toggle span.expandable-icon{
-  &:after {
-    transform: rotate(180deg);
-  }
   &:before {
-    transform: rotate(180deg);
+    margin-top: $item-padding-tb + 0rem;
+    content: '';
+    display: block;
   }
+  &:after {
+    margin-bottom: $item-padding-tb + 0rem;
+    content: '';
+    display: block;
+  }
+}
+
+.expandable-content.collapsed {
+  max-height: 0;
 }
 
 @media only screen and (max-width: 520px) {
-  .expandable-toggle:checked + .expandable-lbl-toggle + .expandable-content{
+  .expandable-content.expanded {
     max-height: 3000px;
   } 
 }

@@ -134,8 +134,9 @@
   color: $link-color;
   padding: $item-padding;
   display: inline-block;
+  outline: none;
 
-  &:hover {
+  &:hover, &:focus {
     text-decoration: underline;
   }
 

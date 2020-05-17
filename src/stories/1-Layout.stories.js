@@ -98,7 +98,7 @@ export const Lists = () => (
       <div className="col">
         <div className="form-group">
           <Expandable className="view-code">
-            <span className="label-container form-label">
+            <span className="label-container">
               <span>View code</span>
               <span className="expandable-icon"></span>
             </span>
@@ -134,8 +134,8 @@ export const ExpandAndCollapse = () => (
     <div className="row">
       <div className="col">
         <div className="form-group">
-          <Expandable>
-            <span className="label-container form-label">
+          <Expandable isExpanded={true}>
+            <span className="label-container">
               <span className="expandable-icon"></span>
               <span>Expand Row 1</span>
             </span>
@@ -144,18 +144,50 @@ export const ExpandAndCollapse = () => (
               sed do eiusmod tempor incididunt ut labore et dolore magna
             </div>
           </Expandable>
-          <Expandable>
-            <span className="label-container form-label">
+          <Expandable maxHeight="300">
+            <span className="label-container">
               <span className="expandable-icon"></span>
               <span>Expand Row 2</span>
             </span>
             <div>
               Ut enim ad minim veniam, quis nostrud exercitation
               ullamco laboris nisi ut aliquip ex ea commodo
+              Ut enim ad minim veniam, quis nostrud exercitation
+              ullamco laboris nisi ut aliquip ex ea commodo
+              Ut enim ad minim veniam, quis nostrud exercitation
+              ullamco laboris nisi ut aliquip ex ea commodo
+              Ut enim ad minim veniam, quis nostrud exercitation
+              ullamco laboris nisi ut aliquip ex ea commodo
+              Ut enim ad minim veniam, quis nostrud exercitation
+              ullamco laboris nisi ut aliquip ex ea commodo
+              Ut enim ad minim veniam, quis nostrud exercitation
+              ullamco laboris nisi ut aliquip ex ea commodo
+              Ut enim ad minim veniam, quis nostrud exercitation
+              ullamco laboris nisi ut aliquip ex ea commodo
+              Ut enim ad minim veniam, quis nostrud exercitation
+              ullamco laboris nisi ut aliquip ex ea commodo
+              Ut enim ad minim veniam, quis nostrud exercitation
+              ullamco laboris nisi ut aliquip ex ea commodo
+              Ut enim ad minim veniam, quis nostrud exercitation
+              ullamco laboris nisi ut aliquip ex ea commodo
+              Ut enim ad minim veniam, quis nostrud exercitation
+              ullamco laboris nisi ut aliquip ex ea commodo
+              Ut enim ad minim veniam, quis nostrud exercitation
+              ullamco laboris nisi ut aliquip ex ea commodo
+              Ut enim ad minim veniam, quis nostrud exercitation
+              ullamco laboris nisi ut aliquip ex ea commodo
+              Ut enim ad minim veniam, quis nostrud exercitation
+              ullamco laboris nisi ut aliquip ex ea commodo
+              Ut enim ad minim veniam, quis nostrud exercitation
+              ullamco laboris nisi ut aliquip ex ea commodo
+              Ut enim ad minim veniam, quis nostrud exercitation
+              ullamco laboris nisi ut aliquip ex ea commodo
+              Ut enim ad minim veniam, quis nostrud exercitation
+              ullamco laboris nisi ut aliquip ex ea commodo
             </div>
           </Expandable>
           <Expandable>
-            <span className="label-container form-label">
+            <span className="label-container">
               <span className="expandable-icon"></span>
               <span>Expand Row 3</span>
             </span>
@@ -168,17 +200,28 @@ export const ExpandAndCollapse = () => (
         </div>
         <div className="form-group">
           <Expandable className="view-code">
-            <span className="label-container form-label">
+            <span className="label-container">
               <span>View code</span>
               <span className="expandable-icon"></span>
             </span>
 {/* White space bug */}
 <CodeBlock language="html">
 {`
-<Expandable>
-  <span className="label-container form-label">
+<Expandable isExpanded={true}>
+  <span className="label-container">
     <span className="expandable-icon"></span>
     <span>Expand Row 1</span>
+  </span>
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna
+  </div>
+</Expandable>
+
+<Expandable maxHeight="300">
+  <span className="label-container">
+    <span className="expandable-icon"></span>
+    <span>Expand Row 2</span>
   </span>
   <div>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit,

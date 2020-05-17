@@ -57,7 +57,7 @@ export const Selects = () => (
 
         <div className="form-group">
           <Expandable className="view-code">
-            <span className="label-container form-label">
+            <span className="label-container">
               <span>View code</span>
               <span className="expandable-icon"></span>
             </span>
@@ -80,7 +80,7 @@ export const Selects = () => (
 
         <div className="form-group">
           <Expandable className="view-code">
-            <span className="label-container form-label">
+            <span className="label-container">
               <span>View code</span>
               <span className="expandable-icon"></span>
             </span>
@@ -107,7 +107,7 @@ export const Selects = () => (
 
         <div className="form-group">
           <Expandable className="view-code">
-            <span className="label-container form-label">
+            <span className="label-container">
               <span>View code</span>
               <span className="expandable-icon"></span>
             </span>
@@ -133,7 +133,7 @@ export const Selects = () => (
 
         <div className="form-group">
           <Expandable className="view-code">
-            <span className="label-container form-label">
+            <span className="label-container">
               <span>View code</span>
               <span className="expandable-icon"></span>
             </span>
@@ -159,7 +159,7 @@ export const Selects = () => (
 
         <div className="form-group">
           <Expandable className="view-code">
-            <span className="label-container form-label">
+            <span className="label-container">
               <span>View code</span>
               <span className="expandable-icon"></span>
             </span>
@@ -197,7 +197,7 @@ const selectRow = (data) => (
 
         <div className="form-group">
           <Expandable className="view-code">
-            <span className="label-container form-label">
+            <span className="label-container">
               <span>View code</span>
               <span className="expandable-icon"></span>
             </span>
@@ -244,7 +244,7 @@ export const MultiSelects = () => (
 
         <div className="form-group">
           <Expandable className="view-code">
-            <span className="label-container form-label">
+            <span className="label-container">
               <span>View code</span>
               <span className="expandable-icon"></span>
             </span>
@@ -273,7 +273,7 @@ export const MultiSelects = () => (
 
         <div className="form-group">
           <Expandable className="view-code">
-            <span className="label-container form-label">
+            <span className="label-container">
               <span>View code</span>
               <span className="expandable-icon"></span>
             </span>
@@ -303,7 +303,7 @@ export const MultiSelects = () => (
 
         <div className="form-group">
           <Expandable className="view-code">
-            <span className="label-container form-label">
+            <span className="label-container">
               <span>View code</span>
               <span className="expandable-icon"></span>
             </span>
@@ -334,7 +334,7 @@ export const MultiSelects = () => (
 
         <div className="form-group">
           <Expandable className="view-code">
-            <span className="label-container form-label">
+            <span className="label-container">
               <span>View code</span>
               <span className="expandable-icon"></span>
             </span>
@@ -366,7 +366,7 @@ export const MultiSelects = () => (
 
         <div className="form-group">
           <Expandable className="view-code">
-            <span className="label-container form-label">
+            <span className="label-container">
               <span>View code</span>
               <span className="expandable-icon"></span>
             </span>
@@ -406,7 +406,7 @@ const selectRow = (data) => (
 
         <div className="form-group">
           <Expandable className="view-code">
-            <span className="label-container form-label">
+            <span className="label-container">
               <span>View code</span>
               <span className="expandable-icon"></span>
             </span>
@@ -437,7 +437,7 @@ const selectRow = (data) => (
 
         <div className="form-group">
           <Expandable className="view-code">
-            <span className="label-container form-label">
+            <span className="label-container">
               <span>View code</span>
               <span className="expandable-icon"></span>
             </span>

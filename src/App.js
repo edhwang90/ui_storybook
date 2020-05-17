@@ -5,6 +5,6 @@ import './App.scss';
 
 export const App = () => {
   return (
-    <ExampleForm></ExampleForm>
+    <ExampleForm shouldValidateBlur={true}></ExampleForm>
   );
 }

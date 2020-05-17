@@ -65,7 +65,7 @@ export const useValidate = (props) => {
     return changeField[field];
   }
 
-  const validateField = useCallback((fieldObj) => {
+  const validateField = (fieldObj) => {
     return new Promise((resolve, reject) => {
   
       let validateObj = fieldObj;
@@ -111,7 +111,8 @@ export const useValidate = (props) => {
       validateObj = { ...validateObj, errors: errorsArr };
   
       resolve(validateObj);
-    }).then(res => {
+    })
+    .then(res => {
       if (!res.customValidation) {
         return res;
       }
@@ -129,7 +130,7 @@ export const useValidate = (props) => {
         return res;
       }
     })
-  }, []);
+  };
 
   const handleChange = (field, value) => {
     const fieldObj = getFieldObj(field, value);

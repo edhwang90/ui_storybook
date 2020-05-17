@@ -6,7 +6,8 @@ import { Toggle, Select, DatePicker, useValidate } from '../Form'
 
 import './ExampleForm.scss';
 
-export const ExampleForm = () => {
+export const ExampleForm = (props) => {
+  const { shouldValidateBlur, shouldValidateChange } = props;
   const [loading, setLoading] = useState(false);
 
   const industryArray = [
@@ -48,12 +49,13 @@ export const ExampleForm = () => {
   ]
 
   const customValidate = (formField) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve('Email is already registered.');
-      }, 2000)
-   })
-  }
+    // for testing, random text set
+    return fetch('https://jsonplaceholder.typicode.com/comments/3')
+            .then(response => response.json())
+            .then(json => {
+              return (json.name);
+            })
+  };
 
   const initialForm = {
     email: { 
@@ -112,10 +114,8 @@ export const ExampleForm = () => {
     // initial dependencies
     initialForm,
     // validates on change or on submit
-    validateOnChange: false
+    validateOnChange: shouldValidateChange
   })
-
-  const [test, setTest] = useState(form);
 
   const handleSubmit = () => {
     setLoading(true);
@@ -125,17 +125,6 @@ export const ExampleForm = () => {
         setLoading(false);
       }, 5000)
      
-    })
-  }
-
-  const handleBlur = (e) => {
-    console.log(form, e)
-  }
-
-  const isValid = (e) => {
-    console.log(e);
-    validate(e).then(res => {
-      setTest({...test, [e]: res})
     })
   }
 
@@ -157,7 +146,7 @@ export const ExampleForm = () => {
               <div className="input-container">
                 <input onChange={e => handleChange('email', e.target.value)}
                        className={`form-input ${form.email.errors?.length > 0 ? 'form-error' : ''}`}
-                       //onBlur={e => validate('email')}
+                       onBlur={e => shouldValidateBlur ? validate('email') : ''}
                        type="email" 
                        placeholder="Email">
                 </input>
@@ -165,9 +154,8 @@ export const ExampleForm = () => {
                   <FontAwesomeIcon icon={faCoffee} />
                 </div>
               </div>
-             
               { form.email.isLoading &&
-                <span className="loading-message">Checking for existing username<span>.</span><span>.</span><span>.</span></span>
+                <span className="loading-message">Checking custom validation<span>.</span><span>.</span><span>.</span></span>
               }
 
               { !form.email.isLoading &&
@@ -182,7 +170,7 @@ export const ExampleForm = () => {
               <div className="input-container">
                 <span className="form-input-prepend"><FontAwesomeIcon icon={faCoffee} /></span>
                 <input className={`form-input ${form.password.errors?.length > 0 ? 'form-error' : ''}`}
-                       //onBlur={e => validate('password')}
+                       onBlur={e => shouldValidateBlur ? validate('password') : ''}
                        onChange={e => handleChange('password', e.target.value)}
                        type="password" 
                        placeholder="Password">
@@ -202,7 +190,7 @@ export const ExampleForm = () => {
                       label="Select..."
                       options={industryArray}
                       isMultiSelect
-                      //onBlur={e => validate('industry')}
+                      onBlur={e => shouldValidateBlur ? validate('industry') : ''}
                       onClick={e => handleChange('industry', e)}>
               </Select>
               { 
@@ -221,7 +209,7 @@ export const ExampleForm = () => {
                       className={form.role.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
                       selectRow={selectRow}
-                      //onBlur={e => validate('role')}
+                      onBlur={e => shouldValidateBlur ? validate('role') : ''}
                       onClick={e => handleChange('role', e)}>
                </Select>
               { 
@@ -244,7 +232,7 @@ export const ExampleForm = () => {
                       //groupedRow={groupedRow}
                       className={form.locations.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
-                      //onBlur={e => validate('locations')}
+                      onBlur={e => shouldValidateBlur ? validate('locations') : ''}
                       onClick={e => handleChange('locations', e)}>
                </Select>
               { 
@@ -258,10 +246,9 @@ export const ExampleForm = () => {
             <div className="form-group">
               <label className="form-label">Select a date<span className="required">*</span></label>
               <DatePicker onClick={e => handleChange('startDate', e)} 
-                          //onBlur={e => validate('startDate')}
+                          onBlur={e => shouldValidateBlur ? validate('startDate') : ''}
                           className={form.startDate.errors?.length > 0 ? 'form-error' : ''}
                           format="MM/DD/YYYY" 
-                          
                           placeholder="MM/DD/YYYY"></DatePicker>
               { 
                 form.startDate.errors &&
@@ -276,7 +263,7 @@ export const ExampleForm = () => {
                 <Toggle type="switch"
                         toggleFor="flexibleDate"
                         className={form.flexible.errors?.length > 0 ? 'form-error' : ''}
-                        //onBlur={e => validate('flexible')}
+                        onBlur={e => shouldValidateBlur ? validate('flexible') : ''}
                         handleToggle={e => handleChange('flexible', e)}>
                 </Toggle>
                 <label className="toggle-label" htmlFor="flexibleDate">Flexible date<span className="required">*</span></label>
@@ -296,7 +283,7 @@ export const ExampleForm = () => {
                 <Toggle type="checkbox"
                         toggleFor="agreeTerms"
                         className={form.terms.errors?.length > 0 ? 'form-error' : ''}
-                        //onBlur={e => validate('terms')}
+                        onBlur={e => shouldValidateBlur ? validate('terms') : ''}
                         handleToggle={e => handleChange('terms', e)}>
                 </Toggle>
                 <label htmlFor="agreeTerms" className="toggle-label">Agree to terms<span className="required">*</span></label>

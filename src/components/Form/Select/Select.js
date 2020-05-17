@@ -257,6 +257,7 @@ export const Select = memo((props) => {
     }
     // alpha numeric: filter
     else if (e.keyCode >= 48 && e.keyCode <= 90) {
+      e.stopPropagation();
       skipTo(e);
     }
   }

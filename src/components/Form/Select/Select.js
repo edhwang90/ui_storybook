@@ -143,11 +143,6 @@ export const Select = memo((props) => {
     if (listRef.current) listRef.current.querySelector('.select-option').focus();
   }, [isOpen, listRef])
 
-  const closeAndFocus = () => {
-    closeSelect();
-    menuRef.current.querySelector('.select-btn').focus();
-  }
-
   const openAndFocus = (e) => {
     if (disabled) return;
     if (!e) return;
@@ -180,9 +175,8 @@ export const Select = memo((props) => {
     }
     else {
       // all grouped options to single array
-      const groupedOptions = filteredGroupList();
-      for (let i = 0; i<groupedOptions.length; i++) {
-        allOptions = [...allOptions, ...groupedOptions[i].options]
+      for (let group of filteredList()) {
+        allOptions = [...allOptions, ...filteredGroupList(group)];
       }
     }
 
@@ -210,7 +204,7 @@ export const Select = memo((props) => {
       return;
     }
 
-    closeAndFocus();
+    closeSelect();
     
     // unbind
     document.removeEventListener('click', onOutsideClick);
@@ -285,7 +279,7 @@ export const Select = memo((props) => {
   //                list and selected
   const traverseSelect = (e) => {
     if (selectedRef.current) traverseNodes(e, selectedRef, '.remove-selected', keydownToClear, true); 
-    if (listRef.current) traverseNodes(e, listRef, '.select-option', closeAndFocus)
+    if (listRef.current) traverseNodes(e, listRef, '.select-option', closeSelect)
   }
   
   // Display purposes: Multiselect actionable selected tags

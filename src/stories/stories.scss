@@ -55,9 +55,15 @@
   }
 
   .view-code {
+    .expandable-row {
+      display: flex;
+      justify-content: flex-end;
+    }
+
     .expandable-lbl-toggle {
       color: $link-color;
-      justify-content: flex-end;
+      width: auto;
+      padding: 0;
   
       .expandable-icon:before,
       .expandable-icon:after {

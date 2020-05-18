@@ -42,13 +42,15 @@ export const Expandable = (props) => {
 
   return (
     <div className={`expandable-container ${className}`}>
-      <button className={`expandable-lbl-toggle ${isOpen ? 'expanded' : 'collapsed'}`}
-         onClick={toggleExpandable}
-         type="button"
-         tabIndex="0"
-         aria-expanded={isOpen}
-         data-toggle={isOpen ? 'collapse' : 'expand'}
-         aria-controls={`Section${identifier}`}>{children[0]}</button>
+      <div className="expandable-row">
+        <button className={`expandable-lbl-toggle ${isOpen ? 'expanded' : 'collapsed'}`}
+                onClick={toggleExpandable}
+                type="button"
+                tabIndex="0"
+                aria-expanded={isOpen}
+                data-toggle={isOpen ? 'collapse' : 'expand'}
+                aria-controls={`Section${identifier}`}>{children[0]}</button>
+      </div>
       
       <div id={`Section${identifier}`} 
            ref={contentRef}

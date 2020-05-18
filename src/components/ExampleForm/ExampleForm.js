@@ -49,12 +49,17 @@ export const ExampleForm = (props) => {
   ]
 
   const customValidate = (formField) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('Custom validation rule');
+      }, 2000)
+   })
     // for testing, random text set
-    return fetch('https://jsonplaceholder.typicode.com/comments/3')
-            .then(response => response.json())
-            .then(json => {
-              return (json.name);
-            })
+    // return fetch('https://jsonplaceholder.typicode.com/comments/3')
+    //         .then(response => response.json())
+    //         .then(json => {
+    //           return (json.name);
+    //         })
   };
 
   const initialForm = {

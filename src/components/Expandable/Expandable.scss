@@ -1,6 +1,9 @@
 @import '../../scss/_Import.scss';
 
 .expandable-container {
+  display: flex;
+  flex-direction: column;
+  
   input[type='checkbox'] {
     opacity: 0;
     position: absolute;

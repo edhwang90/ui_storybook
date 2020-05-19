@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee, faSpinner, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCoffee, faCircleNotch, faSync } from '@fortawesome/free-solid-svg-icons'
+import { LoadingIcon } from '../LoadingIcon';
 
 import { Toggle, Select, DatePicker, useValidate } from '../Form'
 
@@ -149,14 +150,18 @@ export const ExampleForm = (props) => {
             <div className="form-group">
               <label className="form-label">Email<span className="required">*</span></label>
               <div className="input-container">
+                {
+                  form.email.isLoading &&
+                  <LoadingIcon className="with-append"></LoadingIcon>
+                }
                 <input onChange={e => handleChange('email', e.target.value)}
-                       className={`form-input ${form.email.errors?.length > 0 ? 'form-error' : ''}`}
-                       onBlur={e => shouldValidateBlur ? validate('email') : ''}
-                       type="email" 
-                       placeholder="Email">
-                </input>
+                      className={`form-input ${form.email.errors?.length > 0 ? 'form-error' : ''}`}
+                      onBlur={e => shouldValidateBlur ? validate('email') : ''}
+                      type="email" 
+                      placeholder="Email">
+                </input> 
                 <div className="form-input-append">
-                  <FontAwesomeIcon icon={faCoffee} />
+                  <FontAwesomeIcon fixedWidth icon={faCoffee} />
                 </div>
               </div>
               { form.email.isLoading &&
@@ -180,6 +185,7 @@ export const ExampleForm = (props) => {
                        type="password" 
                        placeholder="Password">
                 </input>
+                
               </div>
               { 
                 form.password.errors &&
@@ -254,6 +260,7 @@ export const ExampleForm = (props) => {
                           onBlur={e => shouldValidateBlur ? validate('startDate') : ''}
                           className={form.startDate.errors?.length > 0 ? 'form-error' : ''}
                           format="MM/DD/YYYY" 
+                          disabled
                           placeholder="MM/DD/YYYY"></DatePicker>
               { 
                 form.startDate.errors &&

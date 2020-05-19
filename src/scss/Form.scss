@@ -9,14 +9,15 @@ input, textarea {
 .input-container {
   width: 100%;
   display: flex;
+  position: relative;
 }
 
 .form-input {
   padding: $item-padding;
   font-family: 'Lato', 'Open sans', sans-serif;
   font-size: 1rem;
-  border: 1px solid #e6e6e6;
-  border-radius: 4px;
+  border: .0626rem solid #e6e6e6;
+  border-radius: .25rem;
   display: flex;
   flex: 1;
   width: 100%;
@@ -37,6 +38,7 @@ input, textarea {
   &:disabled {
     background-color: #f7f7f7;
     cursor: not-allowed;
+    opacity: 1; // required for iOS
   }
 }
 
@@ -159,4 +161,22 @@ input, textarea {
 .datepicker-container .form-error.calendar-open {
   border-color: $error-color !important;
   box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25) !important;
+}
+
+// Fontawesome specific
+svg.svg-inline--fa.fa-fw {
+  width: 1rem;
+}
+
+// Loading specific
+.input-container {
+  .lds-ring {
+    position: absolute;
+    right: $item-padding-lr + 0rem;
+    top: $item-padding-tb + 0rem + .125rem;
+  }
+
+  .lds-ring.with-append {
+    right: $item-padding-lr + 0rem + 3.0625rem;
+  }
 }

@@ -44,8 +44,8 @@
 
 .select-btn, .select-list {
   outline: none;
-  border: 1px solid #e6e6e6;
-  border-radius: 4px;
+  border: .0625rem solid #e6e6e6;
+  border-radius: .25rem;
   background-color: #fff;
   color: $font-color;
   width: 100%;
@@ -100,7 +100,7 @@
   span {
     content: '';
     height: 1rem;
-    width: 1px;
+    width: .0625rem;
     background-color: #e6e6e6;
     margin-left: .5rem;
     margin-right: .5rem;

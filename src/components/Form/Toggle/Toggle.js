@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react';
+import React, { useState, memo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import './Toggle.scss';
@@ -20,25 +20,27 @@ export const useToggle = (props) => {
 
 export const Toggle = memo((props) => {
   const { toggled, toggle } = useToggle(props);
-
   const { type, className, toggleFor, disabled, onBlur } = props;
   
+  const checkboxRef = useRef(null);
+
   const handleToggle = () => {
     if (disabled) return;
+    checkboxRef.current.focus();
     toggle();
   }
 
   return (
     <React.Fragment>
       <input className={type} type="checkbox"
+             ref={checkboxRef}
              checked={toggled} 
              value={toggled}
              id={toggleFor}
              onBlur={onBlur}
              onChange={handleToggle}
              disabled={disabled}/>
-      <span className={className} 
-            tabIndex="-1"
+      <span className={className}
             onClick={handleToggle}></span>
     </React.Fragment>
   )

@@ -449,8 +449,8 @@ export const Select = memo((props) => {
 
   return (
     <div ref={menuRef}
-         className={ isMultiSelect ? `multi-select-container ${selected.length > 0 ? 'show-selected' : ''}`: `select-container`}>
-      <div className={`select-btn${ isOpen ? ' list-open' : '' }${ disabled ? ' list-disabled' : ''} ${className}`}
+         className={ isMultiSelect ? `multi-select-container ${className} ${selected.length > 0 ? 'show-selected' : ''}`: `select-container`}>
+      <div className={`select-btn${ isOpen ? ' list-open' : '' }${ disabled ? ' list-disabled' : ''}`}
            onKeyDown={handleKeyDown}
            onClick={openAndFocus}
            tabIndex="0"
@@ -502,6 +502,7 @@ Select.propTypes = {
 
 Select.defaultProps = {
   label: 'Select...',
+  className: '',
   isMultiSelect: false,
   isGrouped: false,
   required: false,

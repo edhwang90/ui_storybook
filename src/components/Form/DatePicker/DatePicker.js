@@ -194,5 +194,6 @@ DatePicker.propTypes = {
 DatePicker.defaultProps = {
   format: 'MM/DD/YYYY',
   placeholder: 'MM/DD/YYYY',
-  disabled: false
+  disabled: false,
+  className: '',
 }

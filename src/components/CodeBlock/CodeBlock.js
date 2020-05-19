@@ -1,9 +1,10 @@
 import React, { useEffect, memo } from 'react';
+import PropTypes from 'prop-types';
 import Prism from 'prismjs';
 
 import './CodeBlock.scss';
 
-export const CodeBlockUI = (props) => {
+export const CodeBlock = memo((props) => {
   const { children, language } = props;
 
   useEffect(() => {
@@ -17,6 +18,9 @@ export const CodeBlockUI = (props) => {
       </code>
     </pre>
   )
-}
+})
 
-export const CodeBlock = memo(CodeBlockUI);
+CodeBlock.propTypes = {
+  children: PropTypes.node.isRequired,
+  language: PropTypes.string.isRequired
+}

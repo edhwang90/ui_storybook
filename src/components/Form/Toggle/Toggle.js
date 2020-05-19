@@ -55,5 +55,6 @@ Toggle.propTypes = {
 
 Toggle.defaultProps = {
   value: false,
-  disabled: false
+  disabled: false,
+  className: ''
 }

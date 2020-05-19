@@ -194,7 +194,6 @@ export const useValidate = (props) => {
 
 useValidate.propTypes = {
   initialForm: PropTypes.object.isRequired,
-  onSubmit: PropTypes.func.isRequired,
   validateOnChange: PropTypes.bool
 }
 

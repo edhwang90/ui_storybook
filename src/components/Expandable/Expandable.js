@@ -67,10 +67,6 @@ Expandable.propTypes = {
   isExpanded: PropTypes.bool
 }
 
-Expandable.propTypes = {
-  children: PropTypes.node.isRequired,
-}
-
 Expandable.defaultProps = {
   className: '',
   isExpanded: false

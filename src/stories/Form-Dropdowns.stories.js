@@ -70,6 +70,7 @@ export const Selects = () => (
 </CodeBlock>
           </Expandable>
         </div>
+        
         <div className="form-group">
           <label className="form-label">Select Obj</label>
           <Select options={options2}
@@ -90,6 +91,30 @@ export const Selects = () => (
 <Select options={optionsObjArr}
         attr="name"
         label="Select Obj..."
+        onClick={fn}></Select>
+`}
+</CodeBlock>
+          </Expandable>
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">Select is Clerable</label>
+          <Select options={options}
+                  isClearable
+                  onClick={action('select')}></Select>
+        </div> 
+
+        <div className="form-group">
+          <Expandable className="view-code">
+            <span className="label-container">
+              <span>View code</span>
+              <span className="expandable-icon"></span>
+            </span>
+{/* White space bug */}
+<CodeBlock language="html">
+{`
+<Select options={options}
+        isClearable
         onClick={fn}></Select>
 `}
 </CodeBlock>
@@ -320,6 +345,36 @@ export const MultiSelects = () => (
 </CodeBlock>
           </Expandable>
         </div> 
+
+        <div className="form-group">
+          <label className="form-label">Multiselect is Clearable</label>
+          <Select options={options2}
+                  attr="name"
+                  isMultiSelect
+                  isClearable
+                  label="Select..."
+                  onClick={action('select')}></Select>
+        </div> 
+
+        <div className="form-group">
+          <Expandable className="view-code">
+            <span className="label-container">
+              <span>View code</span>
+              <span className="expandable-icon"></span>
+            </span>
+{/* White space bug */}
+<CodeBlock language="html">
+{`
+<Select options={options2}
+        attr="name"
+        isMultiSelect
+        isClearable
+        label="Select..."
+        onClick={fn}></Select>
+`}
+</CodeBlock>
+          </Expandable>
+        </div>
 
         <div className="form-group">
           <label className="form-label">Disabled Multiselect</label>

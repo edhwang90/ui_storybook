@@ -170,6 +170,8 @@ export const Select = memo((props) => {
     let indexOfOption;
     let allOptions = [];
 
+    if(!isOpen) return;
+
     if (!isGrouped) {
       allOptions = [...filteredList()];
     }

@@ -82,10 +82,8 @@ export const useValidate = (props) => {
             break;
           case 'type': 
             const checkedType = checkType(validateObj.value, rule.value);
-            let message;
             if (checkedType.error) {
               errorsArr.push(checkedType.message)
-              message = checkedType.message;
             }
             break;
           case 'minlength':

@@ -236,10 +236,10 @@ export const ExampleForm = (props) => {
               <Select //options={nestedArray}
                       options={locationsArray}
                       attr="label"
-                      value={form.locations.value}
                       isGrouped
                       isMultiSelect
                       isClearable
+                      value={form.locations.value}
                       //selectRow={selectRow}
                       //groupedRow={groupedRow}
                       className={form.locations.errors?.length > 0 ? 'form-error' : ''}

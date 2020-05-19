@@ -133,7 +133,7 @@ export const Select = memo((props) => {
   const { disabled, isMultiSelect, isGrouped, isClearable, onBlur,
           className, label, selectRow, groupedRow } = props;
 
-  const [indexOfLast, setIndexOfLast] = useState(null);
+  const [lastFocused, setLastFocused] = useState(null);
   const menuRef = useRef(null);
   const listRef = useRef(null); // for Accessible traversing
   const selectedRef = useRef(null); // for Accessible traversing
@@ -170,8 +170,6 @@ export const Select = memo((props) => {
     let indexOfOption;
     let allOptions = [];
 
-    if(!isOpen) return;
-
     if (!isGrouped) {
       allOptions = [...filteredList()];
     }
@@ -186,7 +184,7 @@ export const Select = memo((props) => {
     indexOfOption = allOptions.findIndex(find => getOptionDisplay(find).toLowerCase().startsWith(e.key.toLowerCase()));
     
     // check for additional options and loop to next
-    if (indexOfOption === indexOfLast) {
+    if (indexOfOption === lastFocused?.index && e.key === lastFocused?.key) {
       indexOfOption = allOptions.findIndex((find, i) => {
         if (i !== indexOfOption && (getOptionDisplay(find).toLowerCase().startsWith(e.key.toLowerCase()))) {
           return find
@@ -195,9 +193,19 @@ export const Select = memo((props) => {
       })
     }
 
-    // update
-    setIndexOfLast(indexOfOption);
-    if (indexOfOption >= 0) listRef.current.querySelectorAll('.select-option')[indexOfOption].focus();
+    // if single select, auto select
+    if (indexOfOption >= 0 && !isMultiSelect) {
+      setLastFocused({ index: indexOfOption, key: e.key });
+      clickSelect(allOptions[indexOfOption]);
+
+      // if open focus
+      if (listRef.current) listRef.current.querySelectorAll('.select-option')[indexOfOption].focus();
+    }
+    // if multiselect and list is open
+    else if (indexOfOption >= 0 && listRef.current) {
+      setLastFocused({ index: indexOfOption, key: e.key });
+      listRef.current.querySelectorAll('.select-option')[indexOfOption].focus();
+    }
   }
 
   const onOutsideClick = e => {

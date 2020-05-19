@@ -239,6 +239,7 @@ export const ExampleForm = (props) => {
                       value={form.locations.value}
                       isGrouped
                       isMultiSelect
+                      isClearable
                       //selectRow={selectRow}
                       //groupedRow={groupedRow}
                       className={form.locations.errors?.length > 0 ? 'form-error' : ''}

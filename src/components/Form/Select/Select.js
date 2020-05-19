@@ -170,6 +170,9 @@ export const Select = memo((props) => {
     let indexOfOption;
     let allOptions = [];
 
+    if (disabled) return;
+    if (isMultiSelect && !listRef.current) return;
+
     if (!isGrouped) {
       allOptions = [...filteredList()];
     }
@@ -202,7 +205,7 @@ export const Select = memo((props) => {
       if (listRef.current) listRef.current.querySelectorAll('.select-option')[indexOfOption].focus();
     }
     // if multiselect and list is open
-    else if (indexOfOption >= 0 && listRef.current) {
+    else if (indexOfOption >= 0) {
       setLastFocused({ index: indexOfOption, key: e.key });
       listRef.current.querySelectorAll('.select-option')[indexOfOption].focus();
     }

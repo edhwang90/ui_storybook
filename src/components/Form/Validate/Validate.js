@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const checkMinlength = (value, ruleValue) => {

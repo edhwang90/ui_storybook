@@ -37,11 +37,6 @@
   }
 }
 
-.select-btn:focus {
-  border-color: #80bdff;
-  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
-}
-
 .select-btn, .select-list {
   outline: none;
   border: .0625rem solid #e6e6e6;
@@ -66,6 +61,11 @@
     border-color: darken(#e6e6e6, 5%);
   }
 
+  &:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+  }
+
   &:disabled {
     cursor: not-allowed;
     background-color: #f7f7f7;
@@ -76,35 +76,6 @@
 .select-display {
   display: flex;
   flex-wrap: wrap;
-}
-
-.select-actions {
-  display: flex;
-  flex-shrink: 0;
-  height: 1rem;
-  align-items: center;
-  margin-left: $item-padding-lr + 0rem;
-
-  button, div {
-    display: flex;
-  }
-
-  button {
-    padding: 0;
-    background-color: transparent;
-    outline: none;
-    border: 0;
-    cursor: pointer;
-  }
-
-  span {
-    content: '';
-    height: 1rem;
-    width: .0625rem;
-    background-color: #e6e6e6;
-    margin-left: .5rem;
-    margin-right: .5rem;
-  }
 }
 
 .select-list {
@@ -143,6 +114,36 @@
 
   .empty {
     cursor: initial;
+  }
+}
+
+// multi select specific
+.select-actions {
+  display: flex;
+  flex-shrink: 0;
+  height: 1rem;
+  align-items: center;
+  margin-left: $item-padding-lr + 0rem;
+
+  button, div {
+    display: flex;
+  }
+
+  button {
+    padding: 0;
+    background-color: transparent;
+    outline: none;
+    border: 0;
+    cursor: pointer;
+  }
+
+  span {
+    content: '';
+    height: 1rem;
+    width: .0625rem;
+    background-color: #e6e6e6;
+    margin-left: .5rem;
+    margin-right: .5rem;
   }
 }
 

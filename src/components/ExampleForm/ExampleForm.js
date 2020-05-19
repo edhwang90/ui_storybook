@@ -260,8 +260,7 @@ export const ExampleForm = (props) => {
               <DatePicker onClick={e => handleChange('startDate', e)} 
                           onBlur={e => shouldValidateBlur ? validate('startDate') : ''}
                           className={form.startDate.errors?.length > 0 ? 'form-error' : ''}
-                          format="MM/DD/YYYY" 
-                          disabled
+                          format="MM/DD/YYYY"
                           placeholder="MM/DD/YYYY"></DatePicker>
               { 
                 form.startDate.errors &&

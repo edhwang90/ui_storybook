@@ -37,7 +37,7 @@ const options3 = [
 ];
 
 const selectRow = (data) => (
-  <li><span className="tag" style={{backgroundColor: data.color}}></span>{data.name}</li>
+  <React.Fragment><span className="tag" style={{backgroundColor: data.color}}></span>{data.name}</React.Fragment>
 )
 
 const groupedRow = (data) => (
@@ -190,11 +190,16 @@ export const Selects = () => (
             </span>
             <div>
 {/* White space bug */}
-<CodeBlock language="js">
+<CodeBlock language="html">
 {
 `
 const selectRow = (data) => (
-  <li><span className="tag" style={{backgroundColor: data.color}}></span>{data.name}</li>
+  <React.Fragment>
+    <span className="tag" 
+          style={{backgroundColor: data.color}}>
+    </span>
+    {data.name}
+  </React.Fragment>
 )
 `
 }
@@ -228,11 +233,14 @@ const selectRow = (data) => (
             </span>
             <div>
 {/* White space bug */}
-<CodeBlock language="js">
+<CodeBlock language="html">
 {
 `
 const groupedRow = (data) => (
-  <label className="different-group">{data.label}<span>{data.options.length}</span></label>
+  <label className="different-group">
+    {data.label}
+    <span>{data.options.length}</span>
+  </label>
 )
 `
 }
@@ -414,7 +422,7 @@ export const MultiSelects = () => (
                   attr="name"
                   selectRow={selectRow}
                   isMultiSelect
-                  value={ [{name: 'hello', id: 1}]}
+                  value={ [{name: 'hello', id: 1, color: '#ff4444'}]}
                   label="Select..."
                   onClick={action('select')}></Select>
         </div> 
@@ -427,10 +435,15 @@ export const MultiSelects = () => (
             </span>
             <div>
 {/* White space bug */}
-<CodeBlock language="js">
+<CodeBlock language="html">
 {`
 const selectRow = (data) => (
-  <li><span className="tag" style={{backgroundColor: data.color}}></span>{data.name}</li>
+  <React.Fragment>
+    <span className="tag" 
+          style={{backgroundColor: data.color}}>
+    </span>
+    {data.name}
+  </React.Fragment>
 )
 `}
 </CodeBlock>
@@ -440,7 +453,7 @@ const selectRow = (data) => (
         attr="name"
         selectRow={selectRow}
         isMultiSelect
-        value={[{name: 'hello', id: 1}]}
+        value={[{name: 'hello', id: 1, color: '#ff4444'}]}
         label="Select..."
         onClick={fn}></Select>
 `}
@@ -498,10 +511,13 @@ const selectRow = (data) => (
             </span>
             <div>
 {/* White space bug */}
-<CodeBlock language="js">
+<CodeBlock language="html">
 {`
 const groupedRow = (data) => (
-  <label className="different-group">{data.label} <span>{data.options.length}</span></label>
+  <label className="different-group">
+    {data.label} 
+    <span>{data.options.length}</span>
+  </label>
 )
 `}
 </CodeBlock>

@@ -97,9 +97,3 @@
 .expandable-content.collapsed {
   max-height: 0;
 }
-
-@media only screen and (max-width: 520px) {
-  .expandable-content.expanded {
-    max-height: 3000px;
-  } 
-}

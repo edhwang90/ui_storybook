@@ -16,7 +16,7 @@ pre[class*="language-"] {
   text-align: left;
   white-space: pre;
   word-spacing: normal;
-  word-break: normal;
+  word-break: break-all;
   word-wrap: normal;
   line-height: 1.5;
 
@@ -51,7 +51,6 @@ pre[class*="language-"]  {
    padding: $container-padding + 0rem;
    width: 100%;
    border-left: 10px solid #358ccb;
-   box-shadow: -1px 0px 0px 0px #358ccb;
    background-color: #fdfdfd;
    background-image: linear-gradient(transparent 50%, rgba(69, 142, 209, 0.04) 50%);
    background-size: 3em 3em;
@@ -87,36 +86,6 @@ pre[class*="language-"]  {
    display: inline;
    white-space: normal;
  }
- 
-//  pre[class*="language-"]:before,
-//  pre[class*="language-"]:after {
-//    content: '';
-//    z-index: -2;
-//    display: block;
-//    position: absolute;
-//    bottom: 0.75em;
-//    left: 0.18em;
-//    width: 40%;
-//    height: 20%;
-//    max-height: 13em;
-//    box-shadow: 0px 13px 8px #979797;
-//    -webkit-transform: rotate(-2deg);
-//    -moz-transform: rotate(-2deg);
-//    -ms-transform: rotate(-2deg);
-//    -o-transform: rotate(-2deg);
-//    transform: rotate(-2deg);
-//  }
- 
-//  :not(pre) > code[class*="language-"]:after,
-//  pre[class*="language-"]:after {
-//    right: 0.75em;
-//    left: auto;
-//    -webkit-transform: rotate(2deg);
-//    -moz-transform: rotate(2deg);
-//    -ms-transform: rotate(2deg);
-//    -o-transform: rotate(2deg);
-//    transform: rotate(2deg);
-//  }
  
  .token.comment,
  .token.block-comment,

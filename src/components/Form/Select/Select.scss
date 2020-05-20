@@ -170,7 +170,7 @@
     }
   }
   
-  .selected span {
+  .selected > span {
     display: flex;
     align-items: center;
     padding: $item-padding-tb/2 + 0rem $item-padding-lr/2 + 0rem;

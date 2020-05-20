@@ -300,7 +300,13 @@ export const Select = memo((props) => {
   const selectedTagUI = (index, selection) => (
     <div key={index}
          className="selected">
-      <span className={selection.isFixed ? 'fixed' : ''}>{getOptionDisplay(selection)}</span>
+      <span className={`selected-tag-label ${selection.isFixed ? 'fixed' : ''}`}>
+        { !selectRow && getOptionDisplay(selection) }
+        {
+          selectRow &&
+          selectRow(selection)
+        }
+      </span>
       {
         !selection.isFixed && !disabled &&
         <button className="btn remove-selected"
@@ -316,11 +322,20 @@ export const Select = memo((props) => {
     </div>
   )
 
+  const selectedUI = (option) => {
+    if (!selectRow) {
+      return getOptionDisplay(option);
+    }
+    else {
+      return selectRow(option);
+    }
+  }
+
   // Display purposes: Multiselect vs Select
   const labelUI = () => {
     if (!isMultiSelect) {
       return selected 
-        ? getOptionDisplay(selected)
+        ? selectedUI(selected)
         : label
     }
     else {
@@ -368,31 +383,21 @@ export const Select = memo((props) => {
   )
 
   const rowUI = (option, index) => {
-    if (!selectRow) {
-      return (
-        <li key={index} 
-            tabIndex="0"
-            className="select-option available"
-            onMouseEnter={e => resetFocus(e)}
-            onKeyDown={e => handleKeyDown(e, option)} 
-            onClick={e => handleClick(option)}
-            aria-label={`Select option ${getOptionDisplay(option)}`}>
-          {getOptionDisplay(option)}
-        </li>
-      )
-    }
-    else {
-      const customRow = selectRow(option);
-      return React.cloneElement(customRow, {
-        tabIndex: "0",
-        key: index,
-        className: `select-option available ${customRow.props.className}`,
-        onKeyDown: e => handleKeyDown(e, option),
-        onClick: e => handleClick(option),
-        onMouseEnter: e => resetFocus(e),
-        'aria-label': `Select option ${getOptionDisplay(option)}`
-      })
-    }
+    return (
+      <li key={index} 
+          tabIndex="0"
+          className="select-option available"
+          onMouseEnter={e => resetFocus(e)}
+          onKeyDown={e => handleKeyDown(e, option)} 
+          onClick={e => handleClick(option)}
+          aria-label={`Select option ${getOptionDisplay(option)}`}>
+        { !selectRow && getOptionDisplay(option) }
+        { 
+          selectRow && 
+          selectRow(option)
+        }
+      </li>
+    )
   }
 
   const groupRowUI = (group, index) => {
@@ -468,7 +473,7 @@ export const Select = memo((props) => {
            onClick={openAndFocus}
            tabIndex="0"
            aria-label="Toggle select list">
-        <div>
+        <div className="select-label">
           {labelUI()}
           {/* <input className="select-search" onKeyDown={accessKeyDown} onChange={onSearch} type="text" placeholder="Select..."></input> */}
         </div>

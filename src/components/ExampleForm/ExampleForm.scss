@@ -23,7 +23,13 @@
   }
 }
 
-.select-list {
+.multi-select-container,
+.select-container {
+  .select-label {
+    display: flex;
+    align-items: center;
+  }
+
   .tag {
     margin-right: 1rem;
     border: 2px solid #f7f7f7;
@@ -31,5 +37,6 @@
     width: 1rem;
     height: 1rem;
     content: '';
+    display: inline-block;
   }
 }

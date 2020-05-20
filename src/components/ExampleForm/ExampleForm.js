@@ -135,7 +135,7 @@ export const ExampleForm = (props) => {
   }
 
   const selectRow = (data) => (
-    <li><span className="tag" style={{backgroundColor: data.color}}></span>{data.name}</li>
+    <React.Fragment><span className="tag" style={{backgroundColor: data.color}}></span>{data.name}</React.Fragment>
   )
 
   const groupedRow = (data) => (
@@ -220,6 +220,7 @@ export const ExampleForm = (props) => {
                       className={form.role.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
                       selectRow={selectRow}
+                      //isMultiSelect
                       onBlur={e => shouldValidateBlur ? validate('role') : ''}
                       onClick={e => handleChange('role', e)}>
                </Select>

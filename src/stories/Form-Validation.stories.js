@@ -1,11 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import { action } from '@storybook/addon-actions';
+import React from 'react';
 import { withInfo } from '@storybook/addon-info';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
 import { ExampleForm } from '../components/ExampleForm';
-import { Toggle, Select, DatePicker, useValidate } from '../components/Form';
 import { CodeBlock } from '../components/CodeBlock';
 
 import './stories.scss';
@@ -74,6 +70,8 @@ const {
   handleChange,
   // available for explicit call for situations such as onBlur handling
   validate,
+  // available for updating form after submit/backend validation
+  updateForm,
   submit,
 } = useValidate({
   // initial dependencies

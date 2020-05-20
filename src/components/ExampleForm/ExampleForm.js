@@ -9,8 +9,8 @@ import './ExampleForm.scss';
 
 export const ExampleForm = (props) => {
   const { shouldValidateBlur, shouldValidateChange } = props;
-  const [loading, setLoading] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
+ 
   const industryArray = [
     'Accounting & Legal',
     'Banking & Financial Services',
@@ -112,9 +112,10 @@ export const ExampleForm = (props) => {
     // output for use on form component
     form,
     handleChange,
-    isLoading,
     // available for explicit call
     validate,
+    // available for updating form post submit
+    updateForm,
     submit,
   } = useValidate({
     // initial dependencies
@@ -124,13 +125,14 @@ export const ExampleForm = (props) => {
   })
 
   const handleSubmit = () => {
-    setLoading(true);
+    setIsLoading(true);
     submit().then(res => {
-      console.log('1', res);
       setTimeout(() => {
-        setLoading(false);
-      }, 5000)
-     
+        console.log('1', res);
+        setIsLoading(false);
+        // update form if backend has errors
+        updateForm({...res, email: {...res['email'], errors: [...res['email'].errors, 'Another error from backend']}})
+      }, 2000)
     })
   }
 
@@ -318,10 +320,10 @@ export const ExampleForm = (props) => {
                     type="button" 
                     className="btn is-primary">
                       {
-                        !form.isLoading && "Submit"
+                        !isLoading && "Submit"
                       }
                       {
-                        form.isLoading &&
+                        isLoading &&
                         <LoadingIcon></LoadingIcon>
                       }
             </button>

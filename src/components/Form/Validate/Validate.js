@@ -170,6 +170,10 @@ export const useValidate = (props) => {
     return validated;
   };
 
+  const updateForm = (updatedForm) => {
+    setForm(updatedForm);
+  }
+
   const submit = async () => {
     let newForm = form;
     setForm({...newForm, isLoading: true});
@@ -190,7 +194,7 @@ export const useValidate = (props) => {
     form,
     handleChange,
     validate,
-    setCustomError,
+    updateForm,
     submit
   }
 }

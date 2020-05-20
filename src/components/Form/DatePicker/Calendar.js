@@ -68,14 +68,15 @@ export const Calendar = (props) => {
   const [dateObj, setDateObj] = useState(selectedDate ? moment(selectedDate, format) : moment());
   const [showYears, setShowYears] = useState(false);
 
-  const monthRef = useRef(null);
+  const focusRef = useRef(null);
 
   useEffect(() => {
     setShowYears(false);
-    
-    if (monthRef.current.querySelector('.calendar-day.selected')) monthRef.current.querySelector('.calendar-day.selected').focus();
-    else monthRef.current.querySelector('.calendar-day').focus();
-  }, [dateObj])
+  }, [dateObj, setShowYears])
+
+  useEffect(() => {
+    if (focusRef.current) focusRef.current.focus();
+  }, [showYears, focusRef.current])
 
   const firstDay = () => {
     return moment(dateObj, format).startOf('month').format('d');
@@ -142,6 +143,7 @@ export const Calendar = (props) => {
 
       days.push(<td tabIndex={ newDate.isSame(currentDate, 'day') ? "0" : "-1" }
                     key={`tdd${j}`} 
+                    ref={j === 1 ? focusRef : null}
                     onMouseEnter={e => resetFocus(e) }
                     onKeyDown={(e) => onMonthKeyDown(e, newDate.format(format))}
                     onClick={(e) => onClick(newDate.format(format))} 
@@ -203,9 +205,7 @@ export const Calendar = (props) => {
       {
         !showYears &&
         <React.Fragment>
-          <table className="month-table"
-                 aria-label={`Month of ${moment(dateObj).format('MMMM')}`}
-                 ref={monthRef}>
+          <table className="month-table">
             <thead>
               <tr>{ displayHeader() }</tr>
             </thead>

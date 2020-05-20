@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import { traverseNodes, traverseTable } from '../../Utils';
+import { traverseNodes } from '../../Utils';
 
 const YearList = (props) => {
   const { currentYear, toYear, toggleYear } = props;
@@ -72,6 +72,7 @@ export const Calendar = (props) => {
 
   useEffect(() => {
     setShowYears(false);
+    monthRef.current.querySelector('.calendar-day').focus();
   }, [dateObj])
 
   const firstDay = () => {
@@ -128,7 +129,7 @@ export const Calendar = (props) => {
     const currentYear = moment(dateObj, format).year();
 
     for (let i = 0; i<firstDay(dateObj); i++) {
-      days.push(<td key={`tde${i}`} className="calendar-day empty">{''}</td>)
+      days.push(<td key={`tde${i}`} className="empty">{''}</td>)
     }
 
     for (let j = 1; j <= daysInMonth(dateObj); j++) {
@@ -137,7 +138,8 @@ export const Calendar = (props) => {
       const highlightToday = newDate.isSame(currentDate, 'day') ? 'today' : '';
       const highlightSelect = newDate.isSame(selectedDate, 'day') ? 'selected' : '';
 
-      days.push(<td tabIndex="-1" key={`tdd${j}`} 
+      days.push(<td tabIndex={ newDate.isSame(currentDate, 'day') ? "0" : "-1" }
+                    key={`tdd${j}`} 
                     onMouseEnter={e => resetFocus(e) }
                     onKeyDown={(e) => onMonthKeyDown(e, newDate.format(format))}
                     onClick={(e) => onClick(newDate.format(format))} 
@@ -171,8 +173,7 @@ export const Calendar = (props) => {
   return (
     <React.Fragment>
       <div className="calendar-top">
-        <button tabIndex="0"
-                onClick={e => toMonth(e, 'subtract')} 
+        <button onClick={e => toMonth(e, 'subtract')} 
                 className="btn is-clear prev-month" 
                 type="button"
                 aria-label={`To previous month (${moment(dateObj).subtract(1, 'M').format('MMMM')})`}>
@@ -180,14 +181,12 @@ export const Calendar = (props) => {
         </button>
         <div>
           <label>{moment(dateObj).format('MMMM')}</label>
-          <button tabIndex="0"
-                  className="btn is-clear"
+          <button className="btn is-clear"
                   onClick={toggleYear} 
                   type="button"
                   aria-label="Select year">{moment(dateObj).format('YYYY')}</button>
         </div>
-        <button tabIndex="0"
-                onClick={e => toMonth(e, 'add')} 
+        <button onClick={e => toMonth(e, 'add')} 
                 className="btn is-clear next-month" 
                 type="button"
                 aria-label={`To next month (${moment(dateObj).add(1, 'M').format('MMMM')})`}>
@@ -204,9 +203,7 @@ export const Calendar = (props) => {
         <React.Fragment>
           <table className="month-table"
                  aria-label={`Month of ${moment(dateObj).format('MMMM')}`}
-                 ref={monthRef}
-                 tabIndex="0"
-                 onKeyDown={e => traverseTable(e, monthRef)}>
+                 ref={monthRef}>
             <thead>
               <tr>{ displayHeader() }</tr>
             </thead>

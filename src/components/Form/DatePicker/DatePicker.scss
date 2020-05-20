@@ -116,9 +116,9 @@
     border-radius: 4px;
     cursor: pointer;
 
-    &:hover, 
+    &.calendar-day:hover, 
     &.selected,
-    &:focus {
+    &.calendar-day:focus {
       background-color: #e6e6e6;
       outline: none;
     }

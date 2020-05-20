@@ -2,6 +2,7 @@ import React, { useState, useRef, memo, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Calendar } from './Calendar';
 import moment from 'moment';
+import { traverseTable } from '../../Utils';
 
 import './DatePicker.scss';
 
@@ -94,6 +95,7 @@ export const DatePicker = memo((props) => {
   const { className, placeholder, format, disabled, onBlur } = props;
 
   const datepickerRef = useRef(null);
+  const calendarRef = useRef(null);
 
   const onOutsideClick = e => {
     if (datepickerRef.current.contains(e.target)) {
@@ -140,7 +142,9 @@ export const DatePicker = memo((props) => {
 
   const calendar = () => (
     isOpen && (
-      <div className="calendar-container">
+      <div className="calendar-container"
+           ref={calendarRef}
+           onKeyDown={e => traverseTable(e, calendarRef)}>
         {
           <Calendar selectedDate={selectedDate}
                     format={format}

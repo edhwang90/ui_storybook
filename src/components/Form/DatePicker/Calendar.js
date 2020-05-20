@@ -72,7 +72,9 @@ export const Calendar = (props) => {
 
   useEffect(() => {
     setShowYears(false);
-    monthRef.current.querySelector('.calendar-day').focus();
+    
+    if (monthRef.current.querySelector('.calendar-day.selected')) monthRef.current.querySelector('.calendar-day.selected').focus();
+    else monthRef.current.querySelector('.calendar-day').focus();
   }, [dateObj])
 
   const firstDay = () => {

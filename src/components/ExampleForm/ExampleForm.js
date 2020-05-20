@@ -151,7 +151,7 @@ export const ExampleForm = (props) => {
               <label className="form-label">Email<span className="required">*</span></label>
               <div className="input-container">
                 {
-                  form.email.isLoading &&
+                  (form.email.isLoading || form.isLoading) &&
                   <LoadingIcon className="with-append"></LoadingIcon>
                 }
                 <input onChange={e => handleChange('email', e.target.value)}
@@ -164,11 +164,11 @@ export const ExampleForm = (props) => {
                   <FontAwesomeIcon fixedWidth icon={faCoffee} />
                 </div>
               </div>
-              { form.email.isLoading &&
+              { (form.email.isLoading || form.isLoading) &&
                 <span className="loading-message">Checking custom validation<span>.</span><span>.</span><span>.</span></span>
               }
 
-              { !form.email.isLoading &&
+              { (!form.email.isLoading && !form.isLoading) &&
                 form.email.errors &&
                 form.email.errors.map((err, index) => (
                   <span key={index} className="error-message">{err}</span>
@@ -316,7 +316,15 @@ export const ExampleForm = (props) => {
           <div className="col">
             <button onClick={handleSubmit} 
                     type="button" 
-                    className={`btn is-primary ${loading ? 'loader' : ''}`}>Submit</button>
+                    className="btn is-primary">
+                      {
+                        !form.isLoading && "Submit"
+                      }
+                      {
+                        form.isLoading &&
+                        <LoadingIcon></LoadingIcon>
+                      }
+            </button>
           </div>
         </div>
       </form>

@@ -40,3 +40,11 @@
     display: inline-block;
   }
 }
+
+.btn.is-primary {
+  min-width: 6.25rem;
+
+  .lds-ring div {
+    border-color: #fff transparent transparent transparent;
+  }
+}

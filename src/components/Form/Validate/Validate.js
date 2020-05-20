@@ -169,6 +169,7 @@ export const useValidate = (props) => {
 
   const submit = async () => {
     let newForm = form;
+    setForm({...newForm, isLoading: true});
 
     let i = 0;
     let fields = Object.keys(form);
@@ -177,6 +178,7 @@ export const useValidate = (props) => {
       newForm = validated.errors?.length > 0 ? {...newForm, [fields[i]]: validated, error: true} : {...newForm, [fields[i]]: validated};
       i++;
     }
+    setForm({...newForm, isLoading: false});
     setForm(newForm);
     return newForm;
   }

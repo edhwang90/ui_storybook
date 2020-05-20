@@ -155,10 +155,10 @@ export const ExampleForm = (props) => {
                   <LoadingIcon className="with-append"></LoadingIcon>
                 }
                 <input onChange={e => handleChange('email', e.target.value)}
-                      className={`form-input ${form.email.errors?.length > 0 ? 'form-error' : ''}`}
-                      onBlur={e => shouldValidateBlur ? validate('email') : ''}
-                      type="email" 
-                      placeholder="Email">
+                       className={`form-input ${form.email.errors?.length > 0 ? 'form-error' : ''}`}
+                       onBlur={e => shouldValidateBlur ? validate('email') : ''}
+                       type="email" 
+                       placeholder="Email">
                 </input> 
                 <div className="form-input-append">
                   <FontAwesomeIcon fixedWidth icon={faCoffee} />

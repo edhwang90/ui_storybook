@@ -65,7 +65,7 @@ export const useValidate = (props) => {
     return changeField[field];
   }
 
-  const validateField = (fieldObj) => {
+  const validateField = (fieldObj, isOnChange) => {
     return new Promise((resolve, reject) => {
   
       let validateObj = fieldObj;
@@ -114,6 +114,9 @@ export const useValidate = (props) => {
       if (!res.customValidation) {
         return res;
       }
+      else if ((validateOnChange || res.validateOnChange) && isOnChange) {
+        return res;
+      }
       else if (res.errors.length <= 0) {
         // temporary hack for concurrency
         const lockDom = (e) => e.preventDefault();
@@ -136,7 +139,7 @@ export const useValidate = (props) => {
     let validated;
 
     if (fieldObj.validateOnChange || validateOnChange) {
-      validateField(fieldObj).then(res => {
+      validateField(fieldObj, true).then(res => {
         validated = res;
         newForm = validated.errors?.length > 0 ? {...form, [field]: validated, error: true} : {...form, [field]: validated};
         setForm(newForm);

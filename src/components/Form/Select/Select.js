@@ -236,8 +236,8 @@ export const Select = memo((props) => {
       if (onBlur) onBlur();
       menuRef.current.querySelector('.select-btn').blur();
     }
-    // arrow down: open and focus on list
-    else if (e.keyCode === 40) {
+    // arrow down || space from button: open and focus on list
+    else if (e.keyCode === 40 || (e.keyCode === 32 && e.target.classList.contains('select-btn'))) {
       e.preventDefault();
       openAndFocus(e);
       if (listRef.current) listRef.current.querySelector('.select-option').focus();
@@ -253,7 +253,7 @@ export const Select = memo((props) => {
       const toIndex = displayedOptions.length - 1 < 0 ? 0 : displayedOptions.length -1;
       if (displayedOptions.length > 0) displayedOptions[toIndex].focus();
     }
-    // hand click
+    // enter || space: hand click
     else if ((e.keyCode === 13 || e.keyCode === 32) && option) {
       e.preventDefault();
       handleClick(option);
@@ -342,8 +342,9 @@ export const Select = memo((props) => {
       return selected.length > 0
       ? 
         (
-          <div className="select-display" ref={selectedRef}
-                onKeyDown={e => traverseSelect(e, selectedRef, 'button', keydownToClear, true)}>
+          <div className="select-display" 
+               ref={selectedRef}
+               onKeyDown={e => traverseSelect(e, selectedRef, 'button', keydownToClear, true)}>
             { 
               selected.map((selection, k) => (
                 selectedTagUI(k, selection)
@@ -379,7 +380,12 @@ export const Select = memo((props) => {
 
   // Display purposes: empty row
   const emptySelectUI = () => (
-    <li tabIndex="0" onKeyDown={handleKeyDown} className="select-option empty">No available options.</li>
+    <li tabIndex="0" 
+        onKeyDown={handleKeyDown}
+        aria-label="No available options"
+        className="select-option empty">
+      No available options.
+    </li>
   )
 
   const rowUI = (option, index) => {
@@ -390,6 +396,7 @@ export const Select = memo((props) => {
           onMouseEnter={e => resetFocus(e)}
           onKeyDown={e => handleKeyDown(e, option)} 
           onClick={e => handleClick(option)}
+          role="button"
           aria-label={`Select option ${getOptionDisplay(option)}`}>
         { !selectRow && getOptionDisplay(option) }
         { 
@@ -416,7 +423,7 @@ export const Select = memo((props) => {
   const listUI = () => {
     if (isOpen && !isGrouped) {
       return (
-        <ul className="select-list" 
+        <ul className="select-list"
             ref={listRef} 
             onKeyDown={e => traverseSelect(e)}>
           {   
@@ -472,6 +479,10 @@ export const Select = memo((props) => {
            onKeyDown={handleKeyDown}
            onClick={openAndFocus}
            tabIndex="0"
+           role="button"
+           data-toggle="dropdown"
+           aria-haspopup="true"
+           aria-expanded={isOpen}
            aria-label="Toggle select list">
         <div className="select-label">
           {labelUI()}

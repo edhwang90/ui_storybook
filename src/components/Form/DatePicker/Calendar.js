@@ -132,7 +132,7 @@ export const Calendar = (props) => {
     const currentYear = moment(dateObj, format).year();
 
     for (let i = 0; i<firstDay(dateObj); i++) {
-      days.push(<td key={`tde${i}`} className="empty">{''}</td>)
+      days.push(<td aria-hidden="true" key={`tde${i}`} className="empty">{''}</td>)
     }
 
     for (let j = 1; j <= daysInMonth(dateObj); j++) {
@@ -147,9 +147,11 @@ export const Calendar = (props) => {
                     onMouseEnter={e => resetFocus(e) }
                     onKeyDown={(e) => onMonthKeyDown(e, newDate.format(format))}
                     onClick={(e) => onClick(newDate.format(format))} 
-                    className={`calendar-day ${highlightToday} ${highlightSelect}`}
-                    aria-label={`Select the date: ${moment(dateObj).set('date', j).format('MMMM DD YYYY')}`}>
-                    {j}
+                    className={`calendar-day ${highlightToday} ${highlightSelect}`}>
+                    <span role="button"
+                          aria-label={`Select the date: ${moment(dateObj).set('date', j).format('MMMM DD YYYY')}`}>
+                      {j}
+                    </span>
                 </td>)
     }
 

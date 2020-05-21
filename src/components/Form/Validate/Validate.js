@@ -77,7 +77,7 @@ export const useValidate = (props) => {
         switch (rule.type) {
           case 'required':
             if (!validateObj.value || validateObj.value.length <= 0) {
-              errorsArr.push('This field is required');
+              errorsArr.push('This field is required.');
             }
             break;
           case 'type': 

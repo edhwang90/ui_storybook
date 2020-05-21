@@ -11,6 +11,8 @@ export const ExampleForm = (props) => {
   const { shouldValidateBlur, shouldValidateChange } = props;
   const [isLoading, setIsLoading] = useState(false);
  
+  const [formErrors, setFormErrors] = useState([]);
+
   const industryArray = [
     'Accounting & Legal',
     'Banking & Financial Services',
@@ -52,7 +54,7 @@ export const ExampleForm = (props) => {
   const customValidate = (formField) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve('Custom validation rule');
+        resolve('Sample custom validation error.');
       }, 2000)
    })
     // for testing, random text set
@@ -130,8 +132,9 @@ export const ExampleForm = (props) => {
       setTimeout(() => {
         console.log('1', res);
         setIsLoading(false);
+        setFormErrors([...formErrors, 'There are errors in submitted form.']);
         // update form if backend has errors
-        updateForm({...res, email: {...res['email'], errors: [...res['email'].errors, 'Another error from backend']}})
+        updateForm({...res, email: {...res['email'], errors: [...res['email'].errors, 'Sample error from backend.']}})
       }, 2000)
     })
   }
@@ -329,6 +332,14 @@ export const ExampleForm = (props) => {
             </button>
           </div>
         </div>
+        <div className="row">
+                { 
+                  formErrors &&
+                  formErrors.map((err, index) => (
+                    <span key={index} className="error-message">{err}</span>
+                  ))
+                }
+              </div>
       </form>
     </div>
   );

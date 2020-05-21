@@ -98,7 +98,8 @@ export const DatePicker = memo((props) => {
   const calendarRef = useRef(null);
 
   const onOutsideClick = e => {
-    if (datepickerRef.current.contains(e.target)) {
+    const path = e.path || e.composedPath();
+    if (path.indexOf(datepickerRef.current) >= 0) {
       return;
     }
 

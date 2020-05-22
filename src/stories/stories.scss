@@ -71,7 +71,8 @@
       }
     }
 
-    .expandable-lbl-toggle:hover {
+    .expandable-lbl-toggle:hover,
+    .expandable-lbl-toggle:focus {
       text-decoration: underline;
     }
 

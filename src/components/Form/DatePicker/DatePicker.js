@@ -122,7 +122,6 @@ export const DatePicker = memo((props) => {
     }
     // arrow down: open
     else if (e.keyCode === 40 && e.target.classList.contains('form-input')) {
-      console.log(e.target);
       toggle(true);
       document.addEventListener('click', onOutsideClick);
     }

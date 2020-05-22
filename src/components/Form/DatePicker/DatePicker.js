@@ -85,7 +85,6 @@ export const DatePicker = memo((props) => {
   const { selectedDate, 
           displayDate,
           isOpen,
-          toggleCalendar,
           openCalendar,
           closeCalendar,
           clearDate,
@@ -116,12 +115,8 @@ export const DatePicker = memo((props) => {
 
   // Accessibility: key downs: escape (close), enter/space (open)
   const handleKeyDown = (e) => {
-    // enter, space: open
-    if (e.keyCode === 13) {
-      toggle();
-    }
     // arrow down: open
-    else if (e.keyCode === 40 && e.target.classList.contains('form-input')) {
+    if (e.keyCode === 40 && e.target.classList.contains('form-input')) {
       toggle(true);
       document.addEventListener('click', onOutsideClick);
     }
@@ -136,10 +131,14 @@ export const DatePicker = memo((props) => {
 
   // Accessibility close on blur
   const handleExitBlur = (e) => {
-    if (e.keyCode === 9 && !e.shiftKey) {
+    if (e.keyCode === 9) {
       e.preventDefault();
       // loop focus back to calendar top actions
       datepickerRef.current.querySelector('.prev-month').focus();
+    }
+    else if (e.keyCode === 32) {
+      e.preventDefault();
+      closeCalendar();
     }
   }
 

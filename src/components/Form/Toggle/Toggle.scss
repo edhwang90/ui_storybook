@@ -56,6 +56,7 @@
   }
 }
 
+// Switch toggle
 .switch {
   // Container
   & + span:before {
@@ -93,6 +94,7 @@
   }
 }
 
+//Checkbox
 .checkbox {
   // Box.
   & + span:before {
@@ -103,7 +105,7 @@
   }
 
   // Checkmark
-  &:checked + span:after, &:hover + span:after {
+  &:checked + span:after {
     left: .6rem;
     top: .3125rem;
     transform: rotate(45deg);

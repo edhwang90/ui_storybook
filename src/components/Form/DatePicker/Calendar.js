@@ -63,7 +63,7 @@ const YearList = (props) => {
 }
 
 export const Calendar = (props) => {
-  const { selectedDate, format, onClick } = props;
+  const { selectedDate, format, onClick, closeCalendar } = props;
 
   const [dateObj, setDateObj] = useState(selectedDate ? moment(selectedDate, format) : moment());
   const [showYears, setShowYears] = useState(false);
@@ -106,9 +106,13 @@ export const Calendar = (props) => {
 
   // Accessibility: key down handle selection
   const onMonthKeyDown = (e, date) => {
-    // keys: enter, space
+    // enter || space: register click
     if (e.keyCode === 13 || e.keyCode === 32) {
       onClick(date);
+    }
+    // escape: close calendar
+    else if (e.keyCode === 27) {
+      closeCalendar();
     }
   }
 
@@ -127,9 +131,10 @@ export const Calendar = (props) => {
     let days = [];
     let rows = [];
     let cells = [];
-
+    
     const currentMonth = moment(dateObj, format).month();
     const currentYear = moment(dateObj, format).year();
+    let hasStartingRef = false;
 
     for (let i = 0; i<firstDay(dateObj); i++) {
       days.push(<td aria-hidden="true" key={`tde${i}`} className="empty">{''}</td>)
@@ -141,9 +146,24 @@ export const Calendar = (props) => {
       const highlightToday = newDate.isSame(currentDate, 'day') ? 'today' : '';
       const highlightSelect = newDate.isSame(selectedDate, 'day') ? 'selected' : '';
 
+      let startingRef = null;
+      // if selected day visible override
+      if (newDate.isSame(selectedDate, 'day')) {
+        startingRef = focusRef;
+        hasStartingRef = true;
+      }
+      // if current day visible and no selected
+      else if (newDate.isSame(currentDate, 'day') && !hasStartingRef) {
+        startingRef = focusRef;
+      }
+      // default first day and no current or selected
+      else if (j=== 1 && !hasStartingRef) {
+        startingRef = focusRef
+      }
+
       days.push(<td tabIndex={ newDate.isSame(currentDate, 'day') ? "0" : "-1" }
                     key={`tdd${j}`} 
-                    ref={j === 1 ? focusRef : null}
+                    ref={startingRef}
                     onMouseEnter={e => resetFocus(e) }
                     onKeyDown={(e) => onMonthKeyDown(e, newDate.format(format))}
                     onClick={(e) => onClick(newDate.format(format))} 
@@ -207,7 +227,8 @@ export const Calendar = (props) => {
       {
         !showYears &&
         <React.Fragment>
-          <table className="month-table">
+          <table aria-label={`Month of ${moment(dateObj).format('MMMM')}`}
+                 className="month-table">
             <thead>
               <tr>{ displayHeader() }</tr>
             </thead>
@@ -223,6 +244,7 @@ export const Calendar = (props) => {
 
 Calendar.propTypes = {
   onClick: PropTypes.func.isRequired,
+  closeCalendar: PropTypes.func.isRequired,
   selectedDate: PropTypes.any,
   format: PropTypes.string
 }

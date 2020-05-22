@@ -107,27 +107,31 @@ export const DatePicker = memo((props) => {
     document.removeEventListener('click', onOutsideClick);
   };
 
-  const toggle = () => {
+  const toggle = (toggleOpen) => {
     if (disabled) return;
-    toggleCalendar();
+    if (toggleOpen) openCalendar();
+    else closeCalendar();
     document.addEventListener('click', onOutsideClick);
   }
 
   // Accessibility: key downs: escape (close), enter/space (open)
   const handleKeyDown = (e) => {
-    // key: enter, space
+    // enter, space: open
     if (e.keyCode === 13) {
       toggle();
     }
-    else if (e.keyCode === 40) {
-      openCalendar();
+    // arrow down: open
+    else if (e.keyCode === 40 && e.target.classList.contains('form-input')) {
+      console.log(e.target);
+      toggle(true);
       document.addEventListener('click', onOutsideClick);
     }
     // key: shift + tab || esc
     else if ((e.keyCode === 9 && e.shiftKey) || e.keyCode === 27) {
       closeCalendar();
     }
-    else {
+    // alpha numeric || -,.,/
+    else if ((e.keyCode >= 48 && e.keyCode <= 90) || (e.keyCode >= 189 && e.keyCode <= 191)) {
       setDisplay(e.target.value);
     }
   }
@@ -149,6 +153,7 @@ export const DatePicker = memo((props) => {
         {
           <Calendar selectedDate={selectedDate}
                     format={format}
+                    closeCalendar={closeCalendar}
                     onClick={setDate}>
           </Calendar>     
         }
@@ -176,7 +181,7 @@ export const DatePicker = memo((props) => {
               onBlur={onBlur}
               disabled={disabled}
               onChange={handleKeyDown}
-              onKeyUp={handleKeyDown}>
+              onKeyDown={handleKeyDown}>
         </input>
         <button aria-label="Open datepicker"
                 data-toggle="datepicker"

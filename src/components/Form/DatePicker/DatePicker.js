@@ -129,8 +129,7 @@ export const DatePicker = memo((props) => {
     else if ((e.keyCode === 9 && e.shiftKey) || e.keyCode === 27) {
       closeCalendar();
     }
-    // alpha numeric || -,.,/
-    else if ((e.keyCode >= 48 && e.keyCode <= 90) || (e.keyCode >= 189 && e.keyCode <= 191)) {
+    else {
       setDisplay(e.target.value);
     }
   }

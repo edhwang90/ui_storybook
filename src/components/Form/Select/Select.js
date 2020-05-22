@@ -235,6 +235,7 @@ export const Select = memo((props) => {
     if ((e.keyCode === 9) || e.keyCode === 27) {
       if (onBlur) onBlur();
       menuRef.current.querySelector('.select-btn').blur();
+      closeSelect();
     }
     // arrow down || space from button: open and focus on list
     else if (e.keyCode === 40 || (e.keyCode === 32 && e.target.classList.contains('select-btn'))) {

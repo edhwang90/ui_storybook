@@ -73,7 +73,6 @@ export const useDatePicker = (props) => {
     displayDate,
     isOpen,
     toggleCalendar,
-    openCalendar,
     closeCalendar,
     clearDate,
     setDate,
@@ -85,7 +84,7 @@ export const DatePicker = memo((props) => {
   const { selectedDate, 
           displayDate,
           isOpen,
-          openCalendar,
+          toggleCalendar,
           closeCalendar,
           clearDate,
           setDate,
@@ -106,10 +105,9 @@ export const DatePicker = memo((props) => {
     document.removeEventListener('click', onOutsideClick);
   };
 
-  const toggle = (toggleOpen) => {
+  const toggle = () => {
     if (disabled) return;
-    if (toggleOpen) openCalendar();
-    else closeCalendar();
+    toggleCalendar();
     document.addEventListener('click', onOutsideClick);
   }
 
@@ -160,7 +158,7 @@ export const DatePicker = memo((props) => {
                   type="button">Clear</button>
 
           <button className="btn is-clear" 
-                  onClick={toggle} 
+                  onClick={closeCalendar} 
                   onKeyDown={e => handleExitBlur(e)} 
                   type="button">Close</button>
         </div>

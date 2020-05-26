@@ -11,40 +11,41 @@
       border-color: #fff transparent transparent transparent;
     }
   }
+}
 
-  .different-group {
+
+.different-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  span {
+    background-color: $primary-color;
+    color: $primary-color-font;
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: .8rem;
+    border-radius: 50%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+  }
+}
 
-    span {
-      background-color: $primary-color;
-      color: $primary-color-font;
-      width: 1.5rem;
-      height: 1.5rem;
-      font-size: .8rem;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+.multi-select-container,
+.select-container {
+  .select-label {
+    display: flex;
+    align-items: center;
   }
 
-  .multi-select-container,
-  .select-container {
-    .select-label {
-      display: flex;
-      align-items: center;
-    }
-
-    .tag {
-      margin-right: 1rem;
-      border: 2px solid #f7f7f7;
-      border-radius: 50%;
-      width: 1rem;
-      height: 1rem;
-      content: '';
-      display: inline-block;
-    }
+  .tag {
+    margin-right: 1rem;
+    border: 2px solid #f7f7f7;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    content: '';
+    display: inline-block;
   }
 }

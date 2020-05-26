@@ -98,7 +98,7 @@ export const Selects = () => (
         </div>
 
         <div className="form-group">
-          <label className="form-label">Select is Clerable</label>
+          <label className="form-label">Select is Clearable</label>
           <Select options={options}
                   isClearable
                   onClick={action('select')}></Select>

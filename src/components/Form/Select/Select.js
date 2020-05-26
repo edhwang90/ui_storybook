@@ -413,10 +413,13 @@ export const Select = memo((props) => {
       return <label className="group-label" key={index}>{group.label}</label>
     }
     else {
-      return React.cloneElement(groupedRow(group), {
+      const filteredGroup = {...group, options: filteredGroupList(group)};
+      const customGroupUI = groupedRow(filteredGroup);
+
+      return React.cloneElement(customGroupUI, {
         key: index,
-        className: `group-label ${groupedRow(group).props.className}`,
-        'aria-label': `Options group`
+        className: `group-label ${customGroupUI.props.className}`,
+        'aria-label': `Grouped Options for ${filteredGroup.label}`
       })
     }
   }

@@ -132,7 +132,7 @@ export const ExampleForm = (props) => {
       setTimeout(() => {
         console.log('1', res);
         setIsLoading(false);
-        setFormErrors([...formErrors, 'There are errors in submitted form.']);
+        setFormErrors([...formErrors, 'There are errors in the submitted form.']);
         // update form if backend has errors
         updateForm({...res, email: {...res['email'], errors: [...res['email'].errors, 'Sample error from backend.']}})
       }, 2000)

@@ -27,20 +27,20 @@ export const DatePickers = () => (
                       placeholder="MM/DD/YYYY"></DatePicker>
         </div>
         <div className="form-group">
+          <label className="form-label">Select a date</label>
+          <DatePicker onClick={action('select')} 
+                      format="DD/MM/YYYY" 
+                      placeholder="DD/MM/YYYY"></DatePicker>
+        </div>
+      </div>
+      <div className="col">
+       <div className="form-group">
           <label className="form-label">Disabled date</label>
           <DatePicker onClick={action('select')} 
                       disabled
                       value="12/01/2020" 
                       format="MM/DD/YYYY" 
                       placeholder="MM/DD/YYYY"></DatePicker>
-        </div>
-      </div>
-      <div className="col">
-        <div className="form-group">
-          <label className="form-label">Select a date</label>
-          <DatePicker onClick={action('select')} 
-                      format="DD/MM/YYYY" 
-                      placeholder="DD/MM/YYYY"></DatePicker>
         </div>
       </div>
     </div>

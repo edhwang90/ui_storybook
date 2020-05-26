@@ -268,6 +268,10 @@ export const Select = memo((props) => {
           menuRef.current.querySelector('.select-btn').focus();
         }
       }
+      else {
+        // unbind outside click for single select
+        document.removeEventListener('click', onOutsideClick);
+      }
     }
     // alpha numeric: filter
     else if (e.keyCode >= 48 && e.keyCode <= 90) {

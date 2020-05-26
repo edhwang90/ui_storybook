@@ -227,7 +227,9 @@ export const Select = memo((props) => {
   // tab: to clear all
   const keydownToClear = () => {
     const clear = menuRef.current.querySelector('.select-clear');
+
     if (clear) clear.focus();
+    else menuRef.current.querySelector('.select-btn').focus();
   }
 
   // Accessibility: handle selection and escape

@@ -47,7 +47,13 @@ export const useSelect = (props) => {
     const selections = isMultiSelect ? selected : [selected];
     const toSearch = searchParam ? searchParam.toLowerCase() : '';
 
-    return search(group.options, toSearch).filter(filter => !selections.find(find => (getOptionDisplay(filter) === getOptionDisplay(find)) && group.label === find.group?.label))
+    const flattenedOptions = group.options.map(m => {
+      const { options, ...otherDetails } = group;
+      const withGroupDetails = { ...m , group: { ...otherDetails } };
+      return withGroupDetails;
+    });
+
+    return search(flattenedOptions, toSearch).filter(filter => !selections.find(find => (getOptionDisplay(filter) === getOptionDisplay(find)) && group.label === find.group?.label))
   }
 
   const isResetAvailable = () => {
@@ -164,7 +170,6 @@ export const Select = memo((props) => {
 
   // single key short cut to option
   const skipTo = (e) => {
-    let indexOfOption;
     let allOptions = [];
 
     if (disabled) return;
@@ -181,12 +186,14 @@ export const Select = memo((props) => {
     }
 
     // get index of first occurrence of match
-    indexOfOption = allOptions.findIndex(find => getOptionDisplay(find).toLowerCase().startsWith(e.key.toLowerCase()));
-    
+    let indexOfOption = allOptions.findIndex(find => getOptionDisplay(find).toLowerCase().startsWith(e.key.toLowerCase()));
+    const lastOption = indexOfOption >= 0 ? getOptionDisplay(allOptions[indexOfOption]) : null;
+
     // check for additional options and loop to next
-    if (indexOfOption === lastFocused?.index && e.key === lastFocused?.key) {
+    if (lastOption === lastFocused?.option && e.key === lastFocused?.key) {
       indexOfOption = allOptions.findIndex((find, i) => {
-        if (i !== indexOfOption && (getOptionDisplay(find).toLowerCase().startsWith(e.key.toLowerCase()))) {
+        const toCompare = getOptionDisplay(find);
+        if ((lastOption !== toCompare) && toCompare.toLowerCase().startsWith(e.key.toLowerCase())) {
           return find
         }
         return null;
@@ -195,15 +202,12 @@ export const Select = memo((props) => {
 
     // if single select, auto select
     if (indexOfOption >= 0 && !isMultiSelect) {
-      setLastFocused({ index: indexOfOption, key: e.key });
+      setLastFocused({ option: getOptionDisplay(allOptions[indexOfOption]), key: e.key });
       clickSelect(allOptions[indexOfOption]);
-
-      // if open focus
-      if (listRef.current) listRef.current.querySelectorAll('.select-option')[indexOfOption].focus();
     }
     // if multiselect and list is open
     else if (indexOfOption >= 0) {
-      setLastFocused({ index: indexOfOption, key: e.key });
+      setLastFocused({ option: getOptionDisplay(allOptions[indexOfOption]), key: e.key });
       listRef.current.querySelectorAll('.select-option')[indexOfOption].focus();
     }
   }
@@ -447,28 +451,31 @@ export const Select = memo((props) => {
         <div className="select-list" 
              ref={listRef}>
           {
-            filteredList().map((group, i) => (
-              <React.Fragment key={i}>
-                {groupRowUI(group)}
-                {
-                  <ul onKeyDown={e => traverseSelect(e)}>
-                    {
-                      filteredGroupList(group).length > 0 &&
-                      filteredGroupList(group)
-                        .map((option, j) => {
-                          const groupDetails = Object.assign({}, group);
-                          delete groupDetails.options;
-                          return rowUI({...option, group: groupDetails}, j);
-                        })
-                    }
-                    {
-                     filteredGroupList(group).length <= 0 &&
-                      emptySelectUI()
-                    }
-                  </ul>
-                }
-              </React.Fragment>
-            ))
+            filteredList().map((group, i) => {
+              const flatGroupOptions = filteredGroupList(group);
+              return (
+                <React.Fragment key={i}>
+                  {groupRowUI(group)}
+                  {
+                    <ul onKeyDown={e => traverseSelect(e)}>
+                      {
+                        flatGroupOptions.length > 0 &&
+                        flatGroupOptions
+                          .map((option, j) => {
+                            const groupDetails = Object.assign({}, group);
+                            delete groupDetails.options;
+                            return rowUI({...option, group: groupDetails}, j);
+                          })
+                      }
+                      {
+                      flatGroupOptions.length <= 0 &&
+                        emptySelectUI()
+                      }
+                    </ul>
+                  }
+                </React.Fragment>
+              )
+            })
           }
         </div>
       )
@@ -520,7 +527,10 @@ Select.propTypes = {
   label: PropTypes.string,
   value: PropTypes.any,
   attr: (props, propName, componentName) => {
-    if (props['options']?.[0] instanceof Object && (props[propName] === undefined || typeof(props[propName]) !== 'string')) {
+    if ((props['isGrouped'] && typeof (props['options'][0]['options'][0]) === 'string') && (props[propName] === undefined || typeof(props[propName]) !== 'string')) {
+      return new Error(`Please provide a list of objects for a grouped list and a cooresponding attr for display purposes.`)
+    }
+    else if (props['options']?.[0] instanceof Object && (props[propName] === undefined || typeof(props[propName]) !== 'string')) {
       return new Error(`Please provide an ${propName} for display purposes.`)
     }
   },

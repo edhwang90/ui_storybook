@@ -36,6 +36,11 @@ const options3 = [
   { label: 'Asia', options: [{label: 'Seoul', value: 7 }, { label: 'Hong Kong', value: 8 }, { label: 'Tokyo', value: 9 }]},
 ];
 
+const options4= [
+  { label: 'Strings', options: ['a', 'b', 'c', 'd']},
+  { label: 'Integers', options: [1,2,3,4,5,6]}
+];
+
 const selectRow = (data) => (
   <React.Fragment><span className="tag" style={{backgroundColor: data.color}}></span>{data.name}</React.Fragment>
 )
@@ -268,8 +273,7 @@ export const MultiSelects = () => (
       <div className="col">
         <div className="form-group">
           <label className="form-label">Multiselect</label>
-          <Select options={options2}
-                  attr="name"
+          <Select options={options}
                   isMultiSelect
                   label="Select..."
                   onClick={action('select')}></Select>

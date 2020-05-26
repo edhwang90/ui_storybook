@@ -136,7 +136,7 @@ export const Select = memo((props) => {
           setSearchParam,
           removeSelection  } = useSelect(props);
   
-  const { disabled, isMultiSelect, isGrouped, isClearable, onBlur,
+  const { options, disabled, isMultiSelect, isGrouped, isClearable, onBlur,
           className, label, selectRow, groupedRow } = props;
 
   const [lastFocused, setLastFocused] = useState(null);
@@ -451,7 +451,7 @@ export const Select = memo((props) => {
         <div className="select-list" 
              ref={listRef}>
           {
-            filteredList().map((group, i) => {
+            options.map((group, i) => {
               const flatGroupOptions = filteredGroupList(group);
               return (
                 <React.Fragment key={i}>

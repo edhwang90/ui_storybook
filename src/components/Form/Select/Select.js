@@ -429,18 +429,20 @@ export const Select = memo((props) => {
 
   const listUI = () => {
     if (isOpen && !isGrouped) {
+      const selectList = filteredList();
+      
       return (
         <ul className="select-list"
             ref={listRef} 
             onKeyDown={e => traverseSelect(e)}>
           {   
-            filteredList().length > 0 &&
-            filteredList().map((option, index) => (
+            selectList.length > 0 &&
+            selectList.map((option, index) => (
               rowUI(option, index)
             ))
           }
           {
-            filteredList().length <= 0 &&
+            selectList.length <= 0 &&
             emptySelectUI()
           }
         </ul>

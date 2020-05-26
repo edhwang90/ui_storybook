@@ -143,14 +143,11 @@ export const Select = memo((props) => {
     if (listRef.current) listRef.current.querySelector('.select-option').focus();
   }, [isOpen, listRef])
 
-  const openAndFocus = (e) => {
+  const openAndBind = (e) => {
     if (disabled) return;
     if (!e) return;
     openSelect();
 
-    // auto focus for traversing list
-    if (listRef.current) listRef.current.querySelector('.select-option').focus();
-    
     // bind outside click event
     document.addEventListener('click', onOutsideClick);
   }
@@ -240,7 +237,7 @@ export const Select = memo((props) => {
     // arrow down || space from button: open and focus on list
     else if (e.keyCode === 40 || (e.keyCode === 32 && e.target.classList.contains('select-btn'))) {
       e.preventDefault();
-      openAndFocus(e);
+      openAndBind(e);
       if (listRef.current) listRef.current.querySelector('.select-option').focus();
     }
     // arrow right: to selected
@@ -268,10 +265,6 @@ export const Select = memo((props) => {
           menuRef.current.querySelector('.select-btn').focus();
         }
       }
-      else {
-        // unbind outside click for single select
-        document.removeEventListener('click', onOutsideClick);
-      }
     }
     // alpha numeric: filter
     else if (e.keyCode >= 48 && e.keyCode <= 90) {
@@ -286,12 +279,14 @@ export const Select = memo((props) => {
     if (!isMultiSelect) {
       closeSelect();
       menuRef.current.querySelector('.select-btn').focus();
+      // unbind outside click for single select
+      document.removeEventListener('click', onOutsideClick);
     }
   }
 
   const handleRemove = (e, selection) => {
     removeSelection(e, selection);
-    if (listRef.current) listRef.current.querySelector('.select-option').focus();
+    menuRef.current.querySelector('.select-btn').focus();
   }
 
   // Accessibility: handle traversal and list, toggle between
@@ -485,7 +480,7 @@ export const Select = memo((props) => {
          className={isMultiSelect ? `multi-select-container ${className} ${selected.length > 0 ? 'show-selected' : ''}`: `select-container ${className}`}>
       <div className={`select-btn${ isOpen ? ' list-open' : '' }${ disabled ? ' list-disabled' : ''}`}
            onKeyDown={handleKeyDown}
-           onClick={openAndFocus}
+           onClick={openAndBind}
            tabIndex="0"
            role="button"
            data-toggle="dropdown"

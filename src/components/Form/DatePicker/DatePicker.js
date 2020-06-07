@@ -80,7 +80,7 @@ export const useDatePicker = (props) => {
   }
 }
 
-export const DatePicker = memo((props) => {
+export const DatePicker = (props) => {
   const { selectedDate, 
           displayDate,
           isOpen,
@@ -191,7 +191,7 @@ export const DatePicker = memo((props) => {
       { calendar() }
     </div>
   )
-});
+};
 
 DatePicker.propTypes = {
   onClick: PropTypes.func.isRequired,

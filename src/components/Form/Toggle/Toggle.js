@@ -18,7 +18,7 @@ export const useToggle = (props) => {
   }
 }
 
-export const Toggle = memo((props) => {
+export const Toggle = (props) => {
   const { toggled, toggle } = useToggle(props);
   const { type, className, toggleFor, disabled, onBlur } = props;
   
@@ -44,7 +44,7 @@ export const Toggle = memo((props) => {
             onClick={handleToggle}></span>
     </React.Fragment>
   )
-})
+};
 
 Toggle.propTypes = {
   type: PropTypes.string.isRequired,

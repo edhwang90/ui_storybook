@@ -122,7 +122,7 @@ export const useSelect = (props) => {
   }
 }
 
-export const Select = memo((props) => {
+export const Select = (props) => {
   const { selected,
           isOpen,
           getOptionDisplay,
@@ -515,7 +515,7 @@ export const Select = memo((props) => {
       { listUI() }
     </div>
   )
-});
+};
 
 Select.propTypes = {
   options: (props, propName, componentName) => {

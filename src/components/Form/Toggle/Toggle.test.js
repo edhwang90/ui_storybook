@@ -1,21 +1,40 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import {render, screen, fireEvent, act} from '@testing-library/react'
 
 import { Toggle, useToggle } from './Toggle';
 
+const setup = (args) => {
+  const returnVal = {};
 
-let wrappedSwitch = shallow(<Toggle type="switch" handleToggle={ () => {} } toggleFor="testToggle"></Toggle>);
+  const TestComponent = () => {
+    Object.assign(returnVal, useToggle(args));
+    return null;
+  }
 
-const ToggleHook = () => {
-  const props = useToggle({ handleToggle: () => {} });
-  return <div {...props}></div>;
-};
+  render(<TestComponent></TestComponent>);
+  return returnVal;
+}
 
-const hookWrapper = shallow(<ToggleHook></ToggleHook>);
+const toggleHook = setup({ handleToggle: () => {} });
 
 describe('Toggle', () => {
   it('toggles checkbox/switch', () => { 
-    hookWrapper.props().toggle();
-    expect(hookWrapper.prop('toggled')).toEqual(true);
+    act(() => {
+      toggleHook.toggle();
+    })
+
+    expect(toggleHook.toggled).toEqual(true);
   });
+
+  it('has correct initial state', () => {
+    const { unmount } = 
+      render(<Toggle toggleFor="MockToggle" 
+                     type="checkbox"
+                     disabled
+                     handleToggle={() => {}}></Toggle>);
+
+    const toggle = document.getElementById('MockToggle');   
+    expect(toggle.disabled).toEqual(true);
+    unmount();
+  })
 });

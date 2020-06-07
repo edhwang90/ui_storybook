@@ -1,7 +1,7 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import {render, screen, fireEvent, act} from '@testing-library/react'
 
-import { Select, useSelect } from './Select';
+import { useSelect } from './Select';
 
 const options = [
   'Option 1',
@@ -15,58 +15,94 @@ const optionsObjs = [
   { id: 3, value: 'Option 3' }
 ];
 
-let wrapped = shallow(<Select options={options} onClick={ () => {} }></Select>);
+const setup = (args) => {
+  const returnVal = {};
 
-const SelectHook = () => {
-  const props = useSelect({ options: options, onClick: () => {} });
-  return <div {...props}></div>;
-};
+  const TestComponent = () => {
+    Object.assign(returnVal, useSelect(args));
+    return null;
+  }
 
-const hookWrapper = shallow(<SelectHook></SelectHook>);
+  render(<TestComponent></TestComponent>);
+  return returnVal;
+}
 
 describe('Select', () => {
 
   it('opens select', () => {
-    hookWrapper.props().openSelect();
-    expect(hookWrapper.prop('isOpen')).toEqual(true);
+    const selectHook = setup({ options, onClick: () => {} });
+
+    act(() => {
+      selectHook.openSelect();
+    })
+
+    expect(selectHook.isOpen).toEqual(true);
   });
 
   it('sets the selection', () => { 
+    const selectHook = setup({ options, onClick: () => {} });
     const selection = 'Option 1';
-    hookWrapper.props().clickSelect(selection);
-    expect(hookWrapper.prop('selected')).toEqual(selection);
+
+    act(() => {
+      selectHook.clickSelect(selection);
+    })
+
+    expect(selectHook.selected).toEqual(selection);
   });
 
   it('clears selected', () => { 
+    const selectHook = setup({ options, onClick: () => {} });
+    const selection = 'Option 1';
     const mockedEvent = { stopPropagation: () => {} }
-    hookWrapper.props().resetSelect(mockedEvent);
-    expect(hookWrapper.prop('selected')).toEqual('');
+
+    act(() => {
+      selectHook.clickSelect(selection);
+    })
+
+    act(() => {
+      selectHook.resetSelect(mockedEvent);
+    })
+
+    expect(selectHook.selected).toEqual('');
   });
 });
-
-const MultiSelectHook = () => {
-  const props = useSelect({ isMultiSelect: true, options: options, onClick: () => {} });
-  return <div {...props}></div>;
-};
-
-const multiHookWrapper = shallow(<MultiSelectHook></MultiSelectHook>);
 
 describe('MultiSelect', () => {
 
   it('opens select', () => {
-    multiHookWrapper.props().openSelect();
-    expect(multiHookWrapper.prop('isOpen')).toEqual(true);
+    const multiSelectHook = setup({ isMultiSelect: true, options, onClick: () => {} });
+
+    act(() => {
+      multiSelectHook.openSelect();
+    })
+
+    expect(multiSelectHook.isOpen).toEqual(true);
   });
 
   it('sets the selection', () => { 
+    const multiSelectHook = setup({ isMultiSelect: true, options, onClick: () => {} });
     const selection = 'Option 1';
-    multiHookWrapper.props().clickSelect(selection);
-    expect(multiHookWrapper.prop('selected')).toEqual([selection]);
+
+    act(() => {
+      multiSelectHook.clickSelect(selection);
+    })
+
+    expect(multiSelectHook.selected).toEqual([selection]);
   });
 
   it('clears selected', () => { 
+    const multiSelectHook = setup({ isMultiSelect: true, options, onClick: () => {} });
+    const selection = 'Option 1';
     const mockedEvent = { stopPropagation: () => {} }
-    multiHookWrapper.props().resetSelect(mockedEvent);
-    expect(multiHookWrapper.prop('selected')).toEqual([]);
+
+    act(() => {
+      multiSelectHook.clickSelect(selection);
+    })
+
+    act(() => {
+      multiSelectHook.resetSelect(mockedEvent);
+    })
+
+    expect(multiSelectHook.selected).toEqual([]);
   });
 });

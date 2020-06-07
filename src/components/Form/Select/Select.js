@@ -115,6 +115,7 @@ export const useSelect = (props) => {
     isResetAvailable,
     closeSelect,
     openSelect,
+    onBlurCallback,
     resetSelect,
     clickSelect,
     setSearchParam,
@@ -131,6 +132,7 @@ export const Select = (props) => {
           isResetAvailable,
           closeSelect,
           openSelect,
+          onBlurCallback,
           resetSelect,
           clickSelect,
           setSearchParam,
@@ -223,6 +225,14 @@ export const Select = (props) => {
     // unbind
     document.removeEventListener('click', onOutsideClick);
   };
+
+  const handleBlur = e => {
+    if (menuRef.current.contains(e.relatedTarget)) {
+      return;
+    }
+
+    onBlurCallback();
+  }
 
   // tab: to clear all
   const keydownToClear = () => {
@@ -490,6 +500,7 @@ export const Select = (props) => {
          className={isMultiSelect ? `multi-select-container ${className} ${selected.length > 0 ? 'show-selected' : ''}`: `select-container ${className}`}>
       <div className={`select-btn${ isOpen ? ' list-open' : '' }${ disabled ? ' list-disabled' : ''}`}
            onKeyDown={handleKeyDown}
+           onBlur={e => handleBlur(e)}
            onClick={openAndBind}
            tabIndex="0"
            role="button"

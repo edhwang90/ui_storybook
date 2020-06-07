@@ -101,11 +101,11 @@ export const ExampleForm = (props) => {
       rules: [{ type: 'required' }]
     },
     flexible: {
-      value: '',
+      value: false,
       rules: [{ type: 'required' }]
     },
     terms: {
-      value: '',
+      value: false,
       rules: [{ type: 'required' }]
     }
   };

@@ -128,13 +128,16 @@ export const ExampleForm = (props) => {
 
   const handleSubmit = () => {
     setIsLoading(true);
-    submit().then(res => {
+    submit().then((validatedForm) => {
+      // mock backend call
       setTimeout(() => {
-        console.log('1', res);
+        console.log('1', validatedForm);
         setIsLoading(false);
-        setFormErrors([...formErrors, 'There are errors in the submitted form.']);
+
+        // Show generic error message if errors
+        setFormErrors(['There are errors in the submitted form.']);
         // update form if backend has errors
-        updateForm({...res, email: {...res['email'], errors: [...res['email'].errors, 'Sample error from backend.']}})
+        updateForm({...validatedForm, email: {...validatedForm['email'], errors: [...validatedForm['email'].errors, 'Sample error from backend.']}})
       }, 2000)
     })
   }

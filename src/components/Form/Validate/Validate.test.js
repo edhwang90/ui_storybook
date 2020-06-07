@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme';
+import { renderHook, act } from '@testing-library/react-hooks'
 
 import { useValidate } from './Validate';
 
@@ -14,108 +14,91 @@ const initialForm = {
   }
 };
 
+
 describe('Validate', () => {
-  it('should validate all fields', () => {
-    // new Form
-    const ValidateHook = () => {
-      const props = useValidate({ initialForm, onSubmit: () => {} })
-      return <div {...props}></div>
-    }
-    
-    const hookWrapper = shallow(<ValidateHook></ValidateHook>);
-    
+  it ('should validate on change', async () => {
+    const { result, waitForNextUpdate } = renderHook(() => useValidate({initialForm, validateOnChange: true }))
+
+    act(() => {
+      result.current.handleChange('email', 'test');
+    })
+
+    await waitForNextUpdate();
+
+    const updatedForm = {
+      email: {
+        value: 'test',
+        rules: [ {type: 'type', value: 'email' } ],
+        errors: ['Please enter a valid email address.']
+      },
+      password: {
+        value: '',
+        rules: [ {type: 'required'} ]
+      },
+      error: true
+    };
+
+    expect(result.current.form).toEqual(updatedForm);
+  })
+
+  it ('should validate on explicit call', async () => {
+    const { result, waitForNextUpdate } = renderHook(() => useValidate({initialForm, validateOnChange: false }))
+
+    act(() => {
+      result.current.handleChange('email', 'test');
+    })
+
+    act(() => {
+      result.current.validate('email');
+    })
+
+    await waitForNextUpdate();
+
+    const updatedForm = {
+      email: {
+        value: 'test',
+        rules: [ {type: 'type', value: 'email' } ],
+        errors: ['Please enter a valid email address.'],
+        isLoading: false,
+      },
+      password: {
+        value: '',
+        rules: [ {type: 'required'} ]
+      },
+      error: true
+    };
+
+    expect(result.current.form).toEqual(updatedForm);
+  })
+
+  it('should validate all fields', async () => {
+    const { result, wait } = renderHook(() => useValidate({initialForm, validateOnChange: false }))
+
+    act(() => {
+      result.current.submit();
+    })
+
+    await wait(() => {
+      return !result.current.form.isLoading;
+    });
+
     const updatedForm = {
       email: {
         value: '',
         rules: [ {type: 'type', value: 'email' } ],
-        errors: ['Please enter a valid email address.']
+        errors: [
+          'Please enter a valid email address.'
+        ]
       },
       password: {
         value: '',
         rules: [ {type: 'required'} ],
         errors: [ 'This field is required.' ]
       },
-      error: true
+      error: true,
+      isLoading: false
     };
 
-    hookWrapper.props().handleSubmit();
-    expect(hookWrapper.prop('form')).toEqual(updatedForm); 
-  })
-
-  it('should validate field', () => {
-    // new Form
-    const ValidateHook = () => {
-      const props = useValidate({ initialForm, onSubmit: () => {} })
-      return <div {...props}></div>
-    }
-    
-    const hookWrapper = shallow(<ValidateHook></ValidateHook>);
-    
-    const updatedForm = {
-      email: {
-        value: 'test',
-        rules: [ {type: 'type', value: 'email' } ],
-        errors: ['Please enter a valid email address.']
-      },
-      password: {
-        value: '',
-        rules: [ {type: 'required'} ]
-      },
-      error: true
-    };
-
-    hookWrapper.props().validate('email', 'test');
-    expect(hookWrapper.prop('form')).toEqual(updatedForm);
+    expect(result.current.form).toEqual(updatedForm);
   });
-
-  it('should not validate field on change', () => {
-    // new Form
-    const ValidateHook = () => {
-      const props = useValidate({ initialForm, onSubmit: () => {} })
-      return <div {...props}></div>
-    }
-    
-    const hookWrapper = shallow(<ValidateHook></ValidateHook>);
-    
-    const updatedForm = {
-      email: {
-        value: 'test',
-        rules: [ {type: 'type', value: 'email' } ]
-      },
-      password: {
-        value: '',
-        rules: [ {type: 'required'} ]
-      }
-    };
-
-    hookWrapper.props().handleChange('email', 'test');
-    expect(hookWrapper.prop('form')).toEqual(updatedForm);
-  });
-
-  it('should validate field on change', () => {
-    // new Form
-    const ValidateHook = () => {
-      const props = useValidate({ validateOnChange: true, initialForm, onSubmit: () => {} })
-      return <div {...props}></div>
-    }
-    
-    const hookWrapper = shallow(<ValidateHook></ValidateHook>);
-    
-    const updatedForm = {
-      email: {
-        value: 'test',
-        rules: [ {type: 'type', value: 'email' } ],
-        errors: ['Please enter a valid email address.']
-      },
-      password: {
-        value: '',
-        rules: [ {type: 'required'} ]
-      },
-      error: true
-    };
-
-    hookWrapper.props().handleChange('email', 'test');
-    expect(hookWrapper.prop('form')).toEqual(updatedForm);
-  });
-
 });

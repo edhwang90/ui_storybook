@@ -65,6 +65,16 @@ export const useValidate = (props) => {
     return changeField[field];
   }
 
+  const setCustomError = (fieldObj, error) => {
+    const fieldErrors = fieldObj.errors ? fieldObj.errors : [];
+    const validated = {...fieldObj, errors: [...fieldErrors, error]};
+    return validated;
+  }
+
+  const updateForm = (updatedForm) => {
+    setForm(updatedForm);
+  }
+
   const validateField = (fieldObj, isOnChange) => {
     return new Promise((resolve, reject) => {
   
@@ -142,12 +152,13 @@ export const useValidate = (props) => {
       validateField(fieldObj, true).then(res => {
         validated = res;
         newForm = validated.errors?.length > 0 ? {...form, [field]: validated, error: true} : {...form, [field]: validated};
-        setForm(newForm);
+
+        updateForm(newForm);
       });
     }
     else {
       newForm = {...form, [field]: fieldObj}
-      setForm(newForm);
+      updateForm(newForm);
     }
   }
 
@@ -155,28 +166,18 @@ export const useValidate = (props) => {
     const fieldObj = form[field];
     let validated;
 
-    setForm({...form, [field]: {...fieldObj, isLoading: true}});
+    updateForm({...form, [field]: {...fieldObj, isLoading: true}});
     
     validateField(fieldObj).then(res => {
       validated = res;
       const newForm = validated.errors?.length > 0 ? {...form, [field]: {...validated, isLoading: false}, error: true} : {...form, [field]: {...validated, isLoading: false}};
-      setForm(newForm);
+      updateForm(newForm);
     });
-  }
-
-  const setCustomError = (fieldObj, error) => {
-    const fieldErrors = fieldObj.errors ? fieldObj.errors : [];
-    const validated = {...fieldObj, errors: [...fieldErrors, error]};
-    return validated;
-  };
-
-  const updateForm = (updatedForm) => {
-    setForm(updatedForm);
   }
 
   const submit = async () => {
     let newForm = form;
-    setForm({...newForm, isLoading: true});
+    updateForm({...newForm, isLoading: true});
 
     let i = 0;
     let fields = Object.keys(form);
@@ -185,8 +186,8 @@ export const useValidate = (props) => {
       newForm = validated.errors?.length > 0 ? {...newForm, [fields[i]]: validated, error: true} : {...newForm, [fields[i]]: validated};
       i++;
     }
-    setForm({...newForm, isLoading: false});
-    setForm(newForm);
+    newForm = {...newForm, isLoading: false};
+    updateForm(newForm);
     return newForm;
   }
 

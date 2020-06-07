@@ -206,6 +206,7 @@ export const ExampleForm = (props) => {
                       label="Select..."
                       options={industryArray}
                       isMultiSelect
+                      isClearable
                       onBlur={e => shouldValidateBlur ? validate('industry') : ''}
                       onClick={e => handleChange('industry', e)}>
               </Select>
@@ -220,7 +221,7 @@ export const ExampleForm = (props) => {
             <div className="form-group">
               <label className="form-label">Role<span className="required">*</span></label>
               <Select options={rolesArray}
-                      //value={form.role.value}
+                      value={form.role.value}
                       attr="name"
                       className={form.role.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
@@ -265,6 +266,7 @@ export const ExampleForm = (props) => {
               <label className="form-label">Select a date<span className="required">*</span></label>
               <DatePicker onClick={e => handleChange('startDate', e)} 
                           onBlur={e => shouldValidateBlur ? validate('startDate') : ''}
+                          value={form.startDate.value}
                           className={form.startDate.errors?.length > 0 ? 'form-error' : ''}
                           format="MM/DD/YYYY"
                           placeholder="MM/DD/YYYY"></DatePicker>
@@ -281,6 +283,7 @@ export const ExampleForm = (props) => {
                 <Toggle type="switch"
                         toggleFor="flexibleDate"
                         className={form.flexible.errors?.length > 0 ? 'form-error' : ''}
+                        value={form.flexible.value}
                         onBlur={e => shouldValidateBlur ? validate('flexible') : ''}
                         handleToggle={e => handleChange('flexible', e)}>
                 </Toggle>
@@ -301,6 +304,7 @@ export const ExampleForm = (props) => {
                 <Toggle type="checkbox"
                         toggleFor="agreeTerms"
                         className={form.terms.errors?.length > 0 ? 'form-error' : ''}
+                        value={form.terms.value}
                         onBlur={e => shouldValidateBlur ? validate('terms') : ''}
                         handleToggle={e => handleChange('terms', e)}>
                 </Toggle>

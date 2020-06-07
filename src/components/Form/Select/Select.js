@@ -193,15 +193,18 @@ export const Select = (props) => {
 
     // check for additional options and loop to next
     if (lastOption === lastFocused?.option && e.key === lastFocused?.key) {
-      indexOfOption = allOptions.findIndex((find, i) => {
+      const nextOption = allOptions.findIndex((find, i) => {
         const toCompare = getOptionDisplay(find);
         if ((lastOption !== toCompare) && toCompare.toLowerCase().startsWith(e.key.toLowerCase())) {
           return find
         }
         return null;
       })
-    }
 
+      // if no options retain focus
+      indexOfOption = nextOption >= 0 ? nextOption : indexOfOption;
+    }
+    
     // if single select, auto select
     if (indexOfOption >= 0 && !isMultiSelect) {
       setLastFocused({ option: getOptionDisplay(allOptions[indexOfOption]), key: e.key });
@@ -209,6 +212,7 @@ export const Select = (props) => {
     }
     // if multiselect and list is open
     else if (indexOfOption >= 0) {
+      
       setLastFocused({ option: getOptionDisplay(allOptions[indexOfOption]), key: e.key });
       listRef.current.querySelectorAll('.select-option')[indexOfOption].focus();
     }

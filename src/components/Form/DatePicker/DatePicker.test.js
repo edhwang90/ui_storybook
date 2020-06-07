@@ -1,32 +1,51 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import {render, screen, fireEvent, act} from '@testing-library/react'
 
-import { DatePicker, useDatePicker } from './DatePicker';
+import { useDatePicker } from './DatePicker';
 
-let wrapped = shallow(<DatePicker onClick={ () => {} }></DatePicker>);
+const setup = (args) => {
+  const returnVal = {};
 
-const DatePickerHook = () => {
-  const props = useDatePicker({ onClick: () => {} });
-  return <div {...props}></div>;
-};
+  const TestComponent = () => {
+    Object.assign(returnVal, useDatePicker(args));
+    return null;
+  }
 
-const hookWrapper = shallow(<DatePickerHook></DatePickerHook>);
+  render(<TestComponent></TestComponent>);
+  return returnVal;
+}
 
 describe('DatePicker', () => {
 
   it('opens the calendar', () => {
-    hookWrapper.props().toggleCalendar();
-    expect(hookWrapper.prop('isOpen')).toEqual(true);
+    const dateHook = setup({ onClick: () => {} });
+
+    act(() => {
+      dateHook.toggleCalendar();
+    })
+
+    expect(dateHook.isOpen).toEqual(true);
   });
 
   it('sets the date', () => { 
+    const dateHook = setup({ onClick: () => {} });
     const date = '01/01/2020';
-    hookWrapper.props().setDate(date);
-    expect(hookWrapper.prop('selectedDate')).toEqual(date);
+    const dateTimeStamp = new Date(2020, 0, 1);
+
+    act(() => {
+      dateHook.setDate(date);
+    })
+
+    expect(new Date(dateHook.selectedDate)).toEqual(dateTimeStamp);
   });
 
   it('clears the date', () => { 
-    hookWrapper.props().clearDate();
-    expect(hookWrapper.prop('selectedDate')).toEqual('');
+    const dateHook = setup({ onClick: () => {} });
+
+    act(() => {
+      dateHook.clearDate();
+    })
+    
+    expect(dateHook.selectedDate).toEqual('');
   });
 });

@@ -1,41 +1,78 @@
-import React, { useState, memo, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import './Toggle.scss';
 
 export const useToggle = (props) => {
-  const { value, handleToggle } = props;
-  const [toggled, setToggled] = useState(value || false);
+  const { value, toggleGroupValue, handleToggle, type } = props;
+  
+  const [isToggled, setIsToggled] = useState(value);
 
-  const toggle = (e) => {
-    setToggled(!toggled);
-    handleToggle(!toggled);
+  useEffect(() => {
+    // if standard switch or checkbox
+    if (toggleGroupValue == null) return;
+    // if radio group
+    else if (!Array.isArray(toggleGroupValue)) {
+      setIsToggled(toggleGroupValue === value);
+    }
+    // if checkbox or switch group
+    else {
+      setIsToggled(toggleGroupValue.indexOf(value) >= 0)
+    }
+  }, [value, toggleGroupValue])
+
+  const toggle = () => {
+
+    // if default boolean toggle
+    if (toggleGroupValue == null) {
+      setIsToggled(!isToggled);
+      handleToggle(!isToggled);
+    }
+    else if (type === 'radio') {
+      handleToggle(value);
+    }
+    else {
+      // check if it exists
+      const existingIndex = toggleGroupValue.indexOf(value);
+      if (existingIndex < 0) {
+        handleToggle([...toggleGroupValue, value]);
+      }
+      else {
+        handleToggle([
+          ...toggleGroupValue.slice(0, existingIndex),
+          ...toggleGroupValue.slice(existingIndex+1)
+        ])
+      }
+    }
   }
   
   return {
-    toggled,
     toggle,
+    isToggled
   }
 }
 
 export const Toggle = (props) => {
-  const { toggled, toggle } = useToggle(props);
-  const { type, className, toggleFor, disabled, onBlur } = props;
+  const { toggle, isToggled } = useToggle(props);
+  const { value, type, toggleFor, onBlur,
+          className, disabled } = props;
   
-  const checkboxRef = useRef(null);
+  const inputType = (type === 'checkbox' || type === 'switch') ? 'checkbox' : 'radio';
+  const toggleRef = useRef(null);
 
   const handleToggle = () => {
     if (disabled) return;
-    checkboxRef.current.focus();
+    toggleRef.current.focus();
     toggle();
   }
 
   return (
     <React.Fragment>
-      <input className={type} type="checkbox"
-             ref={checkboxRef}
-             checked={toggled} 
-             value={toggled}
+      <input className={`${type} ${className}`} 
+             type={inputType}
+             ref={toggleRef}
+             checked={isToggled} 
+             value={value}
              id={toggleFor}
              onBlur={onBlur}
              onChange={handleToggle}
@@ -50,13 +87,17 @@ Toggle.propTypes = {
   type: PropTypes.string.isRequired,
   toggleFor: PropTypes.string.isRequired,
   handleToggle: PropTypes.func.isRequired,
+  toggled: PropTypes.bool,
+  value: PropTypes.any,
+  toggleGroupValue: PropTypes.any,
   className: PropTypes.string,
-  value: PropTypes.bool,
   disabled: PropTypes.bool,
 }
 
 Toggle.defaultProps = {
   value: false,
+  toggled: null,
+  toggleGroupValue: null,
   disabled: false,
   className: ''
 }

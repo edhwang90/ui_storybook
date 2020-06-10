@@ -23,7 +23,15 @@ describe('Toggle', () => {
       toggleHook.toggle();
     })
 
-    expect(toggleHook.toggled).toEqual(true);
+    expect(toggleHook.isToggled).toEqual(true);
+  });
+
+  it('has correct radio button state', () => { 
+    const radioHook = setup({ handleToggle: () => {}, type: 'radio', value: 2, toggleGroupValue: 4 });
+    const selectedRadioHook = setup({ handleToggle: () => {}, type: 'radio', value: 4, toggleGroupValue: 4 });
+    
+    expect(radioHook.isToggled).toEqual(false);
+    expect(selectedRadioHook.isToggled).toEqual(true);
   });
 
   it('has correct initial state', () => {

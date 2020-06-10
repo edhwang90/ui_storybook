@@ -1,4 +1,4 @@
-.switch, .checkbox {
+.switch, .checkbox, .radio {
   position: absolute;
   opacity: 0;
 
@@ -115,4 +115,29 @@
     border-right: .125rem solid #4d4d4d;
     align-self: unset;
   }
+}
+
+.radio {
+    // Box.
+    & + span:before {
+      width: 1.5625rem;
+      min-width: 1.5625rem;
+      height: 1.5625rem;
+      border-radius: 50%;
+    }
+
+    // Box checked
+    &:checked + span:before {
+      border-color: #4d4d4d;
+    }
+  
+    // Checkmark
+    &:checked + span:after {
+      left: .3125rem;
+      top: .3125rem;
+      height: .9375rem;
+      width: .9375rem;
+      background-color: #4d4d4d;
+      border-radius: 50%;
+    }
 }

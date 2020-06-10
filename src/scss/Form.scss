@@ -54,6 +54,14 @@ input, textarea {
   padding-right: $item-padding-lr + rem;
 }
 
+.toggle-group {
+  padding-bottom: $item-padding-tb + rem;
+
+  &:last-of-type {
+    padding-bottom: 0px;
+  }
+}
+
 .form-input-prepend,
 .form-input-append {
   display: flex;

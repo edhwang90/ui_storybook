@@ -321,7 +321,6 @@ export const ExampleForm = (props) => {
                 <Toggle type="switch"
                         toggleFor="flexibleDate"
                         className={form.flexible.errors?.length > 0 ? 'form-error' : ''}
-                        toggled={form.flexible.value}
                         value={form.flexible.value}
                         onBlur={e => shouldValidateBlur ? validate('flexible') : ''}
                         handleToggle={e => handleChange('flexible', e)}>

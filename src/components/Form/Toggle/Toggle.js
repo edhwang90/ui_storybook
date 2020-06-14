@@ -24,7 +24,7 @@ export const useToggle = (props) => {
   const toggle = () => {
 
     // if default boolean toggle
-    if (toggleGroupValue == null) {
+    if (toggleGroupValue === null) {
       setIsToggled(!isToggled);
       handleToggle(!isToggled);
     }
@@ -74,6 +74,7 @@ export const Toggle = (props) => {
              checked={isToggled} 
              value={value}
              id={toggleFor}
+             name={toggleFor}
              onBlur={onBlur}
              onChange={handleToggle}
              disabled={disabled}/>
@@ -84,11 +85,15 @@ export const Toggle = (props) => {
 };
 
 Toggle.propTypes = {
+  /** Can be: 'checkbox', 'switch', 'radio' */
   type: PropTypes.string.isRequired,
+  /** Serves as unique identifier while matching label to input */
   toggleFor: PropTypes.string.isRequired,
+  /** Click handler*/
   handleToggle: PropTypes.func.isRequired,
-  toggled: PropTypes.bool,
+  /** Truthy value for single switch/checkbox, else any primitive */
   value: PropTypes.any,
+  /** Form value to replace or update for radio or grouped switch/checkbox */
   toggleGroupValue: PropTypes.any,
   className: PropTypes.string,
   disabled: PropTypes.bool,
@@ -96,7 +101,6 @@ Toggle.propTypes = {
 
 Toggle.defaultProps = {
   value: false,
-  toggled: null,
   toggleGroupValue: null,
   disabled: false,
   className: ''

@@ -53,6 +53,11 @@ input, textarea {
   cursor: pointer;
   padding-left: $item-padding-lr + rem;
   padding-right: $item-padding-lr + rem;
+
+  &.disabled {
+    color: #e6e6e6;
+    cursor: not-allowed;
+  }
 }
 
 .toggle-group {
@@ -143,7 +148,8 @@ input, textarea {
 
 // Toggle specific
 .checkbox,
-.switch {
+.switch,
+.radio {
   &:focus + .form-error:before {
     border-color: $error-color !important;
     box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25) !important;

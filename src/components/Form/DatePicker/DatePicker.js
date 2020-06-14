@@ -194,9 +194,11 @@ export const DatePicker = (props) => {
 };
 
 DatePicker.propTypes = {
+  /** Click handler */
   onClick: PropTypes.func.isRequired,
   className: PropTypes.string,
   value: PropTypes.string,
+  /** Format, can be any supported by Moment.js (i.e., DD/MM/YYYY) */
   format: PropTypes.string,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool

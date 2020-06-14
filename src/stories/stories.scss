@@ -83,3 +83,29 @@
     }
   }
 }
+
+.info-table {
+  border-collapse: collapse;
+
+  th {
+    text-align: left;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    padding-right: .5rem;
+  }
+
+  tr {
+    border-bottom: 2px solid #e6e6e6;
+  }
+
+  td {
+    vertical-align: top;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    padding-right: .5rem;
+  }
+
+  td:first-of-type {
+    font-weight: bold;
+  }
+}

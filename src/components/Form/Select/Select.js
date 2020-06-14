@@ -533,6 +533,7 @@ export const Select = (props) => {
 };
 
 Select.propTypes = {
+  /** Options array: string or object array */
   options: (props, propName, componentName) => {
     if (props['isGrouped']) {
       if (!props['options']?.[0]['options']) {
@@ -540,10 +541,12 @@ Select.propTypes = {
       }
     }
   },
+  /** Click handler */
   onClick: PropTypes.func.isRequired,
   className: PropTypes.string,
   label: PropTypes.string,
   value: PropTypes.any,
+  /** Required for object array of options or grouped options */
   attr: (props, propName, componentName) => {
     if ((props['isGrouped'] && typeof (props['options'][0]['options'][0]) === 'string') && (props[propName] === undefined || typeof(props[propName]) !== 'string')) {
       return new Error(`Please provide a list of objects for a grouped list and a cooresponding attr for display purposes.`)
@@ -552,7 +555,9 @@ Select.propTypes = {
       return new Error(`Please provide an ${propName} for display purposes.`)
     }
   },
+  /** Custom list row component */
   selectRow: PropTypes.func,
+  /** Custom group UI component */
   groupedRow: PropTypes.func,
   isMultiSelect: PropTypes.bool,
   isGrouped: PropTypes.bool,

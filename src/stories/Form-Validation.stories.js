@@ -2,6 +2,7 @@ import React from 'react';
 import { withInfo } from '@storybook/addon-info';
 
 import { ExampleForm } from '../components/ExampleForm';
+import { useValidate } from '../components/Form/Validate';
 import { CodeBlock } from '../components/CodeBlock';
 
 import './stories.scss';
@@ -10,7 +11,7 @@ export default {
   title: 'Validation',
   decorators: [withInfo],
   parameters: {
-    info: { source: false, inline: true, propTables: false } //propTables: [Checkbox]
+    info: { source: false, inline: true, propTables: [useValidate] } //propTables: [Checkbox]
   }
 };
 
@@ -60,6 +61,25 @@ const initialForm = {
     // Preset value, with fixed option
     value: [{label: 'New York', value: 1, isFixed: true, group: { label: 'North America'} }],
     rules: []
+  },
+  startDate: { 
+    value: '',
+    rules: [{ type: 'required' }]
+  },
+  flexible: {
+    value: false,
+  },
+  yearsExp: {
+    value: '',
+    rules: [{ type: 'required' }]
+  },
+  commMethods: {
+    value: [],
+    rules: [{ type: 'required' }]
+  },
+  terms: {
+    value: false,
+    rules: [{ type: 'required' }]
   }
 };
 

@@ -201,6 +201,7 @@ export const useValidate = (props) => {
 }
 
 useValidate.propTypes = {
+  /** Initial Form labels, values, rules */
   initialForm: PropTypes.object.isRequired,
   validateOnChange: PropTypes.bool
 }

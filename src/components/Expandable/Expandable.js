@@ -62,6 +62,7 @@ export const Expandable = (props) => {
 }
 
 Expandable.propTypes = {
+  /** Expandable content: first must be expandable label/button, second must be shown/hidden content */
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   isExpanded: PropTypes.bool

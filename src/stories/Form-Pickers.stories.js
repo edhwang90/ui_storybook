@@ -11,7 +11,7 @@ export default {
   title: 'Pickers',
   decorators: [withInfo],
   parameters: {
-    info: { source: false, inline: true, propTables: false } //propTables: [Checkbox]
+    info: { source: false, inline: true, propTables: [DatePicker] } //propTables: [Checkbox]
   }
 };
 

@@ -41,6 +41,7 @@ ul, ol {
 
   &:last-of-type {
     margin-right: 0rem;
+
   }
 }
 
@@ -63,6 +64,10 @@ ul, ol {
   .col {
     margin-right: 0rem;
     margin-bottom: $container-padding-tb + 0rem;
+
+    &:last-of-type {
+      margin-bottom: 0px;
+    }
   }
 }
 

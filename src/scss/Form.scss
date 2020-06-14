@@ -43,6 +43,7 @@ input, textarea {
 }
 
 .form-label {
+  display: block;
   padding-bottom: $item-padding-tb + rem;
   font-weight: bold;
 }

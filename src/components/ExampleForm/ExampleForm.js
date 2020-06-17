@@ -65,6 +65,7 @@ export const ExampleForm = (props) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [formErrors, setFormErrors] = useState([]);
+  const [asyncOptions, setAsyncOptions] = useState([]);
 
   const customValidate = (formField) => {
     return new Promise((resolve, reject) => {
@@ -79,6 +80,18 @@ export const ExampleForm = (props) => {
     //           return (json.name);
     //         })
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      fetch('https://jsonplaceholder.typicode.com/users')
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+        setAsyncOptions(json);
+    })
+    }, 5000)
+
+  }, [])
 
   const initialForm = {
     email: { 
@@ -242,6 +255,8 @@ export const ExampleForm = (props) => {
               <Select value={form.industry.value}
                       className={form.industry.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
+                      // options={asyncOptions}
+                      // attr="name"
                       options={industryArray}
                       isMultiSelect
                       isClearable

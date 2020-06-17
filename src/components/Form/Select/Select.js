@@ -240,16 +240,17 @@ export const Select = (props) => {
     document.removeEventListener('click', onOutsideClick);
   };
 
-  const handleBlur = e => {
-    if (menuRef.current.contains(e.relatedTarget)) {
-      return;
-    }
+  // Temp Revert
+  //const handleBlur = e => {
+    // if (menuRef.current.contains(e.relatedTarget)) {
+    //   return;
+    // }
 
-    onBlurCallback();
-  }
+    // onBlurCallback();
+  //}
 
   // tab: to clear all
-  const keydownToClear = () => {
+  const keydownToClear = (e) => {
     const clear = menuRef.current.querySelector('.select-clear');
 
     if (clear) clear.focus();
@@ -260,8 +261,9 @@ export const Select = (props) => {
   const handleKeyDown = (e, option) => {
     // tab/escape: close and blur
     if ((e.keyCode === 9) || e.keyCode === 27) {
+      console.log(1234)
       if (onBlur) onBlur();
-      closeAndFocus();
+      closeSelect();
     }
     // arrow down || space from button: open and focus on list
     else if (e.keyCode === 40 || (e.keyCode === 32 && e.target.classList.contains('select-btn'))) {
@@ -514,7 +516,7 @@ export const Select = (props) => {
          className={isMultiSelect ? `multi-select-container ${className} ${selected.length > 0 ? 'show-selected' : ''}`: `select-container ${className}`}>
       <div className={`select-btn${ isOpen ? ' list-open' : ' list-closed' }${ disabled ? ' list-disabled' : ''}`}
            onKeyDown={handleKeyDown}
-           onBlur={e => handleBlur(e)}
+           //onBlur={e => handleBlur(e)}
            onClick={openAndBind}
            tabIndex="0"
            role="button"

@@ -254,8 +254,9 @@ export const ExampleForm = (props) => {
               <Select value={form.industry.value}
                       className={form.industry.errors?.length > 0 ? 'form-error' : ''}
                       label="Select..."
-                      // options={asyncOptions}
-                      // attr="name"
+                      //isLoading={asyncOptions.length <= 0 ? true : false}
+                      //options={asyncOptions}
+                      //attr="name"
                       options={industryArray}
                       isMultiSelect
                       isClearable

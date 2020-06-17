@@ -5,6 +5,8 @@ import { traverseNodes } from '../../Utils';
 import { useHeightAnimation } from '../../Animate';
 import { useSearch } from '../../Search';
 
+import { LoadingIcon } from '../../LoadingIcon';
+
 import './Select.scss';
 
 export const useSelect = (props) => {
@@ -133,14 +135,15 @@ export const Select = (props) => {
           isResetAvailable,
           closeSelect,
           openSelect,
-          onBlurCallback,
+          //onBlurCallback,
           resetSelect,
           clickSelect,
           setSearchParam,
           removeSelection  } = useSelect(props);
   
   const { options, disabled, isMultiSelect, isGrouped, isClearable, onBlur,
-          className, label, maxHeight, selectRow, groupedRow } = props;
+          className, label, maxHeight, selectRow, groupedRow,
+          isLoading } = props;
 
   const [lastFocused, setLastFocused] = useState(null);
   const menuRef = useRef(null);
@@ -261,7 +264,6 @@ export const Select = (props) => {
   const handleKeyDown = (e, option) => {
     // tab/escape: close and blur
     if ((e.keyCode === 9) || e.keyCode === 27) {
-      console.log(1234)
       if (onBlur) onBlur();
       closeSelect();
     }
@@ -531,7 +533,14 @@ export const Select = (props) => {
 
         <div className="select-actions">
           {
-            isClearable && clearUI()
+            isClearable && !isLoading && clearUI()
+          }
+          {
+            isLoading &&
+            <React.Fragment>
+              <LoadingIcon></LoadingIcon>
+              <span></span>
+            </React.Fragment>
           }
           <div className="select-chevron">
             <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path></svg>
@@ -576,6 +585,7 @@ Select.propTypes = {
   isClearable: PropTypes.bool,
   required: PropTypes.bool,
   disabled: PropTypes.bool,
+  isLoading: PropTypes.bool,
   maxHeight: PropTypes.number
 }
 
@@ -587,5 +597,6 @@ Select.defaultProps = {
   isClearable: false,
   required: false,
   disabled: false,
+  isLoading: false,
   maxHeight: 300
 }

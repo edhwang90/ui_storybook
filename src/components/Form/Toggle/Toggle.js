@@ -22,9 +22,8 @@ export const useToggle = (props) => {
   }, [value, toggleGroupValue])
 
   const toggle = () => {
-
     // if default boolean toggle
-    if (toggleGroupValue === null) {
+    if (toggleGroupValue === null || typeof toggleGroupValue === 'undefined') {
       setIsToggled(!isToggled);
       handleToggle(!isToggled);
     }

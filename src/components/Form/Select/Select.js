@@ -2,6 +2,7 @@ import React, { useState, useRef, memo, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { traverseNodes } from '../../Utils';
 
+import { useHeightAnimation } from '../../Animate';
 import { useSearch } from '../../Search';
 
 import './Select.scss';
@@ -139,23 +140,33 @@ export const Select = (props) => {
           removeSelection  } = useSelect(props);
   
   const { options, disabled, isMultiSelect, isGrouped, isClearable, onBlur,
-          className, label, selectRow, groupedRow } = props;
+          className, label, maxHeight, selectRow, groupedRow } = props;
 
   const [lastFocused, setLastFocused] = useState(null);
   const menuRef = useRef(null);
   const listRef = useRef(null); // for Accessible traversing
   const selectedRef = useRef(null); // for Accessible traversing
+  const { setHeight } = useHeightAnimation({ isExpanded: isOpen, contentRef: listRef, maxHeight }); // for animated Expand
 
   // for Accessible traversion: auto focus to list after open
   useEffect(() => {
-    if (listRef.current) listRef.current.querySelector('.select-option').focus();
+    setHeight(isOpen);
+
+    if (isOpen) {
+      listRef.current.querySelector('.select-option').focus();
+    }
   }, [isOpen, listRef])
+
+  const closeAndFocus = () => {
+    closeSelect();
+    menuRef.current.querySelector('.select-btn').focus();
+  }
 
   const openAndBind = (e) => {
     if (disabled) return;
     if (!e) return;
     openSelect();
-
+    
     // bind outside click event
     document.addEventListener('click', onOutsideClick);
   }
@@ -223,9 +234,8 @@ export const Select = (props) => {
     if (path.indexOf(menuRef.current) >= 0) {
       return;
     }
+    closeAndFocus();
 
-    closeSelect();
-    
     // unbind
     document.removeEventListener('click', onOutsideClick);
   };
@@ -251,7 +261,7 @@ export const Select = (props) => {
     // tab/escape: close and blur
     if ((e.keyCode === 9) || e.keyCode === 27) {
       if (onBlur) onBlur();
-      closeSelect();
+      closeAndFocus();
     }
     // arrow down || space from button: open and focus on list
     else if (e.keyCode === 40 || (e.keyCode === 32 && e.target.classList.contains('select-btn'))) {
@@ -296,7 +306,7 @@ export const Select = (props) => {
     clickSelect(option);
     
     if (!isMultiSelect) {
-      closeSelect();
+      closeAndFocus();
       menuRef.current.querySelector('.select-btn').focus();
       // unbind outside click for single select
       document.removeEventListener('click', onOutsideClick);
@@ -312,7 +322,7 @@ export const Select = (props) => {
   //                list and selected
   const traverseSelect = (e) => {
     if (selectedRef.current) traverseNodes(e, selectedRef, '.remove-selected', keydownToClear, true); 
-    if (listRef.current) traverseNodes(e, listRef, '.select-option', closeSelect)
+    if (listRef.current) traverseNodes(e, listRef, '.select-option', closeAndFocus)
   }
   
   // Display purposes: Multiselect actionable selected tags
@@ -399,7 +409,7 @@ export const Select = (props) => {
 
   // Display purposes: empty row
   const emptySelectUI = () => (
-    <li tabIndex="0" 
+    <li tabIndex={isOpen ? '0' : '-1'} 
         onKeyDown={handleKeyDown}
         aria-label="No available options"
         className="select-option empty">
@@ -410,7 +420,7 @@ export const Select = (props) => {
   const rowUI = (option, index) => {
     return (
       <li key={index} 
-          tabIndex="0"
+          tabIndex={isOpen ? '0' : '-1'} 
           className="select-option available"
           onMouseEnter={e => resetFocus(e)}
           onKeyDown={e => handleKeyDown(e, option)} 
@@ -443,12 +453,12 @@ export const Select = (props) => {
   }
 
   const listUI = () => {
-    if (isOpen && !isGrouped) {
+    if (!isGrouped) {
       const selectList = filteredList();
       
       return (
         <ul className="select-list"
-            ref={listRef} 
+            ref={listRef}
             onKeyDown={e => traverseSelect(e)}>
           {   
             selectList.length > 0 &&
@@ -463,7 +473,7 @@ export const Select = (props) => {
         </ul>
       )
     }
-    else if (isOpen && isGrouped) {
+    else {
       return (
         <div className="select-list" 
              ref={listRef}>
@@ -502,7 +512,7 @@ export const Select = (props) => {
   return (
     <div ref={menuRef}
          className={isMultiSelect ? `multi-select-container ${className} ${selected.length > 0 ? 'show-selected' : ''}`: `select-container ${className}`}>
-      <div className={`select-btn${ isOpen ? ' list-open' : '' }${ disabled ? ' list-disabled' : ''}`}
+      <div className={`select-btn${ isOpen ? ' list-open' : ' list-closed' }${ disabled ? ' list-disabled' : ''}`}
            onKeyDown={handleKeyDown}
            onBlur={e => handleBlur(e)}
            onClick={openAndBind}
@@ -563,7 +573,8 @@ Select.propTypes = {
   isGrouped: PropTypes.bool,
   isClearable: PropTypes.bool,
   required: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  maxHeight: PropTypes.number
 }
 
 Select.defaultProps = {
@@ -573,5 +584,6 @@ Select.defaultProps = {
   isGrouped: false,
   isClearable: false,
   required: false,
-  disabled: false
+  disabled: false,
+  maxHeight: 300
 }

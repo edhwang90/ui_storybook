@@ -1,50 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
+
+import { useHeightAnimation } from '../Animate';
 import { generateNumber } from '../Utils';
 
 import './Expandable.scss'
 
-export const useExpandable = (props) => {
-  const { isExpanded } = props;
-  const [isOpen, setIsOpen] = useState(isExpanded || false);
-
-  const toggleExpandable = () => {
-    setIsOpen(!isOpen);
-  }
-
-  return {
-    isOpen,
-    toggleExpandable    
-  }
-}
-
 export const Expandable = (props) => {
-  const { children, className, maxHeight } = props;
-  const { isOpen, toggleExpandable } = useExpandable(props);
+  const { children, className } = props;
+  
   const [identifier] = useState(generateNumber());
 
   const contentRef = useRef(null);
 
-  useEffect(() => {
-    if (isOpen && contentRef.current) {
-      if (maxHeight) {
-        contentRef.current.style.maxHeight = `${maxHeight}px`;
-        contentRef.current.style.overflow = 'auto';
-      }
-      else {
-        contentRef.current.style.maxHeight = `${contentRef.current.scrollHeight}px`;
-      }
-    }
-    else if (!isOpen && contentRef.current) {
-      contentRef.current.style.maxHeight = '0px';
-    }
-  }, [isOpen, maxHeight, contentRef])
+  const { isOpen, toggleHeight } = useHeightAnimation({...props, contentRef});
 
   return (
     <div className={`expandable-container ${className}`}>
       <div className="expandable-row">
         <button className={`expandable-lbl-toggle ${isOpen ? 'expanded' : 'collapsed'}`}
-                onClick={toggleExpandable}
+                onClick={toggleHeight}
                 type="button"
                 tabIndex="0"
                 aria-expanded={isOpen}
@@ -65,10 +40,12 @@ Expandable.propTypes = {
   /** Expandable content: first must be expandable label/button, second must be shown/hidden content */
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  isExpanded: PropTypes.bool
+  isExpanded: PropTypes.bool,
+  isOverlay: PropTypes.bool
 }
 
 Expandable.defaultProps = {
   className: '',
-  isExpanded: false
+  isExpanded: false,
+  isOverlay: false
 }

@@ -1,9 +1,8 @@
 @import '../../scss/_Import.scss';
 
 .expandable-container {
-  display: flex;
-  flex-direction: column;
-  
+  position: relative;
+
   input[type='checkbox'] {
     opacity: 0;
     position: absolute;
@@ -94,6 +93,11 @@
   }
 }
 
-.expandable-content.collapsed {
+.expandable-content.expanded {
+  overflow: auto;
+}
+
+.expandable-content.collapsed,
+.expandable-overlay.collapsed {
   max-height: 0;
 }

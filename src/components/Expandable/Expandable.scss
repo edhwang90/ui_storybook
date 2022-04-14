@@ -23,9 +23,14 @@
     align-items: center;
   }
 
-  &:hover, &:focus {
+  &:hover {
     background-color: #e6e6e6;
   }
+
+  // For accessibility debug
+  // &:focus {
+  //   background-color: #e6e6e6;
+  // }
 }
 
 .expandable-lbl-toggle.expanded {

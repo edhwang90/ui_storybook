@@ -36,11 +36,11 @@ ul, ol {
 .col {
   flex: 1;
   flex-direction: column;
-  margin-right: $container-padding-lr + 0em;
+  margin-right: $container-padding-lr + 0rem;
   width: 100%; // necessary for overflow
 
   &:last-of-type {
-    margin-right: 0em;
+    margin-right: 0rem;
 
   }
 }
@@ -62,8 +62,8 @@ ul, ol {
   }
 
   .col {
-    margin-right: 0em;
-    margin-bottom: $container-padding-tb + 0em;
+    margin-right: 0rem;
+    margin-bottom: $container-padding-tb + 0rem;
 
     &:last-of-type {
       margin-bottom: 0px;
@@ -80,7 +80,7 @@ ul, ol {
   li {
     display: flex;
     flex-direction: row;
-    margin-bottom: $item-padding-tb + 0em;
+    margin-bottom: $item-padding-tb + 0rem;
 
     &:last-of-type {
       margin-bottom: 0;
@@ -96,7 +96,7 @@ ul, ol {
     background-color: #4d4d4d;
     border: 2px solid #fff;
     border-radius: 50%;
-    margin-right: $item-padding-lr + 0em;
+    margin-right: $item-padding-lr + 0rem;
     margin-top: calc(1em/7);
   }
 }

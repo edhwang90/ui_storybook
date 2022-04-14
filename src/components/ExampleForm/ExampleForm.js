@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee, faCircleNotch, faSync } from '@fortawesome/free-solid-svg-icons'
 import { LoadingIcon } from '../LoadingIcon';
 
+import { initialForm } from './InitialForm';
 import { Toggle, Select, DatePicker, useValidate } from '../Form'
 
 import './ExampleForm.scss';
@@ -67,20 +68,6 @@ export const ExampleForm = (props) => {
   const [formErrors, setFormErrors] = useState([]);
   const [asyncOptions, setAsyncOptions] = useState([]);
 
-  const customValidate = (formField) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve('Sample custom validation error.');
-      }, 2000)
-   })
-    // for testing, random text set
-    // return fetch('https://jsonplaceholder.typicode.com/comments/3')
-    //         .then(response => response.json())
-    //         .then(json => {
-    //           return (json.name);
-    //         })
-  };
-
   useEffect(() => {
     setTimeout(() => {
       fetch('https://jsonplaceholder.typicode.com/users')
@@ -89,60 +76,7 @@ export const ExampleForm = (props) => {
         setAsyncOptions(json);
     })
     }, 5000)
-
   }, [])
-
-  const initialForm = {
-    email: { 
-      value: '',
-      rules: [
-        { type: 'required' },
-        { type: 'type', value: 'email'}
-      ],
-      customValidation: customValidate
-    },
-    password: { 
-      value: '',
-      rules: [
-        { type: 'minlength', value: 5 }, 
-        { type: 'contains', value: '@, #, %' },
-        { type: 'maxlength', value: 10 }
-      ]
-    },
-    industry: { 
-      value: '',
-      rules: [{ type: 'required' }] 
-    },
-    role: { 
-      value: '',
-      rules: [{ type: 'required' }] 
-    },
-    locations: {
-      //value: '',
-     // value: {label: 'North America', options: [{label: 'New York', value: 1 }]},
-      value: [{label: 'New York', value: 1, isFixed: true, group: { label: 'North America'} }],
-      rules: []
-    },
-    startDate: { 
-      value: '',
-      rules: [{ type: 'required' }]
-    },
-    flexible: {
-      value: false,
-    },
-    yearsExp: {
-      value: '',
-      rules: [{ type: 'required' }]
-    },
-    commMethods: {
-      value: [],
-      rules: [{ type: 'required' }]
-    },
-    terms: {
-      value: false,
-      rules: [{ type: 'required' }]
-    }
-  };
 
   const {
     // output for use on form component
@@ -182,7 +116,7 @@ export const ExampleForm = (props) => {
 
         // Update form available for server side errors
         // example: additional email error
-        updateForm({...validatedForm, email: {...validatedForm['email'], errors: [...validatedForm['email'].errors, 'Sample error from backend.']}})
+        updateForm({...validatedForm, email: {...validatedForm['email'], errors: [...validatedForm['email'].errors, 'Sample custom error from backend. (i.e. duplicate)']}})
       }).finally(() => {
         setIsLoading(false);
       })
@@ -248,6 +182,7 @@ export const ExampleForm = (props) => {
                   <span key={index} className="error-message">{err}</span>
                 ))
               }
+
             </div>
             <div className="form-group">
               <label className="form-label">Industry Experience<span className="required">*</span></label>

@@ -29,7 +29,7 @@
   &:focus + span:before {
     outline: none;
     border-color: #80bdff;
-    box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
+    box-shadow: 0 0 0 .2em rgba(0,123,255,.25);
   }
 
   & + span:after {
@@ -60,10 +60,10 @@
 .switch {
   // Container
   & + span:before {
-    width: 2.5rem;
-    min-width: 2.5rem;
-    height: 1.5626rem;
-    border-radius: 1.5625rem;
+    width: 2.5em;
+    min-width: 2.5em;
+    height: 1.5626em;
+    border-radius: 1.5625em;
   }
 
   // Box checked
@@ -73,10 +73,10 @@
 
   // Toggle
   & + span:after {
-    left: .3125rem;
-    top: .3125rem;
-    height: .9375rem;
-    width: .9375rem;
+    left: .3125em;
+    top: .3125em;
+    height: .9375em;
+    width: .9375em;
     background-color: #4d4d4d;
     border-radius: 50%;
     align-self: unset;
@@ -86,7 +86,7 @@
   &:checked + span:after {
     content: '';
     background-color: #ffffff;
-    transform: translateX(.9375rem);
+    transform: translateX(.9375em);
   }
 
   &:disabled + span:after {
@@ -98,21 +98,21 @@
 .checkbox {
   // Box.
   & + span:before {
-    width: 1.5625rem;
-    min-width: 1.5625rem;
-    height: 1.5625rem;
+    width: 1.5625em;
+    min-width: 1.5625em;
+    height: 1.5625em;
     border-radius: 4px;
   }
 
   // Checkmark
   &:checked + span:after {
-    left: .6rem;
-    top: .3125rem;
+    left: .6em;
+    top: .3125em;
     transform: rotate(45deg);
-    height: .6875rem;
-    width: .375rem;
-    border-bottom: .125rem solid #4d4d4d;
-    border-right: .125rem solid #4d4d4d;
+    height: .6875em;
+    width: .375em;
+    border-bottom: .125em solid #4d4d4d;
+    border-right: .125em solid #4d4d4d;
     align-self: unset;
   }
 }
@@ -120,9 +120,9 @@
 .radio {
     // Box.
     & + span:before {
-      width: 1.5625rem;
-      min-width: 1.5625rem;
-      height: 1.5625rem;
+      width: 1.5625em;
+      min-width: 1.5625em;
+      height: 1.5625em;
       border-radius: 50%;
     }
 
@@ -133,10 +133,10 @@
   
     // Checkmark
     &:checked + span:after {
-      left: .3125rem;
-      top: .3125rem;
-      height: .9375rem;
-      width: .9375rem;
+      left: .3125em;
+      top: .3125em;
+      height: .9375em;
+      width: .9375em;
       background-color: #4d4d4d;
       border-radius: 50%;
     }

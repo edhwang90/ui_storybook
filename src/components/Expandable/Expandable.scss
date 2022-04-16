@@ -50,18 +50,18 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  width: .8rem;
-  height: .8rem;
+  width: .8em;
+  height: .8em;
   position: relative;
 
   &:before,
   &:after{
     background: #4d4d4d;
     content: '';
-    height: .2rem;
+    height: .2em;
     right: 0;
     position: absolute;
-    width: .8rem;
+    width: .8em;
     transition: transform .2s ease-in-out;
   }
   &:after {
@@ -71,28 +71,28 @@
 }
 
 .expandable-icon:first-child {
-  margin-right: $item-padding-lr + 0rem;
+  margin-right: $item-padding-lr + 0em;
 }
 
 .expandable-icon:last-child {
-  margin-left: $item-padding-lr + 0rem;
+  margin-left: $item-padding-lr + 0em;
 }
 
 .expandable-content {
   transition: max-height .3s ease-in-out;
   overflow: hidden;
   padding: 0;
-  padding-left: $item-padding-lr + 0rem;
-  padding-right: $item-padding-lr + 0rem;
+  padding-left: $item-padding-lr + 0em;
+  padding-right: $item-padding-lr + 0em;
   background-color: #fff;
 
   &:before {
-    margin-top: $item-padding-tb + 0rem;
+    margin-top: $item-padding-tb + 0em;
     content: '';
     display: block;
   }
   &:after {
-    margin-bottom: $item-padding-tb + 0rem;
+    margin-bottom: $item-padding-tb + 0em;
     content: '';
     display: block;
   }

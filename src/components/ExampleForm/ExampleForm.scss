@@ -6,7 +6,7 @@
   padding: 15px 30px;
 
   .btn.is-primary {
-    min-width: 6.25rem;
+    min-width: 6.25em;
   
     .lds-ring div {
       border-color: #fff transparent transparent transparent;
@@ -23,9 +23,9 @@
   span {
     background-color: $primary-color;
     color: $primary-color-font;
-    width: 1.5rem;
-    height: 1.5rem;
-    font-size: .8rem;
+    width: 1.5em;
+    height: 1.5em;
+    font-size: .8em;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -41,11 +41,11 @@
   }
 
   .tag {
-    margin-right: 1rem;
+    margin-right: 1em;
     border: 2px solid #f7f7f7;
     border-radius: 50%;
-    width: 1rem;
-    height: 1rem;
+    width: 1em;
+    height: 1em;
     content: '';
     display: inline-block;
   }

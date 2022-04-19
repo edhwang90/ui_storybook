@@ -5,13 +5,13 @@
 
   svg {
     fill: $font-color;
-    width: 1em;
-    height: 1em;
+    width: 1rem;
+    height: 1rem;
   }
 
   .form-input.calendar-open {
     border-color: #80bdff;
-    box-shadow: 0 0 0 0.2em rgba(0,123,255,.25);
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
     z-index: 3;
 
     & + .select-chevron > svg {
@@ -26,11 +26,11 @@
 
 .calendar-container {
   position: absolute;
-  margin-top: .5em;
-  margin-bottom: .5em;
-  padding: .75em 1em;
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+  padding: .75rem 1rem;
   width: 100%;
-  min-width: 18.75em;
+  min-width: 18.75rem;
   background-color: #fff;
   z-index: 9;
   border: 0;
@@ -42,21 +42,21 @@
 .calendar-bottom {
   display: flex;
   justify-content: space-between;
-  margin-top: .5em;
+  margin-top: .5rem;
 
   button {
     border: 0;
-    padding: .5em;
+    padding: .5rem;
     border-radius: 4px;
     cursor: pointer;
-    margin-right: 1em;
+    margin-right: 1rem;
 
     &:hover {
       background-color: #e6e6e6;
     }
 
     &:last-of-type {
-      margin-right: 0em;
+      margin-right: 0rem;
     }
   }
 }
@@ -65,10 +65,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: .5em;
+  margin-bottom: .5rem;
 
   button {
-    padding: .2em;
+    padding: .2rem;
     cursor: pointer;
 
     > svg {
@@ -112,7 +112,7 @@
   td {
     vertical-align: middle;
     text-align: center;
-    padding: .5em;
+    padding: .5rem;
     border-radius: 4px;
     cursor: pointer;
 
@@ -135,14 +135,14 @@
   overflow: auto;
 
   li {
-    padding: 1em;
+    padding: 1rem;
     cursor: pointer;
     transition: font-size ease-in-out .2s;
     outline: none;
   }
 
   .this-year, li:hover {
-    font-size: 1.5em;
+    font-size: 1.5rem;
     border-radius: 4px;
   }
 

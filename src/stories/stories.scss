@@ -8,19 +8,19 @@
   font-family: 'Lato', 'Open sans', sans-serif;
 
   h4 {
-    margin-bottom: 2em;
+    margin-bottom: 2rem;
   }
 
   p {
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
 
     &:last-of-type {
-      padding-top: 2em;
+      padding-top: 2rem;
     }
   }
 
   .sandbox {
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
   }
 
   .checkbox-container {
@@ -28,29 +28,29 @@
   }
 
   .btn-group .btn {
-    margin-top: 1em; // storybook purposes
+    margin-top: 1rem; // storybook purposes
   }
 
   .ul-list {
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
   }
 
   .sample-grid {
     .col {
-      padding: 1em 2em;
+      padding: 1rem 2rem;
       background-color: #e6e6e6;
       text-align: center;
       align-items: center;
     }
 
     .row {
-      margin-bottom: .5em;
+      margin-bottom: .5rem;
     }
   }
 
   .sample-expand-collapse {
     .expandable-container {
-      margin-bottom: 1em;
+      margin-bottom: 1rem;
     }
   }
 
@@ -89,9 +89,9 @@
 
   th {
     text-align: left;
-    padding-top: .5em;
-    padding-bottom: .5em;
-    padding-right: .5em;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    padding-right: .5rem;
   }
 
   tr {
@@ -100,9 +100,9 @@
 
   td {
     vertical-align: top;
-    padding-top: .5em;
-    padding-bottom: .5em;
-    padding-right: .5em;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    padding-right: .5rem;
   }
 
   td:first-of-type {

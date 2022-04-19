@@ -12,7 +12,7 @@ pre[class*="language-"] {
   color: $font-color;
   background: none;
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  font-size: .8em;
+  font-size: .8rem;
   text-align: left;
   white-space: pre;
   word-spacing: normal;
@@ -48,7 +48,7 @@ pre[class*="language-"]  {
 
  pre[class*="language-"]>code {
    position: relative;
-   padding: $container-padding + 0em;
+   padding: $container-padding + 0rem;
    width: 100%;
    border-left: 10px solid #358ccb;
    background-color: #fdfdfd;

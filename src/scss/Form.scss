@@ -44,15 +44,15 @@ input, textarea {
 
 .form-label {
   display: block;
-  padding-bottom: $item-padding-tb + rem;
+  padding-bottom: $item-padding-tb + 0rem;
   font-weight: bold;
 }
 
 .toggle-label {
   display: inline-block;
   cursor: pointer;
-  padding-left: $item-padding-lr + rem;
-  padding-right: $item-padding-lr + rem;
+  padding-left: $item-padding-lr + 0rem;
+  padding-right: $item-padding-lr + 0rem;
 
   &.disabled {
     color: #e6e6e6;
@@ -61,7 +61,7 @@ input, textarea {
 }
 
 .toggle-group {
-  padding-bottom: $item-padding-tb + rem;
+  padding-bottom: $item-padding-tb + 0rem;
 
   &:last-of-type {
     padding-bottom: 0px;

@@ -1,0 +1,16 @@
+@import '../../scss/_Import.scss';
+
+.container {
+  background-color: red;
+  width:150px;
+  height:150px;
+
+  & > div {
+    background-color: green;
+  }
+
+  &:nth-of-type(2) {
+    background-color: blue;
+  }
+}
+

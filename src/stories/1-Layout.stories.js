@@ -235,3 +235,37 @@ export const ExpandAndCollapse = () => (
     </div>
   </section>
 )
+
+export const Modal = () => (
+  <section>
+    <div className="btn-group">
+      <a className="btn is-success" href="#Modal1Open" for="modal-1">Modal 1</a>
+      <a className="btn is-danger" href="#Modal2Open" for="modal-2">Modal 2</a>
+    </div>
+
+    <div id="Modal1Open" className="modal">
+      <div className="modal-inner">
+        <p>
+          Aliquam in sagittis nulla. Curabitur euismod diam eget risus venenatis, sed dictum lectus bibendum. Nunc nunc nisi, 
+          hendrerit eget nisi id, rhoncus rutrum velit. Nunc vel mauris dolor. Class aptent taciti sociosqu ad litora torquent 
+          per conubia nostra, per inceptos himenaeos. Aliquam fringilla quis nisi eget imperdiet.
+        </p>
+
+        <a href="#ModalClose" title="Close" className="btn is-primary modal-close">Close</a>
+      </div>
+    </div>
+
+    <div id="Modal2Open" className="modal">
+      <div className="modal-inner">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+          sed do eiusmod tempor incididunt ut labore et dolore magna
+        </p>
+
+        <a href="#ModalClose" title="Close" className="btn is-primary modal-close">Close</a>
+      </div>
+    </div>
+
+    
+  </section>
+)

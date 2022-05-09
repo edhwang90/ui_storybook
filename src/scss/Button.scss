@@ -1,6 +1,7 @@
 @import './_Import.scss';
 
 .btn {
+  display: inline-block;
   padding: $item-padding;
   font-size: 1rem;
   outline: none;
@@ -9,6 +10,7 @@
   background-color: #e6e6e6;
   color: $font-color;
   cursor: pointer;
+  text-decoration: none;
   transition: 
     border-color ease-in-out .2s,
     box-shadow ease-in-out .2s;

@@ -128,7 +128,7 @@ ul, ol {
   display: none;
 }
 
-.modal:target {
+.modal:target, .modal-state:checked + .modal {
   opacity: 1;
   visibility: visible;
 }
@@ -142,7 +142,6 @@ ul, ol {
   padding: $item-padding;
   border-radius: 2px;
 }
-
 
 // Spacing
 .margin-0 {

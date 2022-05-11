@@ -236,11 +236,41 @@ export const ExpandAndCollapse = () => (
   </section>
 )
 
-export const Modal = () => (
-  <section>
+export const Modals = () => (
+  <section className="stories-modal">
+    <h4>Simple Modal</h4>
     <div className="btn-group">
-      <a className="btn is-success" href="#Modal1Open" for="modal-1">Modal 1</a>
-      <a className="btn is-danger" href="#Modal2Open" for="modal-2">Modal 2</a>
+      <label className="btn is-primary" for="modal-1">Modal 1</label>
+      <label className="btn is-alternate" for="modal-2">Modal 2</label>
+    </div>
+
+    <input className="modal-state" id="modal-1" type="checkbox" />
+    <div className="modal">
+    <label className="modal-bg" for="modal-1"></label>
+      <div className="modal-inner">
+        <p>
+          Aliquam in sagittis nulla. Curabitur euismod diam eget risus venenatis, sed dictum lectus bibendum. Nunc nunc nisi, 
+          hendrerit eget nisi id, rhoncus rutrum velit. Nunc vel mauris dolor. Class aptent taciti sociosqu ad litora torquent 
+          per conubia nostra, per inceptos himenaeos. Aliquam fringilla quis nisi eget imperdiet.
+        </p>
+      </div>
+    </div>
+
+    <input className="modal-state" id="modal-2" type="checkbox" />
+    <div className="modal">
+    <label className="modal-bg" for="modal-2"></label>
+      <div className="modal-inner">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+          sed do eiusmod tempor incididunt ut labore et dolore magna
+        </p>
+       </div>
+    </div>
+
+    <h4>HREF based Modal</h4>
+    <div className="btn-group">
+      <a className="btn is-primary" href="#Modal1Open">HREF Modal 1</a>
+      <a className="btn is-alternate" href="#Modal2Open">HREF Modal 2</a>
     </div>
 
     <div id="Modal1Open" className="modal">

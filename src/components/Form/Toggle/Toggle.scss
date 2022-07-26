@@ -74,7 +74,7 @@
   // Toggle
   & + span:after {
     left: .3125rem;
-    top: .3125rem;
+    top: .35rem;
     height: .9375rem;
     width: .9375rem;
     background-color: #4d4d4d;
@@ -134,7 +134,7 @@
     // Checkmark
     &:checked + span:after {
       left: .3125rem;
-      top: .3125rem;
+      top: .35rem;
       height: .9375rem;
       width: .9375rem;
       background-color: #4d4d4d;

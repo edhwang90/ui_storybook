@@ -2,7 +2,7 @@ import React, { useState, useRef, memo, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Calendar } from './Calendar';
 import moment from 'moment';
-import { traverseTable } from '../../Utils';
+import { traverseTable } from '../../../Utils';
 
 import './DatePicker.scss';
 

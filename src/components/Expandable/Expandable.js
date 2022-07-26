@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 
 import { useHeightAnimation } from '../Animate';
-import { generateNumber } from '../Utils';
+import { generateNumber } from '../../Utils';
 
 import './Expandable.scss'
 

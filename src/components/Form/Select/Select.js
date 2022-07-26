@@ -1,6 +1,6 @@
 import React, { useState, useRef, memo, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { traverseNodes } from '../../Utils';
+import { traverseNodes } from '../../../Utils';
 
 import { useHeightAnimation } from '../../Animate';
 import { useSearch } from '../../Search';

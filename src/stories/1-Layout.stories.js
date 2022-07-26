@@ -296,6 +296,39 @@ export const Modals = () => (
       </div>
     </div>
 
-    
+    <CodeBlock language="html">
+      {`
+      <label className="btn is-primary" for="modal-1">Modal 1</label>
+
+<input className="modal-state" id="modal-1" type="checkbox" />
+  <div className="modal">
+    <label className="modal-bg" for="modal-1"></label>
+      <div className="modal-inner">
+        <p>
+          Aliquam in sagittis nulla. Curabitur euismod diam eget risus venenatis, sed dictum lectus bibendum. Nunc nunc nisi, 
+          hendrerit eget nisi id, rhoncus rutrum velit. Nunc vel mauris dolor. Class aptent taciti sociosqu ad litora torquent 
+          per conubia nostra, per inceptos himenaeos. Aliquam fringilla quis nisi eget imperdiet.
+        </p>
+      </div>
+  </div>
+      `}
+      </CodeBlock>
+      <CodeBlock language="html">
+      {`
+      <a className="btn is-primary" href="#Modal1Open">HREF Modal 1</a>
+
+<div id="Modal1Open" className="modal">
+  <div className="modal-inner">
+    <p>
+      Aliquam in sagittis nulla. Curabitur euismod diam eget risus venenatis, sed dictum lectus bibendum. Nunc nunc nisi, 
+      hendrerit eget nisi id, rhoncus rutrum velit. Nunc vel mauris dolor. Class aptent taciti sociosqu ad litora torquent 
+      per conubia nostra, per inceptos himenaeos. Aliquam fringilla quis nisi eget imperdiet.
+    </p>
+
+    <a href="#ModalClose" title="Close" className="btn is-primary modal-close">Close</a>
+  </div>
+</div>
+      `}
+      </CodeBlock>
   </section>
 )

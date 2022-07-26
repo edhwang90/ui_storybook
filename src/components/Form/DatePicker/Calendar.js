@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import { traverseNodes } from '../../Utils';
+import { traverseNodes } from '../../../Utils';
 
 const YearList = (props) => {
   const { currentYear, toYear, toggleYear } = props;

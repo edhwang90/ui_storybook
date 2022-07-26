@@ -1,4 +1,7 @@
-// shallow / needs work
+import React from 'react';
+import { useEffect, createRef } from "react";
+
+// needs work
 export const filterObjectArray = (arr, filterArr) => (
   arr.filter(elem => !filterArr?.find(filter => JSON.stringify(elem) === JSON.stringify(filter)))
 );
@@ -71,5 +74,27 @@ export const traverseTable = (evt, el) => {
     const previous = selected <= 0 ? clickable.length - 1 : selected - 1
     clickable[previous].focus();
   }
+}
+
+export const OutsideClickHandler = (props) => {
+  const { children, onOutsideClick } = props;
+  const wrapperRef = createRef();
+
+  useEffect(() => {
+    const handleClickOutside = (evt) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(evt.target)) {
+        onOutsideClick();
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    const cleanup = () => { document.removeEventListener("mousedown", handleClickOutside); }
+    
+    return  cleanup;
+  }, []);
+
+  return (
+    <div ref={wrapperRef}>{children}</div>
+  )
 }
 

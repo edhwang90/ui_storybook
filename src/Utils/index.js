@@ -3,4 +3,5 @@ export { filterObjectArray,
          partial,
          pipe,
          traverseNodes,
-         traverseTable } from './Utils';
+         traverseTable,
+         OutsideClickHandler } from './Utils';

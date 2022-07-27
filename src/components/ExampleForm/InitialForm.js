@@ -19,7 +19,7 @@ export const initialForm = {
   password: { 
     value: '',
     rules: [
-      { type: 'minlength', value: 5 }, 
+      { type: 'minlength', value: 8 }, 
       { type: 'contains', value: '@, #, %' },
       { type: 'maxlength', value: 10 }
     ]

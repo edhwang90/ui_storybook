@@ -40,12 +40,10 @@ Expandable.propTypes = {
   /** Expandable content: first must be expandable label/button, second must be shown/hidden content */
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  isExpanded: PropTypes.bool,
-  isOverlay: PropTypes.bool
+  isOpen: PropTypes.bool
 }
 
 Expandable.defaultProps = {
   className: '',
-  isExpanded: false,
-  isOverlay: false
+  isOpen: false
 }

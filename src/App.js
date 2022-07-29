@@ -14,7 +14,6 @@ export const App = () => {
                           completed: Math.floor(Math.random() * 100) + 1, 
                           bgColor: '#28a745'
                         }), 2000);
-
   },[])
 
   return (

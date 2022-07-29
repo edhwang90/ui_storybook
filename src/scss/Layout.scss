@@ -215,6 +215,10 @@ ul, ol {
   animation: spin 4s linear infinite;
 }
 
+.fade {
+  transition: opacity .15s linear;
+}
+
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }

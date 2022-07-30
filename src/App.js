@@ -3,6 +3,7 @@ import { ExampleForm } from './components/ExampleForm';
 import { OutsideClickHandler } from './Utils';
 import { ProgressBar } from './components/ProgressBar';
 import { Toaster } from './components/Toaster';
+import { DialogueBox } from './components/DialogueBox';
 
 import './App.scss';
 
@@ -31,6 +32,12 @@ export const App = () => {
 
       {/* <ProgressBar completed={testProgressBar.completed}
                    bgColor={testProgressBar.bgColor}></ProgressBar> */}
+
+
+      <DialogueBox message="test message"
+                   isCancelConfirm={true}
+                   title="test title"></DialogueBox>
+
 
       <div className="multiple-toasts">
        <Toaster className="toast-default">

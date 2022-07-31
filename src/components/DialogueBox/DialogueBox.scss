@@ -3,7 +3,7 @@
 .dialogue-container {
   display: flex;
   flex-direction: column;
-  padding: 1rem 2rem;
+  padding: .75rem 1.25rem;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   width: 300px;
   position: absolute;
@@ -12,6 +12,18 @@
   transform: translate(-50%, -50%);
   z-index: 99999;
   border-radius: .25rem;
+  cursor: default;
+}
+
+.dialogue-overlay {
+  background-color: transparent;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  position: absolute;
+  cursor: not-allowed;
+  z-index: 99999;
 }
 
 .dialogue-title {

@@ -10,6 +10,8 @@ import './App.scss';
 export const App = () => {
   const [testProgressBar, setTestProgressBar] = useState(0);
 
+  const [alertVisible, setAlertVisible] = useState(false);
+
   useEffect(() => {
     setInterval(() => setTestProgressBar(
                         { 
@@ -17,6 +19,15 @@ export const App = () => {
                           bgColor: '#28a745'
                         }), 2000);
   },[])
+
+  const showAlert = () => {
+    setAlertVisible(true);
+  }
+
+  const testButton= (e) => {
+    console.log('click', e)
+    setAlertVisible(false);
+  }
 
   return (
     //<ExampleForm shouldValidateBlur={true}></ExampleForm>
@@ -33,10 +44,18 @@ export const App = () => {
       {/* <ProgressBar completed={testProgressBar.completed}
                    bgColor={testProgressBar.bgColor}></ProgressBar> */}
 
+      <button className="btn is-error" onClick={showAlert}>Show Alert</button>
 
       <DialogueBox message="test message"
-                   isCancelConfirm={true}
-                   title="test title"></DialogueBox>
+                   isVisible={alertVisible}
+                   title="test title">
+                    <button className="btn" onClick={() => testButton('Cancel')}>
+                        Cancel
+                    </button>
+                    <button className="btn is-primary" onClick={() => testButton('Confirm')}>
+                        Confirm
+                    </button>
+      </DialogueBox>
 
 
       <div className="multiple-toasts">
@@ -69,8 +88,6 @@ export const App = () => {
             Error
           </div>
           <div className="toaster-content">
-            this is a n error with description.
-            this is a n error with description.
             this is a n error with description.
             this is a n error with description.
             this is a n error with description.

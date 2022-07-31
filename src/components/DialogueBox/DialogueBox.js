@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {  useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import './DialogueBox.scss';
@@ -6,28 +6,46 @@ import './DialogueBox.scss';
 export const DialogueBox = (props) => {
   const { title, message, isVisible, children } = props;
 
+  const [alertVisible, setAlertVisible] = useState(isVisible);
+
+  useEffect(() => {
+    setAlertVisible(isVisible);
+  }, [isVisible])
+
+  const closeDialogue = () => {
+    setAlertVisible(false);
+  }
+
   return (
     <React.Fragment>
       {
-        isVisible 
+        alertVisible 
         ?
-          (<div className="dialogue-container">
-            <div className="dialogue-title">
-              { title }
+          (
+            <div className="dialogue-overlay">
+              <div className="dialogue-container">
+                <div className="dialogue-title">
+                  { title }
+                </div>
+                <div className="dialogue-message">
+                  { message }
+                </div>
+                <div className="dialogue-actions">
+                  {
+                    children
+                    ? children
+                    : 
+                      (
+                        <React.Fragment>
+                          <button className="btn"
+                                  onClick={closeDialogue}>OK</button>
+                        </React.Fragment>
+                      )
+                  }
+                </div>
+              </div>
             </div>
-           <div className="dialogue-message">
-              { message }
-            </div>
-          <div className="dialogue-actions">
-            {
-              children
-              ? children
-              : (<React.Fragment>
-                  <button className="btn">Confirm</button>
-                </React.Fragment>)
-            }
-          </div>
-        </div>)
+          )
         : ''
       }
       </React.Fragment>
@@ -37,11 +55,11 @@ export const DialogueBox = (props) => {
 DialogueBox.propTypes = {
   title: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
-  isVisible: PropTypes.bool,
-  isCancelConfirm: PropTypes.bool
+  children: PropTypes.node,
+  isVisible: PropTypes.bool
+  
 }
 
 DialogueBox.defaultProps = {
-  isVisible: true,
-  isCancelConfirm: false
+  isVisible: true
 }

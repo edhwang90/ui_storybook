@@ -11,6 +11,7 @@ export const App = () => {
   const [testProgressBar, setTestProgressBar] = useState(0);
 
   const [alertVisible, setAlertVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     // setInterval(() => setTestProgressBar(
@@ -29,6 +30,10 @@ export const App = () => {
     setAlertVisible(false);
   }
 
+  const showToasts = (e) => {
+    setIsVisible(true);
+  }
+
   return (
     //<ExampleForm shouldValidateBlur={true}></ExampleForm>
     <div className="sandbox">
@@ -45,6 +50,7 @@ export const App = () => {
                    bgColor={testProgressBar.bgColor}></ProgressBar> */}
 
       <button className="btn is-error" onClick={showAlert}>Show Alert</button>
+      <button className="btn" onClick={showToasts}>Show Toasts</button>
 
       <DialogueBox message="test message"
                    isVisible={alertVisible}
@@ -60,25 +66,28 @@ export const App = () => {
 
       <div className="multiple-toasts">
        <Toaster className="toast-default"
+                show={isVisible}
                 isPermanent={true}
                 canDismiss={false}>
           <div className="toaster-header">
             Default
           </div>
           <div className="toaster-content">
-            Default
+            Default with isPermanent=true
+            and canDismiss=false
           </div>
         </Toaster>
         <Toaster className="toast-warning" 
+                 show={isVisible}
                  isPermanent={true}>
           <div className="toaster-header">
-            Alert
+            Warning
           </div>
           <div className="toaster-content">
-            this is an alert.
+             Default Warning
           </div>
         </Toaster>
-        <Toaster className="toast-success">
+        {/* <Toaster className="toast-success">
         <div className="toaster-header">
             Success
           </div>
@@ -95,7 +104,7 @@ export const App = () => {
             this is a n error with description.
             this is a n error with description.
           </div>
-        </Toaster>
+        </Toaster> */}
       </div>
 
 <h2>asasdgasdg</h2>

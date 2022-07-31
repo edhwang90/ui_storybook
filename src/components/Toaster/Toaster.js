@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './Toaster.scss';
 
 export const Toaster = (props) => {
-  const { children, className, timer, isPermanent, canDismiss } = props;
+  const { children, className, timer, isPermanent, canDismiss, show } = props;
 
   const [isVisible, setIsVisible] = useState(true);
 
@@ -23,12 +23,14 @@ export const Toaster = (props) => {
   }
 
   useEffect(() => {
+    setIsVisible(show);
+    
     if (!isPermanent) {
       setTimeout(() => {
         setIsVisible(false)
       }, timer ? timer : 5000)
     }
-  }, [isVisible])
+  }, [show])
 
   return (
     <div className={"toaster-container"+ " " + className }
@@ -44,6 +46,7 @@ Toaster.propTypes = {
   className: PropTypes.string,
   isPermanent: PropTypes.bool,
   canDismiss: PropTypes.bool,
+  show: PropTypes.bool,
   timer: PropTypes.number
 }
 
@@ -51,5 +54,6 @@ Toaster.defaultProps = {
   className: 'toast-default',
   isPermanent: false,
   canDismiss: true,
+  show: false,
   timer: 5000
 }

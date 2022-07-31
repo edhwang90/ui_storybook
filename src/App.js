@@ -13,11 +13,11 @@ export const App = () => {
   const [alertVisible, setAlertVisible] = useState(false);
 
   useEffect(() => {
-    setInterval(() => setTestProgressBar(
-                        { 
-                          completed: Math.floor(Math.random() * 100) + 1, 
-                          bgColor: '#28a745'
-                        }), 2000);
+    // setInterval(() => setTestProgressBar(
+    //                     { 
+    //                       completed: Math.floor(Math.random() * 100) + 1, 
+    //                       bgColor: '#28a745'
+    //                     }), 2000);
   },[])
 
   const showAlert = () => {
@@ -59,7 +59,9 @@ export const App = () => {
 
 
       <div className="multiple-toasts">
-       <Toaster className="toast-default">
+       <Toaster className="toast-default"
+                isPermanent={true}
+                canDismiss={false}>
           <div className="toaster-header">
             Default
           </div>
@@ -67,7 +69,8 @@ export const App = () => {
             Default
           </div>
         </Toaster>
-        <Toaster className="toast-warning" dismissable={false}>
+        <Toaster className="toast-warning" 
+                 isPermanent={true}>
           <div className="toaster-header">
             Alert
           </div>

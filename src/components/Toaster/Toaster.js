@@ -4,24 +4,26 @@ import PropTypes from 'prop-types';
 import './Toaster.scss';
 
 export const Toaster = (props) => {
-  const { children, className, timer, dismissable } = props;
+  const { children, className, timer, isPermanent, canDismiss } = props;
 
   const [isVisible, setIsVisible] = useState(true);
 
   const visibleStyles = {
-    display: 'none'
-  }
-
-  const dismissedStyles = {
     display: 'block'
   }
 
+  const dismissedStyles = {
+    display: 'none'
+  }
+
   const onToastClick = () => {
-    setIsVisible(false);
+    if (canDismiss) {
+      setIsVisible(false);
+    }
   }
 
   useEffect(() => {
-    if (dismissable) {
+    if (!isPermanent) {
       setTimeout(() => {
         setIsVisible(false)
       }, timer ? timer : 5000)
@@ -30,7 +32,7 @@ export const Toaster = (props) => {
 
   return (
     <div className={"toaster-container"+ " " + className }
-         style={isVisible ? dismissedStyles : visibleStyles}
+         style={isVisible ? visibleStyles : dismissedStyles}
          onClick={onToastClick}>
       { children }
     </div>
@@ -40,12 +42,14 @@ export const Toaster = (props) => {
 Toaster.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  dismissable: PropTypes.bool,
+  isPermanent: PropTypes.bool,
+  canDismiss: PropTypes.bool,
   timer: PropTypes.number
 }
 
 Toaster.defaultProps = {
   className: 'toast-default',
-  dismissable: true,
+  isPermanent: false,
+  canDismiss: true,
   timer: 5000
 }

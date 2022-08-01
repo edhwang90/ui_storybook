@@ -70,10 +70,10 @@ export const App = () => {
                 isPermanent={true}
                 canDismiss={false}>
           <div className="toaster-header">
-            Default
+            Default Color
           </div>
           <div className="toaster-content">
-            Default with isPermanent=true
+            isPermanent=true
             and canDismiss=false
           </div>
         </Toaster>
@@ -81,10 +81,10 @@ export const App = () => {
                  show={isVisible}
                  isPermanent={true}>
           <div className="toaster-header">
-            Warning
+            Warning Color
           </div>
           <div className="toaster-content">
-             Default Warning
+             This is a warning message.
           </div>
         </Toaster>
         {/* <Toaster className="toast-success">

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './DialogueBox.scss';
 
-export const useDialogBox = (props) => {
+export const useDialogueBox = (props) => {
   const { isVisible } = props;
 
   const [alertVisible, setAlertVisible] = useState(isVisible);
@@ -25,7 +25,7 @@ export const useDialogBox = (props) => {
 export const DialogueBox = (props) => {
   const { title, message, children } = props;
 
-  const { closeDialogue, alertVisible } = useDialogBox(props);
+  const { closeDialogue, alertVisible } = useDialogueBox(props);
 
   return (
     <React.Fragment>

@@ -1,6 +1,6 @@
 import React, { useState, useRef, memo, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { traverseNodes } from '../../../Utils';
+import { traverseNodes, getKeyCode } from '../../../Utils';
 
 import { useHeightAnimation } from '../../Animate';
 import { useSearch } from '../../Search';
@@ -263,29 +263,29 @@ export const Select = (props) => {
   // Accessibility: handle selection and escape
   const handleKeyDown = (e, option) => {
     // tab/escape: close and blur
-    if ((e.keyCode === 9) || e.keyCode === 27) {
+    if ((e.keyCode === getKeyCode('tab')) || e.keyCode === getKeyCode('escape')) {
       if (onBlur) onBlur();
       closeSelect();
     }
     // arrow down || space from button: open and focus on list
-    else if (e.keyCode === 40 || (e.keyCode === 32 && e.target.classList.contains('select-btn'))) {
+    else if (e.keyCode === getKeyCode('down') || (e.keyCode === getKeyCode('space') && e.target.classList.contains('select-btn'))) {
       e.preventDefault();
       openAndBind(e);
       if (listRef.current) listRef.current.querySelector('.select-option').focus();
     }
     // arrow right: to selected
-    else if (e.keyCode === 39) {
+    else if (e.keyCode === getKeyCode('right')) {
       const displayedOptions = selectedRef.current?.querySelector('.remove-selected');
       if (displayedOptions) displayedOptions.focus();
     }
     // arrow left: to most recent selected
-    else if (e.keyCode === 37) {
+    else if (e.keyCode === getKeyCode('left')) {
       const displayedOptions = Array.from(selectedRef.current?.querySelectorAll('.remove-selected') || []);
       const toIndex = displayedOptions.length - 1 < 0 ? 0 : displayedOptions.length -1;
       if (displayedOptions.length > 0) displayedOptions[toIndex].focus();
     }
     // enter || space: hand click
-    else if ((e.keyCode === 13 || e.keyCode === 32) && option) {
+    else if ((e.keyCode === getKeyCode('enter') || e.keyCode === getKeyCode('space')) && option) {
       e.preventDefault();
       handleClick(option);
 

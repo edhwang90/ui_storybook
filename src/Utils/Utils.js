@@ -14,6 +14,28 @@ const _pipe = (fn, gn) => (...args) => gn(fn(...args));
 
 export const pipe = (...fns) => fns.reduce(_pipe);
 
+export const getKeyCode = (key) => {
+    switch (key) {
+      case 'down':
+        return 40;
+      case 'up':
+        return 38;
+      case 'right':
+        return 39;
+      case 'left':
+        return 37;
+      case 'space':
+        return 32;
+      case 'tab':
+        return 9;
+      case 'escape':
+        return 27;
+      case 'enter':
+        return 13;
+    }
+    
+}
+
 export const traverseNodes = (evt, el, nodeType, endFn, isHorizontal) => {
   const allOptions = el.current.querySelectorAll(nodeType);
   const list = [].slice.call(allOptions)

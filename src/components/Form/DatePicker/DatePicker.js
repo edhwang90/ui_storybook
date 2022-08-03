@@ -2,7 +2,7 @@ import React, { useState, useRef, memo, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Calendar } from './Calendar';
 import moment from 'moment';
-import { traverseTable } from '../../../Utils';
+import { traverseTable, getKeyCode } from '../../../Utils';
 
 import './DatePicker.scss';
 
@@ -114,12 +114,12 @@ export const DatePicker = (props) => {
   // Accessibility: key downs: escape (close), enter/space (open)
   const handleKeyDown = (e) => {
     // arrow down: open
-    if (e.keyCode === 40 && e.target.classList.contains('form-input')) {
+    if (e.keyCode === getKeyCode('down') && e.target.classList.contains('form-input')) {
       toggle(true);
       document.addEventListener('click', onOutsideClick);
     }
     // key: shift + tab || esc
-    else if ((e.keyCode === 9 && e.shiftKey) || e.keyCode === 27) {
+    else if ((e.keyCode === getKeyCode('tab') && e.shiftKey) || e.keyCode === getKeyCode('escape')) {
       closeCalendar();
     }
     else {
@@ -129,12 +129,12 @@ export const DatePicker = (props) => {
 
   // Accessibility close on blur
   const handleExitBlur = (e) => {
-    if (e.keyCode === 9) {
+    if (e.keyCode === getKeyCode('tab')) {
       e.preventDefault();
       // loop focus back to calendar top actions
       datepickerRef.current.querySelector('.prev-month').focus();
     }
-    else if (e.keyCode === 32) {
+    else if (e.keyCode === getKeyCode('space')) {
       e.preventDefault();
       closeCalendar();
     }

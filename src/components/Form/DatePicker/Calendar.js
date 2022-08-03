@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import { traverseNodes } from '../../../Utils';
+import { traverseNodes, getKeyCode } from '../../../Utils';
 
 const YearList = (props) => {
   const { currentYear, toYear, toggleYear } = props;
@@ -18,11 +18,11 @@ const YearList = (props) => {
   // Accessibility: key downs to year, escape year picker
   const onYearKeyDown = (e, year) => {
     // keys: enter, space
-    if (e.keyCode === 13 || e.keyCode === 32) {
+    if (e.keyCode === getKeyCode('enter') || e.keyCode === getKeyCode('space')) {
       toYear(e, year);
     }
     // key: escape
-    else if (e.keyCode === 27) {
+    else if (e.keyCode === getKeyCode('escape')) {
       toggleYear();
     }
   }
@@ -107,11 +107,11 @@ export const Calendar = (props) => {
   // Accessibility: key down handle selection
   const onMonthKeyDown = (e, date) => {
     // enter || space: register click
-    if (e.keyCode === 13 || e.keyCode === 32) {
+    if (e.keyCode === getKeyCode('enter') || e.keyCode === getKeyCode('space')) {
       onClick(date);
     }
     // escape: close calendar
-    else if (e.keyCode === 27) {
+    else if (e.keyCode === getKeyCode('escape')) {
       closeCalendar();
     }
   }

@@ -4,6 +4,8 @@ import { OutsideClickHandler } from './Utils';
 import { ProgressBar } from './components/ProgressBar';
 import { Toaster } from './components/Toaster';
 import { DialogueBox } from './components/DialogueBox';
+import { Wizard } from './components/Wizard';
+
 
 import './App.scss';
 
@@ -33,6 +35,10 @@ export const App = () => {
   const showToasts = (e) => {
     setIsVisible(true);
   }
+
+  const Page1 = () => (<h1>Page 1</h1>);
+  const Page2 = () => (<h1>Page 2</h1>);
+  const Page3 = () => (<h1>Page 3</h1>);
 
   return (
     //<ExampleForm shouldValidateBlur={true}></ExampleForm>
@@ -106,8 +112,17 @@ export const App = () => {
           </div>
         </Toaster> */}
       </div>
-
-<h2>asasdgasdg</h2>
+      <Wizard className="wizard" steps={3}>
+        <Wizard.Pages className="wizard-content">
+          <Page1 />
+          <Page2 />
+          <Page3 />
+        </Wizard.Pages>
+        <div className="wizard-buttons">
+          <Wizard.ButtonPrev />
+          <Wizard.ButtonNext />
+        </div>
+      </Wizard>
     </div>
   );
 }

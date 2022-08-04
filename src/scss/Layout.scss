@@ -208,6 +208,12 @@ ul, ol {
   text-align: left !important;
 }
 
+.clearfix:after {
+  content: "";
+  display: block;
+  clear: both;
+ }
+
 //Animations
 .to-spin {
   -webkit-animation: spin 4s linear infinite;

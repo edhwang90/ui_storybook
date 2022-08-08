@@ -1,3 +1,4 @@
+import { disableWorkerMessageHandler } from 'prismjs';
 import React from 'react';
 import { useEffect, createRef } from "react";
 
@@ -5,9 +6,11 @@ export const checkObjEq = (obj1, obj2) => {
   return JSON.stringify(obj1).split('').sort().toString() === JSON.stringify(obj2).split('').sort().toString();
 };
 
-// export const filterObjectArray = (arr, filterArr) => (
-//   arr.filter(elem => !filterArr?.find(filter => checkObjEq(elem, filter)))
-// );
+export const filterObjectArray = (arr, filterObj) => {
+
+  const filtered = arr.filter(obj => !checkObjEq(obj, filterObj));
+  return filtered;
+};
 
 export const generateNumber = () => Math.floor(Math.random()*10000);
 

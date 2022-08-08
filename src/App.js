@@ -4,8 +4,7 @@ import { OutsideClickHandler } from './Utils';
 import { ProgressBar } from './components/ProgressBar';
 import { Toaster } from './components/Toaster';
 import { DialogueBox } from './components/DialogueBox'
-import { checkObjEq } from './Utils';
-
+import { checkObjEq, filterObjectArray } from './Utils';
 
 import './App.scss';
 
@@ -42,13 +41,13 @@ export const App = () => {
       name: 'ed',
       experience: 4,
       team: {
-        availability: true,
+        availability: false,
         name: 'team1'
       }
     }
 
     const obj2 = {
-      name: 'ed',
+      name: '1',
       experience: 4,
       team: {
         name: 'team1',
@@ -56,6 +55,35 @@ export const App = () => {
       }
     }
     console.log(checkObjEq(obj1, obj2));
+
+    const arr = [
+      {
+        name: 'ed',
+        experience: 4,
+        team: {
+          name: 'team1',
+          availability: false
+        }
+      },
+      {
+        name: '1',
+        experience: 4,
+        team: {
+          name: 'team1',
+          availability: true
+        }
+      },
+      {
+        name: '2',
+        experience: 4,
+        team: {
+          name: 'team1',
+          availability: true
+        }
+      }
+    ]
+
+    console.log(filterObjectArray(arr, obj1));
   }
 
   const Page1 = () => (<h1>Page 1</h1>);

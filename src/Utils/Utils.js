@@ -1,10 +1,13 @@
 import React from 'react';
 import { useEffect, createRef } from "react";
 
-// needs work
-export const filterObjectArray = (arr, filterArr) => (
-  arr.filter(elem => !filterArr?.find(filter => JSON.stringify(elem) === JSON.stringify(filter)))
-);
+export const checkObjEq = (obj1, obj2) => {
+  return JSON.stringify(obj1).split('').sort().toString() === JSON.stringify(obj2).split('').sort().toString();
+};
+
+// export const filterObjectArray = (arr, filterArr) => (
+//   arr.filter(elem => !filterArr?.find(filter => checkObjEq(elem, filter)))
+// );
 
 export const generateNumber = () => Math.floor(Math.random()*10000);
 

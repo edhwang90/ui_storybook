@@ -3,8 +3,8 @@ import { ExampleForm } from './components/ExampleForm';
 import { OutsideClickHandler } from './Utils';
 import { ProgressBar } from './components/ProgressBar';
 import { Toaster } from './components/Toaster';
-import { DialogueBox } from './components/DialogueBox';
-import { Wizard } from './components/Wizard';
+import { DialogueBox } from './components/DialogueBox'
+import { checkObjEq } from './Utils';
 
 
 import './App.scss';
@@ -36,6 +36,28 @@ export const App = () => {
     setIsVisible(true);
   }
 
+  const checkObjs = () => {
+    
+    const obj1 = {
+      name: 'ed',
+      experience: 4,
+      team: {
+        availability: true,
+        name: 'team1'
+      }
+    }
+
+    const obj2 = {
+      name: 'ed',
+      experience: 4,
+      team: {
+        name: 'team1',
+        availability: true
+      }
+    }
+    console.log(checkObjEq(obj1, obj2));
+  }
+
   const Page1 = () => (<h1>Page 1</h1>);
   const Page2 = () => (<h1>Page 2</h1>);
   const Page3 = () => (<h1>Page 3</h1>);
@@ -57,6 +79,7 @@ export const App = () => {
 
       <button className="btn is-error" onClick={showAlert}>Show Alert</button>
       <button className="btn" onClick={showToasts}>Show Toasts</button>
+      <button className="btn is-clear" onClick={checkObjs}>Deep Check Equality</button>
 
       <DialogueBox message="test message"
                    isVisible={alertVisible}
@@ -112,17 +135,6 @@ export const App = () => {
           </div>
         </Toaster> */}
       </div>
-      <Wizard className="wizard" steps={3}>
-        <Wizard.Pages className="wizard-content">
-          <Page1 />
-          <Page2 />
-          <Page3 />
-        </Wizard.Pages>
-        <div className="wizard-buttons">
-          <Wizard.ButtonPrev />
-          <Wizard.ButtonNext />
-        </div>
-      </Wizard>
     </div>
   );
 }

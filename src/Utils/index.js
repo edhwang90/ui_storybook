@@ -1,4 +1,4 @@
-export { filterObjectArray, 
+export { checkObjEq, 
          generateNumber,
          partial,
          pipe,
